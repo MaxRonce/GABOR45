@@ -1,0 +1,8 @@
+ion-icon {
+    color: #ffffff;
+}
+
+ion-tab-button:active ion-icon,
+ion-tab-button.tab-selected ion-icon {
+    color: #03a852; /* Choisir la couleur que vous souhaitez pour les icônes sélectionnées */
+}

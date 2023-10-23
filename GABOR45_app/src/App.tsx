@@ -15,6 +15,15 @@ import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 
+
+/* Icons imports */
+import home from '../src/icons/home.svg';
+import calendar from '../src/icons/calendar.svg';
+import farmer from '../src/icons/farmer.svg';
+import position from '../src/icons/position.svg';
+import user from '../src/icons/user.svg';
+
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -33,6 +42,10 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import './theme/custom.css';
+
+
+
 
 setupIonicReact();
 
@@ -41,31 +54,47 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path="/tab1">
+          <Route exact path="/home">
             <Tab1 />
           </Route>
-          <Route exact path="/tab2">
+          <Route exact path="/events">
+            <Tab2 />
+          </Route>
+          <Route exact path="/farmers">
+            <Tab1 />
+          </Route>
+          <Route exact path="/position">
+            <Tab2 />
+          </Route>
+          <Route exact path="/profile">
             <Tab2 />
           </Route>
           <Route path="/tab3">
             <Tab3 />
           </Route>
           <Route exact path="/">
-            <Redirect to="/tab1" />
+            <Redirect to="/home" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon aria-hidden="true" icon={triangle} />
-            <IonLabel>Tab 1</IonLabel>
+          <IonTabButton tab="home" href="/home">
+            <IonIcon src={home} />
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon icon={images} />
-            <IonLabel>Photos</IonLabel>
+          <IonTabButton tab="events" href="/events">
+            <IonIcon src={calendar} />
+          </IonTabButton>
+          <IonTabButton tab="farmers" href="/farmers">
+            <IonIcon src={farmer} />
+          </IonTabButton>
+          <IonTabButton tab="position" href="/position">
+            <IonIcon src={position} />
+          </IonTabButton>
+          <IonTabButton tab="profile" href="/profile">
+            <IonIcon src={user} />
           </IonTabButton>
           <IonTabButton tab="tab3" href="/tab3">
             <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Tab 3</IonLabel>
+            <IonLabel>DEBUG TAB</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
