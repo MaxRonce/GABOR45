@@ -14,6 +14,9 @@ import { images, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+import Profile from "./pages/Profile";
+import Login from './pages/Login';
+
 
 
 /* Icons imports */
@@ -67,13 +70,16 @@ const App: React.FC = () => (
             <Tab2 />
           </Route>
           <Route exact path="/profile">
-            <Tab2 />
+            <Profile />
           </Route>
           <Route path="/tab3">
             <Tab3 />
           </Route>
           <Route exact path="/">
             <Redirect to="/home" />
+          </Route>
+          <Route exact path="/login">
+            <Login />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
