@@ -1,0 +1,6 @@
+.custom-button {
+    --ion-color-primary: #007bff; /* Establece el color azul que deseas */
+    --ion-color-primary-contrast: #fff; /* Color del texto para el color azul */
+    --ion-color-primary-shade: #0056b3; /* Sombra para el color azul */
+    --ion-color-primary-tint: #3295ff; /* Tinte para el color azul */
+  }
