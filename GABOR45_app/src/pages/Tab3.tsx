@@ -1,8 +1,10 @@
-import {IonCard, IonCardContent, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
+import {IonButton, IonCard, IonCardContent, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab3.css';
 import { supabase } from '../supabaseClient';
 import React, { useEffect, useState } from 'react';
+
+
 
 async function fetchPhrase() {
     const { data, error } = await supabase
@@ -17,9 +19,11 @@ async function fetchPhrase() {
 }
 
 
+
+
 const Tab3: React.FC = () => {
     const [phrase, setPhrase] = useState<string | null>(null);
-
+    
     useEffect(() => {
         async function getPhrase() {
             const fetchedPhrase = await fetchPhrase();
@@ -27,6 +31,22 @@ const Tab3: React.FC = () => {
         }
         getPhrase();
     }, []);
+
+    async function signInWithFacebook() {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'facebook',
+        });
+        if (error) console.error(error);
+        else console.log('Connexion réussie :', data);
+    }
+
+    async function signOut() {
+        const { error } = await supabase.auth.signOut();
+        if (error) console.error(error);
+        else console.log('Déconnexion réussie');
+    }
+
+
 
     return (
         <IonPage>
@@ -46,6 +66,8 @@ const Tab3: React.FC = () => {
                         {phrase}
                     </IonCardContent>
                 </IonCard>
+                <IonButton onClick={signInWithFacebook}>Se connecter avec Facebook</IonButton>
+                <IonButton onClick={signOut}>Se déconnecter</IonButton>
             </IonContent>
         </IonPage>
     );
