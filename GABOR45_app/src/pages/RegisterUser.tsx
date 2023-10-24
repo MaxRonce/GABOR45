@@ -16,7 +16,7 @@ import '../theme/custom.css';
 import '../theme/variables.css';
 
 
-const Login: React.FC = () => {
+const RegisterUser: React.FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [passwordI, setPasswordI] = useState<string>("");
@@ -30,7 +30,7 @@ const Login: React.FC = () => {
     const handleLogin = async () => {
         console.log("entro al login");
         try {
-          const { data, error } = await supabase.auth.signInWithPassword({
+          const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
           });
@@ -45,22 +45,10 @@ const Login: React.FC = () => {
           }
         } catch (error) {
 
-            setError("Hubo un error al iniciar sesión");
+            setError("Hubo un error al Registrarse");
         }
     };
 
-    const signInWithFacebook = async () => {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'facebook',
-        });
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('Connexion réussie :', data);
-            console.log("Redirection vers la page de profil")
-            history.push('/profile');  // Redirige vers la page de profil après la connexion réussie
-        }
-    };
 
     const showPasswordHandler = () => {
         console.log(" entro a la funcion ", password);
@@ -126,17 +114,10 @@ const Login: React.FC = () => {
                 <IonButton onClick={handleLogin} className='btn-login ion-padding-horizontal'>
                     Se connecter
                 </IonButton>
-                <IonText onClick={() => {history.push('/registerUser')}} className='btn-login ion-padding-horizontal'>
-                    S'inscrire
-                </IonText>
-                <IonButton onClick={signInWithFacebook} className='btn-login ion-padding-horizontal' style={{ '--ion-color-primary': '#2b5c93',  }}>
-                    <IonIcon src={facebook} className="login-icon ion-icon"/>
-                    Se connecter avec Facebook
-                </IonButton>
 
             </IonContent>
         </IonPage>
     );
 };
 
-export default Login;
+export default RegisterUser;
