@@ -1,5 +1,6 @@
 // src/pages/Login.tsx
-
+import '../theme/custom.css';
+import '../theme/variables.css';
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { IonButton, useIonToast, IonItem, IonLabel, IonInput, IonText, IonPage, IonContent,
@@ -11,15 +12,11 @@ import facebook from '../icons/facebook.svg';
 import bloquer from '../icons/bloquer.svg';
 import showP from '../icons/showP.svg'
 import hideP from '../icons/hideP.svg'
-
-import '../theme/custom.css';
-import '../theme/variables.css';
-
+import google from '../icons/google.svg'
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [passwordI, setPasswordI] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [showToast ] = useIonToast();
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -45,7 +42,7 @@ const Login: React.FC = () => {
           }
         } catch (error) {
 
-            setError("Hubo un error al iniciar sesión");
+            setError("Error to sign in");
         }
     };
 
@@ -61,12 +58,22 @@ const Login: React.FC = () => {
             history.push('/profile');  // Redirige vers la page de profil après la connexion réussie
         }
     };
-
+    const signInWithGoogle = async () => {
+        const { data, error } = await supabase.auth.signInWithOAuth({
+            provider: 'facebook',
+        });
+        if (error) {
+            console.error(error);
+        } else {
+            console.log('Connexion réussie :', data);
+            console.log("Redirection vers la page de profil")
+            history.push('/profile');  // Redirige vers la page de profil après la connexion réussie
+        }
+    };
+    //show and hide password
     const showPasswordHandler = () => {
         console.log(" entro a la funcion ", password);
         setShowPassword(!showPassword);
-        setPasswordI(password);
-        console.log(" funcion ",passwordI);
     };
 
 
@@ -74,10 +81,11 @@ const Login: React.FC = () => {
     return (
         <IonPage>
             <IonContent>
-                <IonItem>
-                    <IonImg src={logo} alt="GABOR45" class="ion-img ion-margin ion-padding" />
-                </IonItem>
-                <IonGrid class="ion-margin-horizontal ion-padding-horizontal ion-margin-top">
+                <IonImg src={logo} alt="GABOR45" class="ion-img ion-margin-horizontal ion-padding-horizontal" />
+                <IonText className="ion-text-center">
+                    <h1 className='text-title'>Connexion</h1>
+                </IonText>
+                <IonGrid class="ion-margin-horizontal ion-padding-horizontal">
                     <IonRow>
                         <IonCol size="1" class="ion-margin">
                             <IonIcon src={mail} className="login-icon ion-icon" />
@@ -98,7 +106,7 @@ const Login: React.FC = () => {
                     </IonRow>
                 </IonGrid>
 
-                <IonGrid class="ion-margin-horizontal ion-padding-horizontal ion-margin-bottom">
+                <IonGrid class="ion-margin-horizontal ion-padding-horizontal">
                     <IonRow>
                         <IonCol size="1" class="ion-margin">
                             <IonIcon src={bloquer} className="login-icon ion-icon" />
@@ -111,7 +119,7 @@ const Login: React.FC = () => {
                                     label-placement="floating"     
                                     type={showPassword ? "text" : "password"}
                                     placeholder='********'
-                                    value={passwordI}
+                                    value={password}
                                     onIonChange={(e) => setPassword(e.detail.value || "")}
                                     className='custom-input'
                                     />
@@ -122,16 +130,26 @@ const Login: React.FC = () => {
                         </IonCol>
                     </IonRow>
                 </IonGrid>
+                <IonText onClick={() => {history.push('/registerUser')}} id='motOublie' className='ion-padding-horizontal ion-float-right ion-margin-horizontal ion-margin-bottom'>
+                    Mot de passe oublié ?
+                </IonText>
                 {error && <IonText color="danger">{error}</IonText>}
-                <IonButton onClick={handleLogin} className='btn-login ion-padding-horizontal'>
+                <IonButton onClick={handleLogin} expand='full' shape="round" className='ion-margin-horizontal ion-padding-horizontal   '>
                     Se connecter
                 </IonButton>
-                <IonText onClick={() => {history.push('/registerUser')}} className='btn-login ion-padding-horizontal'>
-                    S'inscrire
+                <IonText onClick={() => {history.push('/registerUser')}} className='ion-text-center ion-margin-bottom'>
+                    <h3 className='text-title'>S'inscrire</h3>
                 </IonText>
-                <IonButton onClick={signInWithFacebook} className='btn-login ion-padding-horizontal' style={{ '--ion-color-primary': '#2b5c93',  }}>
-                    <IonIcon src={facebook} className="login-icon ion-icon"/>
+                <div id='line-login'>
+                    <span>ou</span>
+                </div>
+                <IonButton onClick={signInWithFacebook} expand='full' shape="round" className='ion-padding-horizontal ion-margin-horizontal ion-margin-top' style={{ '--ion-color-primary': '#2b5c93',  }}>
+                    <IonIcon src={facebook} className="ion-icon ion-margin-end"/>
                     Se connecter avec Facebook
+                </IonButton>
+                <IonButton onClick={signInWithGoogle} expand='full' shape="round" className='btn-google ion-padding-horizontal ion-margin-horizontal ion-margin-top'>
+                    <IonIcon src={google} className="ion-icon ion-margin-end"/>
+                    Se connecter avec Google
                 </IonButton>
 
             </IonContent>

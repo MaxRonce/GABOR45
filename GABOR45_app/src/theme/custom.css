@@ -28,9 +28,34 @@ ion-tab-button.tab-selected ion-icon {
     box-shadow: none;
     border-bottom: none;
 }
+ion-button.btn-google {
+    --border-color : #000;
+    --border-style: solid;
+    --border-width: 1px;
+    --background: #fff;
+    --color: #000;
+}
 
-.btn-login {
-    border-radius: 30px;
-    width: 100%;
+.text-title {
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    
+}
 
+#motOublie {
+    font-size: 12px;
+}
+
+#line-login {
+    height: 2px;
+    background: gray;
+    text-align: center;
+    position: relative;
+}
+
+#line-login span {
+    position: relative; 
+    background-color: #fff;
+    padding: 0 10px; 
+    top: -11px; 
 }
