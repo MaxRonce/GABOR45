@@ -1,4 +1,3 @@
-// src/pages/Login.tsx
 
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
@@ -28,7 +27,7 @@ const RegisterUser: React.FC = () => {
     const history = useHistory();
 
     const handleLogin = async () => {
-        console.log("entro al login");
+        console.log("Enter into the login function");
         try {
           const { data, error } = await supabase.auth.signUp({
             email: email,
@@ -40,12 +39,12 @@ const RegisterUser: React.FC = () => {
             setError(error.message);
           } else {
             await showToast({ message: 'Success', duration: 2000, color: 'success' });
-            // Inicio de sesión exitoso, puedes redirigir a otra página aquí
+            // If the login is success redirect to profile page
             history.push('/profile');
           }
         } catch (error) {
 
-            setError("Hubo un error al Registrarse");
+            setError("Error signing up with email and password");
         }
     };
 

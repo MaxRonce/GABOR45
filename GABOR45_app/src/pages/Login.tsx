@@ -19,7 +19,6 @@ import '../theme/variables.css';
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [passwordI, setPasswordI] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [showToast ] = useIonToast();
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -63,10 +62,7 @@ const Login: React.FC = () => {
     };
 
     const showPasswordHandler = () => {
-        console.log(" entro a la funcion ", password);
         setShowPassword(!showPassword);
-        setPasswordI(password);
-        console.log(" funcion ",passwordI);
     };
 
 
@@ -107,15 +103,14 @@ const Login: React.FC = () => {
                             <div className='login-input'>
                                 <IonItem lines="none">
                                     <IonInput
-                                    label="Mot de passe"
-                                    label-placement="floating"     
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder='********'
-                                    value={passwordI}
-                                    onIonChange={(e) => setPassword(e.detail.value || "")}
-                                    className='custom-input'
+                                        label="Mot de passe"
+                                        label-placement="floating"
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder='********'
+                                        value={password}
+                                        onIonChange={(e) => setPassword(e.detail.value || "")}
+                                        className='custom-input'
                                     />
-                                <IonIcon src={showPassword ? showP : hideP} className="login-icon ion-icon" onClick={() => showPasswordHandler()} />
 
                                 </IonItem>
                             </div>
