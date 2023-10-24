@@ -16,6 +16,7 @@ import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import Profile from "./pages/Profile";
 import Login from './pages/Login';
+import RegisterUser from './pages/RegisterUser';
 
 
 
@@ -81,6 +82,9 @@ const App: React.FC = () => (
           </Route>
           <Route exact path="/login">
             <Login />
+          </Route>
+          <Route exact path="/registerUser">
+            <RegisterUser />
           </Route>
         </IonRouterOutlet>
 
