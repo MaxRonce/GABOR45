@@ -17,6 +17,7 @@ import Tab3 from './pages/Tab3';
 import Profile from "./pages/Profile";
 import Login from './pages/Login';
 import RegisterUser from './pages/RegisterUser';
+import FarmerPage from './pages/Farmer';
 
 
 
@@ -66,7 +67,7 @@ const App: React.FC = () => (
             <Tab2 />
           </Route>
           <Route exact path="/farmers">
-            <Tab1 />
+            <FarmerPage />
           </Route>
           <Route exact path="/position">
             <Tab2 />
