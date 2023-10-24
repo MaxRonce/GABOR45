@@ -4,12 +4,13 @@ http://ionicframework.com/docs/theming/ */
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #03a852;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #3171e0;
   --ion-color-primary-tint: #4c8dff;
+  --ion-color-facebook: #2b5c93;
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;
@@ -74,6 +75,9 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  --ion-tab-bar-background: #164550; /* Remplacez #03a852 par la couleur de fond souhaitée pour la navbar */
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -89,6 +93,7 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-primary-contrast-rgb: 255,255,255;
     --ion-color-primary-shade: #3a7be0;
     --ion-color-primary-tint: #5598ff;
+    --ion-color-facebook: #2b5c93;
 
     --ion-color-secondary: #50c8ff;
     --ion-color-secondary-rgb: 80,200,255;

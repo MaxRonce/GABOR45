@@ -1,0 +1,36 @@
+ion-icon {
+    color: #ffffff;
+}
+
+ion-tab-button:active ion-icon,
+ion-tab-button.tab-selected ion-icon {
+    color: #03a852;
+}
+
+.login-icon {
+    font-size: 30px;
+    color: #374856;
+}
+
+.login-input {
+    text-align: justify;
+    border: 1px solid #A7A7A7;
+    border-radius: 5px;
+    padding: 10px;
+    height: 90%;
+}
+
+.custom-input {
+    border-bottom: none;
+}
+
+.custom-input:focus {
+    box-shadow: none;
+    border-bottom: none;
+}
+
+.btn-login {
+    border-radius: 30px;
+    width: 100%;
+
+}
