@@ -18,12 +18,15 @@ async function fetchPhrase() {
     return data?.phrase;
 }
 
+async function test(){
+    const { data } = await supabase.from("test").select("*");
+}
 
 
 
 const Tab3: React.FC = () => {
     const [phrase, setPhrase] = useState<string | null>(null);
-    
+
     useEffect(() => {
         async function getPhrase() {
             const fetchedPhrase = await fetchPhrase();
