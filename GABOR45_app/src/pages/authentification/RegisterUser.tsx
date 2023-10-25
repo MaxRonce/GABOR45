@@ -1,19 +1,18 @@
-// src/pages/Login.tsx
-
+// RegisterUser.tsx
 import React, { useState } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../../supabaseClient';
 import { IonButton, useIonToast, IonItem, IonLabel, IonInput, IonText, IonPage, IonContent,
      IonImg, IonIcon, IonGrid, IonRow, IonCol, IonTabButton } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import logo from '../assets/logo_Gabor45.png';
-import mail from '../icons/mail.svg';
-import facebook from '../icons/facebook.svg';
-import bloquer from '../icons/bloquer.svg';
-import showP from '../icons/showP.svg'
-import hideP from '../icons/hideP.svg'
+import logo from '../../assets/logo_Gabor45.png';
+import mail from '../../icons/mail.svg';
+import facebook from '../../icons/facebook.svg';
+import bloquer from '../../icons/bloquer.svg';
+import showP from '../../icons/showP.svg'
+import hideP from '../../icons/hideP.svg'
 
-import '../theme/custom.css';
-import '../theme/variables.css';
+import '../../theme/custom.css';
+import '../../theme/variables.css';
 
 
 const RegisterUser: React.FC = () => {
@@ -28,7 +27,7 @@ const RegisterUser: React.FC = () => {
     const history = useHistory();
 
     const handleLogin = async () => {
-        console.log("entro al login");
+        console.log("Enter into the login function");
         try {
           const { data, error } = await supabase.auth.signUp({
             email: email,
@@ -40,12 +39,12 @@ const RegisterUser: React.FC = () => {
             setError(error.message);
           } else {
             await showToast({ message: 'Success', duration: 2000, color: 'success' });
-            // Inicio de sesión exitoso, puedes redirigir a otra página aquí
+            // If the login is success redirect to profile page
             history.push('/profile');
           }
         } catch (error) {
 
-            setError("Hubo un error al Registrarse");
+            setError("Error signing up with email and password");
         }
     };
 

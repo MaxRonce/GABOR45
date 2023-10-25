@@ -1,25 +1,24 @@
 // src/pages/Login.tsx
 
 import React, { useState } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../../supabaseClient';
 import { IonButton, useIonToast, IonItem, IonLabel, IonInput, IonText, IonPage, IonContent,
      IonImg, IonIcon, IonGrid, IonRow, IonCol, IonTabButton } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import logo from '../assets/logo_Gabor45.png';
-import mail from '../icons/mail.svg';
-import facebook from '../icons/facebook.svg';
-import bloquer from '../icons/bloquer.svg';
-import showP from '../icons/showP.svg'
-import hideP from '../icons/hideP.svg'
+import logo from '../../assets/logo_Gabor45.png';
+import mail from '../../icons/mail.svg';
+import facebook from '../../icons/facebook.svg';
+import bloquer from '../../icons/bloquer.svg';
+import showP from '../../icons/showP.svg'
+import hideP from '../../icons/hideP.svg'
 
-import '../theme/custom.css';
-import '../theme/variables.css';
+import '../../theme/custom.css';
+import '../../theme/variables.css';
 
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [passwordI, setPasswordI] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [showToast ] = useIonToast();
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -28,7 +27,7 @@ const Login: React.FC = () => {
     const history = useHistory();
 
     const handleLogin = async () => {
-        console.log("entro al login");
+        console.log("Enter into the login function");
         try {
           const { data, error } = await supabase.auth.signInWithPassword({
             email: email,
@@ -45,7 +44,7 @@ const Login: React.FC = () => {
           }
         } catch (error) {
 
-            setError("Hubo un error al iniciar sesión");
+            setError("Error signing up with email and password");
         }
     };
 
@@ -63,10 +62,7 @@ const Login: React.FC = () => {
     };
 
     const showPasswordHandler = () => {
-        console.log(" entro a la funcion ", password);
         setShowPassword(!showPassword);
-        setPasswordI(password);
-        console.log(" funcion ",passwordI);
     };
 
 
@@ -107,15 +103,14 @@ const Login: React.FC = () => {
                             <div className='login-input'>
                                 <IonItem lines="none">
                                     <IonInput
-                                    label="Mot de passe"
-                                    label-placement="floating"     
-                                    type={showPassword ? "text" : "password"}
-                                    placeholder='********'
-                                    value={passwordI}
-                                    onIonChange={(e) => setPassword(e.detail.value || "")}
-                                    className='custom-input'
+                                        label="Mot de passe"
+                                        label-placement="floating"
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder='********'
+                                        value={password}
+                                        onIonChange={(e) => setPassword(e.detail.value || "")}
+                                        className='custom-input'
                                     />
-                                <IonIcon src={showPassword ? showP : hideP} className="login-icon ion-icon" onClick={() => showPasswordHandler()} />
 
                                 </IonItem>
                             </div>
