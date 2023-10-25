@@ -6,7 +6,7 @@ import { supabase } from '../supabaseClient';
 import { IonButton, useIonToast, IonItem, IonLabel, IonInput, IonText, IonPage, IonContent,
      IonImg, IonIcon, IonGrid, IonRow, IonCol, IonTabButton } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import logo from '../assets/logo_Gabor45.png';
+import logo_Gabor45 from '../icons/logo_Gabor45.svg';
 import mail from '../icons/mail.svg';
 import facebook from '../icons/facebook.svg';
 import bloquer from '../icons/bloquer.svg';
@@ -46,29 +46,18 @@ const Login: React.FC = () => {
         }
     };
 
-    const signInWithFacebook = async () => {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'facebook',
-        });
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('Connexion réussie :', data);
-            console.log("Redirection vers la page de profil")
-            history.push('/profile');  // Redirige vers la page de profil après la connexion réussie
+    const signInWith = async (provider: any) => {
+        try {
+            await supabase.auth.signInWithOAuth({
+                provider: provider,
+            });
+
+            
+        } catch (error) {
+            console.log(error);
+            setError("Error to sign in");
         }
-    };
-    const signInWithGoogle = async () => {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'facebook',
-        });
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('Connexion réussie :', data);
-            console.log("Redirection vers la page de profil")
-            history.push('/profile');  // Redirige vers la page de profil après la connexion réussie
-        }
+        
     };
     //show and hide password
     const showPasswordHandler = () => {
@@ -81,7 +70,7 @@ const Login: React.FC = () => {
     return (
         <IonPage>
             <IonContent>
-                <IonImg src={logo} alt="GABOR45" class="ion-img ion-margin-horizontal ion-padding-horizontal" />
+                <IonIcon src={logo_Gabor45} className="gabor45-logo" />
                 <IonText className="ion-text-center">
                     <h1 className='text-title'>Connexion</h1>
                 </IonText>
@@ -143,11 +132,11 @@ const Login: React.FC = () => {
                 <div id='line-login'>
                     <span>ou</span>
                 </div>
-                <IonButton onClick={signInWithFacebook} expand='full' shape="round" className='ion-padding-horizontal ion-margin-horizontal ion-margin-top' style={{ '--ion-color-primary': '#2b5c93',  }}>
+                <IonButton onClick={() => {signInWith("facebook")}} expand='full' shape="round" className='ion-padding-horizontal ion-margin-horizontal ion-margin-top' style={{ '--ion-color-primary': '#2b5c93',  }}>
                     <IonIcon src={facebook} className="ion-icon ion-margin-end"/>
                     Se connecter avec Facebook
                 </IonButton>
-                <IonButton onClick={signInWithGoogle} expand='full' shape="round" className='btn-google ion-padding-horizontal ion-margin-horizontal ion-margin-top'>
+                <IonButton onClick={() => {signInWith("google")}} expand='full' shape="round" className='btn-google ion-padding-horizontal ion-margin-horizontal ion-margin-top'>
                     <IonIcon src={google} className="ion-icon ion-margin-end"/>
                     Se connecter avec Google
                 </IonButton>

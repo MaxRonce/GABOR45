@@ -7,6 +7,14 @@ ion-tab-button.tab-selected ion-icon {
     color: #03a852;
 }
 
+.gabor45-logo {
+    width: 20%;
+    height: 20%;
+    margin: 0 40%;
+
+    
+}
+
 .login-icon {
     font-size: 30px;
     color: #374856;
