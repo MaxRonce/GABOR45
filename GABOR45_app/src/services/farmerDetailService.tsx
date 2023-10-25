@@ -1,14 +1,10 @@
+import { UserWithFarmer } from '../models/UserWithFarmer';
+import { supabase } from '../supabaseClient';
 
-import {Farmer} from '../models/Farmer';
-import {supabase} from '../supabaseClient';
-
-export const getFarmerDetails = async (id: string): Promise<Farmer> => {
-    const { data, error } = await supabase
-        .from('agriculteur')
-        .select('*')
-        .eq('id', id);
+export const getUserWithFarmer = async (id: string): Promise<UserWithFarmer> => {
+    const { data, error } = await supabase.rpc('get_user_with_farmer', { p_id: id });
 
     if (error) throw error;
 
-    return data[0];
+    return data as UserWithFarmer;
 }
