@@ -1,3 +1,5 @@
+import './theme/variables.css';
+import './theme/custom.css';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -48,8 +50,7 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
 /* Theme variables */
-import './theme/variables.css';
-import './theme/custom.css';
+
 
 
 

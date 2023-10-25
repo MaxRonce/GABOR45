@@ -1,33 +1,33 @@
 // src/pages/Login.tsx
-
+import '../theme/custom.css';
+import '../theme/variables.css';
 import React, { useState } from 'react';
 import { supabase } from '../../supabaseClient';
 import { IonButton, useIonToast, IonItem, IonLabel, IonInput, IonText, IonPage, IonContent,
      IonImg, IonIcon, IonGrid, IonRow, IonCol, IonTabButton } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import logo from '../../assets/logo_Gabor45.png';
+import ButtonComponent from '../../components/ButtonComponent';
+import InputComponent from '../../components/InputComponent';
+import logo_Gabor45 from '../../icons/logo_Gabor45.svg';
 import mail from '../../icons/mail.svg';
 import facebook from '../../icons/facebook.svg';
 import bloquer from '../../icons/bloquer.svg';
-import showP from '../../icons/showP.svg'
-import hideP from '../../icons/hideP.svg'
-
-import '../../theme/custom.css';
-import '../../theme/variables.css';
-
+import showP from '../../icons/showP.svg';
+import hideP from '../../icons/hideP.svg';
+import google from '../../icons/google.svg';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [error, setError] = useState<string | null>(null);
     const [showToast ] = useIonToast();
     const [showPassword, setShowPassword] = useState<boolean>(false);
     
 
     const history = useHistory();
 
+    //function to login with email and password
     const handleLogin = async () => {
-        console.log("Enter into the login function");
+        console.log("entra a la funcion");
         try {
           const { data, error } = await supabase.auth.signInWithPassword({
             email: email,
@@ -36,31 +36,35 @@ const Login: React.FC = () => {
           console.log(data);
     
           if (error) {
-            setError(error.message);
+            await showToast({ message: 'Error to sigUp', duration: 2000, color: 'danger' });
           } else {
+            setPassword('');
+            setEmail('');
             await showToast({ message: 'Success', duration: 2000, color: 'success' });
             // Inicio de sesión exitoso, puedes redirigir a otra página aquí
             history.push('/profile');
           }
         } catch (error) {
 
-            setError("Error signing up with email and password");
+            await showToast({ message: 'Error to sigUp', duration: 2000, color: 'danger' });
         }
     };
 
-    const signInWithFacebook = async () => {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'facebook',
-        });
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('Connexion réussie :', data);
-            console.log("Redirection vers la page de profil")
-            history.push('/profile');  // Redirige vers la page de profil après la connexion réussie
-        }
-    };
+    //function to login with providers
+    const signInWith = async (provider: any) => {
+        try {
+            await supabase.auth.signInWithOAuth({
+                provider: provider,
+            });
 
+
+        } catch (error) {
+            console.log(error);
+            await showToast({ message: 'Error to sigUp', duration: 2000, color: 'danger' });
+        }
+
+    };
+    //show and hide password
     const showPasswordHandler = () => {
         setShowPassword(!showPassword);
     };
@@ -70,64 +74,50 @@ const Login: React.FC = () => {
     return (
         <IonPage>
             <IonContent>
-                <IonItem>
-                    <IonImg src={logo} alt="GABOR45" class="ion-img ion-margin ion-padding" />
-                </IonItem>
-                <IonGrid class="ion-margin-horizontal ion-padding-horizontal ion-margin-top">
-                    <IonRow>
-                        <IonCol size="1" class="ion-margin">
-                            <IonIcon src={mail} className="login-icon ion-icon" />
-                        </IonCol>
-                        <IonCol class='ion-margin-start'>
-                            <div className='login-input'>
-                                <IonInput
-                                label="Email"
-                                label-placement="floating"     
-                                type="email"
-                                placeholder='email@domain.com'
-                                value={email}
-                                onIonChange={(e) => setEmail(e.detail.value || "")}
-                                className='custom-input'
-                                />
-                            </div>
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
-
-                <IonGrid class="ion-margin-horizontal ion-padding-horizontal ion-margin-bottom">
-                    <IonRow>
-                        <IonCol size="1" class="ion-margin">
-                            <IonIcon src={bloquer} className="login-icon ion-icon" />
-                        </IonCol>
-                        <IonCol class='ion-margin-start'>
-                            <div className='login-input'>
-                                <IonItem lines="none">
-                                    <IonInput
-                                        label="Mot de passe"
-                                        label-placement="floating"
-                                        type={showPassword ? "text" : "password"}
-                                        placeholder='********'
-                                        value={password}
-                                        onIonChange={(e) => setPassword(e.detail.value || "")}
-                                        className='custom-input'
-                                    />
-
-                                </IonItem>
-                            </div>
-                        </IonCol>
-                    </IonRow>
-                </IonGrid>
-                {error && <IonText color="danger">{error}</IonText>}
-                <IonButton onClick={handleLogin} className='btn-login ion-padding-horizontal'>
-                    Se connecter
-                </IonButton>
-                <IonText onClick={() => {history.push('/registerUser')}} className='btn-login ion-padding-horizontal'>
-                    S'inscrire
+                <IonIcon src={logo_Gabor45} className="gabor45-logo" />
+                <IonText className="ion-text-center">
+                    <h1 className='text-title'>Connexion</h1>
                 </IonText>
-                <IonButton onClick={signInWithFacebook} className='btn-login ion-padding-horizontal' style={{ '--ion-color-primary': '#2b5c93',  }}>
-                    <IonIcon src={facebook} className="login-icon ion-icon"/>
-                    Se connecter avec Facebook
-                </IonButton>
+
+                <InputComponent classP='login-input' labelP='Email' typeP='email'
+                    iconName={mail} placeholderP='email@domain.com'
+                    valueP={email} onChange={(e: any) => setEmail(e.detail.value || "")}
+                    classI='custom-input' classIcon='login-icon ion-icon'
+                />
+
+                <InputComponent
+                    classP="login-input input-pass" // Clase CSS personalizada para el contenedor del input
+                    labelP="Mot de passe"
+                    typeP={showPassword ? "text" : "password"}
+                    placeholderP="********"
+                    valueP={password}
+                    onChange={(e: any) => setPassword(e.detail.value || "")}
+                    classI="custom-input" // Clase CSS personalizada para el input
+                    iconName={bloquer} // Cambia el icono según showPassword
+                    classIcon="login-icon ion-icon"
+                    onIconClick={showPasswordHandler}
+                    iconP={showPassword ? showP : hideP}
+                />
+                <IonText onClick={() => {history.push('/registerUser')}} id='motOublie' className='text-btn ion-padding-horizontal ion-float-right ion-margin-horizontal ion-margin-bottom'>
+                    Mot de passe oublié ?
+                </IonText>
+                <ButtonComponent classP='ion-margin-horizontal ion-padding-horizontal' text='Se connecter'
+                    onClick={handleLogin}/>
+                <IonText onClick={() => {history.push('/registerUser')}} className='text-btn ion-text-center ion-margin-bottom'>
+                    <h3 className='text-title'>S'inscrire</h3>
+                </IonText>
+                <div id='line-login'>
+                    <span>ou</span>
+                </div>
+                <ButtonComponent classP='ion-padding-horizontal ion-margin-horizontal ion-margin-top' text='Se connecter avec Facebook'
+                    onClick={() => {signInWith("facebook")}}
+                    iconName={facebook}
+                    styleP = {{ '--ion-color-primary': '#2b5c93', }}
+                />
+                <ButtonComponent classP='btn-google ion-padding-horizontal ion-margin-horizontal ion-margin-top' text='Se connecter avec Google'
+                    onClick={() => {signInWith("google")}}
+                    iconName={google}
+                />
 
             </IonContent>
         </IonPage>
