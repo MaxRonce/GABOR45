@@ -1,16 +1,16 @@
 import { useParams } from "react-router";
-import {IonPage} from "@ionic/react";
+import {IonPage, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonCardTitle, IonButton, IonIcon} from "@ionic/react";
+import { newspaperOutline } from 'ionicons/icons';
 import {UserWithFarmer} from '../../models/UserWithFarmer';
 import {getUserWithFarmer} from "../../services/farmerDetailService";
-import {useEffect, useState} from "react";
-
+import React, {useEffect, useState} from "react";
+import './FarmerDetailPage.css';
 const Farmer_detail_page: React.FC = () => {
-
+    const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
     const { farmerId } = useParams<{ farmerId: string }>();
     const [data, setData] = useState<UserWithFarmer | null>(null);
 
     useEffect(() => {
-        // Fetch data when component mounts
         const fetchData = async () => {
             try {
                 const userData = await getUserWithFarmer(farmerId);
@@ -19,27 +19,38 @@ const Farmer_detail_page: React.FC = () => {
                 console.error("Failed to fetch data:", error);
             }
         };
-        fetchData().then(r => console.log("data", r));
+
+        fetchData();
     }, [farmerId]);
-
-
-
 
     return (
         <IonPage>
             {data ? (
-                <div>
-                    <h1>{data.nom} {data.prenom}</h1>
-                    <p>Email: {data.email}</p>
-                    <p>Phone: {data.num_tel}</p>
-                </div>
+                <IonPage>
+                    <img src={`${baseUrl}${data.lien_image_user}`} alt="Image de l'agriculteur" />
+
+                    <div className="header-container">
+                        <h1>{data.nom} {data.prenom}</h1>
+                    </div>
+
+                    <div className="button_rows">
+                    <button  id="follow_button">Suivre</button>
+                    <button color="secondary">
+                        <IonIcon slot="start" icon={newspaperOutline} />
+                        News
+                    </button>
+                    </div>
+
+                    <div>
+                        <p>{data.description}</p>
+                    </div>
+                </IonPage>
+
             ) : (
                 <p>Loading... farmer {farmerId ? `Farmer ID: ${farmerId}` : "No Farmer ID provided"}</p>
-                //farmer id if it exists
             )}
         </IonPage>
     );
-
 }
 
 export default Farmer_detail_page;

@@ -4,7 +4,7 @@ export interface UserWithFarmer {
     prenom: string | null;
     email: string;
     num_tel: string | null;
-    lien_image: string | null;  // from the `utilisateurs` table
+    lien_image_user: string | null;  // from the `utilisateurs` table
 
     // Properties from the `agriculteur` table:
     description: string | null;
