@@ -15,11 +15,6 @@ ion-tab-button.tab-selected ion-icon {
     
 }
 
-.login-icon {
-    font-size: 30px;
-    color: #374856;
-}
-
 .login-input {
     text-align: justify;
     border: 1px solid #A7A7A7;
@@ -66,4 +61,12 @@ ion-button.btn-google {
     background-color: #fff;
     padding: 0 10px; 
     top: -11px; 
+}
+.text-btn {
+    cursor: pointer;
+}
+.login-icon {
+    font-size: 30px;
+    color: #374856;
+    
 }
