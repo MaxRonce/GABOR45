@@ -1,8 +1,8 @@
 export interface Farmer {
-    id: string;
+    id_utilisateur: string;
     description: string;
     adresse: string;
-    lien_image: string;
+    lien_image_user: string;
     nom: string;
     prenom: string;
 }

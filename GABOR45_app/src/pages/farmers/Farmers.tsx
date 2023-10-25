@@ -34,9 +34,9 @@ const FarmerPage: React.FC = () => {
             <IonContent>
                 <IonList>
                     {farmers.map(farmer => (
-                        <div key={farmer.id} onClick={() => handleCardClick(farmer.id)}>
+                        <div key={farmer.id_utilisateur} onClick={() => handleCardClick(farmer.id_utilisateur)}>
                             <IonCard className="farmer-card">
-                                <IonImg src={`${baseUrl}${farmer.lien_image}`} alt="Image de l'agriculteur" />
+                                <IonImg src={`${baseUrl}${farmer.lien_image_user}`} alt="Image de l'agriculteur" />
                                 <IonCardHeader>
                                     <IonCardTitle>{farmer.prenom} {farmer.nom}</IonCardTitle>
                                 </IonCardHeader>

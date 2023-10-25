@@ -1,0 +1,107 @@
+/* FarmerDetailPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.ion-page {
+    display: block !important;
+}
+
+*{
+    font-family: 'Poppins', sans-serif;  /* Assurez-vous d'importer cette police */
+}
+
+/* Conteneur pour le rectangle vert et le nom/prénom */
+.header-container {
+    display: flex;
+    align-items: center;
+    background-color: #4CAF50; /* Couleur verte */
+    height: 19%;
+    padding-left:50%;
+
+    /*align item on the right*/
+    justify-content: flex-end;
+    padding-right: 5%;
+
+}
+h1 {
+    color: white;
+    font-weight: 700 !important;
+    font-size: xx-large !important;
+
+    font-family: 'Poppins', sans-serif;  /* Assurez-vous d'importer cette police */
+}
+
+
+
+img {
+    width: 40vw;
+    max-width: 200px !important;
+    max-height: 200px!important; /* Une largeur maximale pour éviter que l'image ne devienne trop grande */
+    min-width: 10px;  /* Une largeur minimale pour éviter que l'image ne devienne trop petite */
+    height:  40vw;  /* Garder les proportions de l'image */
+    margin-left: 20px;
+    border-radius: 50%;
+    z-index: 9999;
+    position: absolute;
+    margin-top: 5%;
+
+
+}
+
+.IonCardTitle {
+    margin-left: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.button_rows{
+    margin:0 !important;
+    padding:0!important;
+}
+
+.button_rows {
+    display: flex;               /* Display buttons in a row */
+    justify-content: space-between;  /* Distribute the buttons evenly */
+    margin-left: 50% !important;            /* Start from the middle of the page */
+    margin-top: -10px;           /* Adjust as needed to position right below the green rectangle */
+    /* Space between the buttons */
+}
+
+/* Adjust the width of the individual buttons */
+button {
+    width: 45%;                  /* Adjusted width to fit two buttons in a row with a gap */
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+
+}
+
+button[color="secondary"] {
+    background-color: #164550;  /* Couleur verte */
+    color: white;
+    border-radius: 43px;
+    padding-left: 3px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+}
+
+.IonIcon {
+    margin-right: 5px;
+}
+
+#follow_button{
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 2px solid #03A852;
+    padding: 5px;
+    border-radius: 43px;
+    color: #03a852;
+
+}
+
+
+

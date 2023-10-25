@@ -2,9 +2,11 @@ import {Farmer} from '../models/Farmer';
 import {supabase} from '../supabaseClient';
 
 export const getUsersWithFarmers = async () => {
-    const { data, error } = await supabase.from('users_with_farmers').select('*');
 
-    if (error) throw error;
+    let { data, error } = await supabase
+        .rpc('get_all_agriculteurs_info')
 
+    if (error) console.error(error)
+    else console.log(data)
     return data;
 }
