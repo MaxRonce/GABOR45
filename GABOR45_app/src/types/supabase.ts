@@ -52,6 +52,12 @@ export interface Database {
             columns: ["id"]
             referencedRelation: "utilisateurs"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "agriculteur_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users_with_farmers"
+            referencedColumns: ["id"]
           }
         ]
       }
@@ -144,6 +150,12 @@ export interface Database {
             foreignKeyName: "follow_id_utilisateur_fkey"
             columns: ["id_utilisateur"]
             referencedRelation: "utilisateurs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "follow_id_utilisateur_fkey"
+            columns: ["id_utilisateur"]
+            referencedRelation: "users_with_farmers"
             referencedColumns: ["id"]
           }
         ]
@@ -262,7 +274,6 @@ export interface Database {
         Row: {
           email: string | null
           id: string
-          lien_image: string | null
           nom: string | null
           num_tel: string | null
           prenom: string | null
@@ -270,7 +281,6 @@ export interface Database {
         Insert: {
           email?: string | null
           id: string
-          lien_image?: string | null
           nom?: string | null
           num_tel?: string | null
           prenom?: string | null
@@ -278,7 +288,6 @@ export interface Database {
         Update: {
           email?: string | null
           id?: string
-          lien_image?: string | null
           nom?: string | null
           num_tel?: string | null
           prenom?: string | null
@@ -294,7 +303,32 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      users_with_farmers: {
+        Row: {
+          adresse: string | null
+          description: string | null
+          email: string | null
+          facebook: string | null
+          id: string | null
+          instagram: string | null
+          lien_image: string | null
+          nom: string | null
+          num_tel: string | null
+          prenom: string | null
+          tel_fixe: string | null
+          tel_portable: string | null
+          twitter: string | null
+          website: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "utilisateurs_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Functions: {
       [_ in never]: never

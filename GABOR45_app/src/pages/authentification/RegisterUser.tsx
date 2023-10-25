@@ -1,24 +1,24 @@
-// src/pages/Login.tsx
-
+// RegisterUser.tsx
 import React, { useState } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../../supabaseClient';
 import { IonButton, useIonToast, IonItem, IonLabel, IonInput, IonText, IonPage, IonContent,
      IonImg, IonIcon, IonGrid, IonRow, IonCol, IonTabButton } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
-import logo from '../assets/logo_Gabor45.png';
-import mail from '../icons/mail.svg';
-import facebook from '../icons/facebook.svg';
-import bloquer from '../icons/bloquer.svg';
-import showP from '../icons/showP.svg'
-import hideP from '../icons/hideP.svg'
+import logo from '../../assets/logo_Gabor45.png';
+import mail from '../../icons/mail.svg';
+import facebook from '../../icons/facebook.svg';
+import bloquer from '../../icons/bloquer.svg';
+import showP from '../../icons/showP.svg'
+import hideP from '../../icons/hideP.svg'
 
-import '../theme/custom.css';
-import '../theme/variables.css';
+import '../../theme/custom.css';
+import '../../theme/variables.css';
 
 
-const Login: React.FC = () => {
+const RegisterUser: React.FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [passwordI, setPasswordI] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
     const [showToast ] = useIonToast();
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -27,9 +27,9 @@ const Login: React.FC = () => {
     const history = useHistory();
 
     const handleLogin = async () => {
-        console.log("entro al login");
+        console.log("Enter into the login function");
         try {
-          const { data, error } = await supabase.auth.signInWithPassword({
+          const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
           });
@@ -39,30 +39,21 @@ const Login: React.FC = () => {
             setError(error.message);
           } else {
             await showToast({ message: 'Success', duration: 2000, color: 'success' });
-            // Inicio de sesión exitoso, puedes redirigir a otra página aquí
+            // If the login is success redirect to profile page
             history.push('/profile');
           }
         } catch (error) {
 
-            setError("Hubo un error al iniciar sesión");
+            setError("Error signing up with email and password");
         }
     };
 
-    const signInWithFacebook = async () => {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'facebook',
-        });
-        if (error) {
-            console.error(error);
-        } else {
-            console.log('Connexion réussie :', data);
-            console.log("Redirection vers la page de profil")
-            history.push('/profile');  // Redirige vers la page de profil après la connexion réussie
-        }
-    };
 
     const showPasswordHandler = () => {
+        console.log(" entro a la funcion ", password);
         setShowPassword(!showPassword);
+        setPasswordI(password);
+        console.log(" funcion ",passwordI);
     };
 
 
@@ -103,14 +94,15 @@ const Login: React.FC = () => {
                             <div className='login-input'>
                                 <IonItem lines="none">
                                     <IonInput
-                                        label="Mot de passe"
-                                        label-placement="floating"
-                                        type={showPassword ? "text" : "password"}
-                                        placeholder='********'
-                                        value={password}
-                                        onIonChange={(e) => setPassword(e.detail.value || "")}
-                                        className='custom-input'
+                                    label="Mot de passe"
+                                    label-placement="floating"     
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder='********'
+                                    value={passwordI}
+                                    onIonChange={(e) => setPassword(e.detail.value || "")}
+                                    className='custom-input'
                                     />
+                                <IonIcon src={showPassword ? showP : hideP} className="login-icon ion-icon" onClick={() => showPasswordHandler()} />
 
                                 </IonItem>
                             </div>
@@ -121,17 +113,10 @@ const Login: React.FC = () => {
                 <IonButton onClick={handleLogin} className='btn-login ion-padding-horizontal'>
                     Se connecter
                 </IonButton>
-                <IonText onClick={() => {history.push('/registerUser')}} className='btn-login ion-padding-horizontal'>
-                    S'inscrire
-                </IonText>
-                <IonButton onClick={signInWithFacebook} className='btn-login ion-padding-horizontal' style={{ '--ion-color-primary': '#2b5c93',  }}>
-                    <IonIcon src={facebook} className="login-icon ion-icon"/>
-                    Se connecter avec Facebook
-                </IonButton>
 
             </IonContent>
         </IonPage>
     );
 };
 
-export default Login;
+export default RegisterUser;

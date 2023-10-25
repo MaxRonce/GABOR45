@@ -1,10 +1,10 @@
 // src/pages/Profile.tsx
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../../supabaseClient';
 import { IonPage, IonContent, IonButton } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { User } from '@supabase/supabase-js';  // Importez le type User
-import { Database} from "../types/supabase";
+import { Database} from "../../types/supabase";
 
 const Profile: React.FC = () => {
     const [user, setUser] = useState<User | null>(null);  // Définissez l'état initial comme null ou User

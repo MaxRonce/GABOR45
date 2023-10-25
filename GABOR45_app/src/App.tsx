@@ -11,13 +11,15 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { images, square, triangle } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
-import Profile from "./pages/Profile";
-import Login from './pages/Login';
-import RegisterUser from './pages/RegisterUser';
-import FarmerPage from './pages/Farmer';
+import Tab1 from './pages/test_tabs_todelete/Tab1';
+import Tab2 from './pages/test_tabs_todelete/Tab2';
+import Tab3 from './pages/test_tabs_todelete/Tab3';
+import Profile from "./pages/profile/Profile";
+import Login from './pages/authentification/Login';
+import RegisterUser from './pages/authentification/RegisterUser';
+import FarmerPage from './pages/farmers/Farmers';
+import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
+
 
 
 
@@ -60,15 +62,16 @@ const App: React.FC = () => (
       <IonTabs>
 
         <IonRouterOutlet>
+
           <Route exact path="/home">
             <Tab1 />
           </Route>
           <Route exact path="/events">
             <Tab2 />
           </Route>
-          <Route exact path="/farmers">
-            <FarmerPage />
-          </Route>
+          <Route path="/farmers/:farmerId" component={FarmerDetailPage} exact />
+          <Route path="/farmers" component={FarmerPage} exact />
+
           <Route exact path="/position">
             <Tab2 />
           </Route>
