@@ -12,7 +12,7 @@ const InputComponent = (props: any) => {
                                 {iconName && <IonIcon src={iconName} className={classIcon} />}
                             </IonCol>
                         )}
-                        <IonCol class='ion-margin-start'>
+                        <IonCol class='ion-margin-start '>
                             <div className={classP}>
                                 <IonInput
                                 label={labelP}
@@ -23,13 +23,12 @@ const InputComponent = (props: any) => {
                                 onIonChange={onChange}
                                 className={classI}
                                 />
+                                {onIconClick && (
+                                    <IonIcon src={iconP} className='login-icon ion-icon' onClick={onIconClick} />
+                                )}
                             </div>
                         </IonCol>
-                        {onIconClick && (
-                            <IonCol size="1" class="ion-margin ion-padding">
-                                <IonIcon src={iconP} className='login-icon ion-icon' onClick={onIconClick} style={{ position: "relative"}} />
-                            </IonCol>
-                        )}
+                        
                     </IonRow>
                 </IonGrid>
     );

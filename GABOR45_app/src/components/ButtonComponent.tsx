@@ -5,7 +5,7 @@ const ButtonComponent = (props: any) => {
     const buttonStyle = styleP ? styleP : {};
     return (
         <IonButton onClick={onClick} expand='full' shape="round" className={classP} style={buttonStyle}>
-            {iconName && <IonIcon src={iconName} className="ion-icon ion-margin-end" />}
+            {iconName && <IonIcon src={iconName} className="icon-input ion-margin-horizontal" />}
             {text}
         </IonButton>
     );

@@ -73,10 +73,10 @@ const Login: React.FC = () => {
 
     return (
         <IonPage>
-            <IonContent>
+            <IonContent class='ion-text-center'>
                 <IonIcon src={logo_Gabor45} className="gabor45-logo" />
-                <IonText className="ion-text-center">
-                    <h1 className='text-title'>Connexion</h1>
+                <IonText className="ion-margin-horizontal text-title">
+                    Connexion
                 </IonText>
 
                 <InputComponent classP='login-input' labelP='Email' typeP='email'
@@ -101,7 +101,7 @@ const Login: React.FC = () => {
                 <IonText onClick={() => {history.push('/registerUser')}} id='motOublie' className='text-btn ion-padding-horizontal ion-float-right ion-margin-horizontal ion-margin-bottom'>
                     Mot de passe oublié ?
                 </IonText>
-                <ButtonComponent classP='ion-margin-horizontal ion-padding-horizontal' text='Se connecter' 
+                <ButtonComponent classP='btns-login ion-margin-horizontal ion-padding-horizontal' text='Se connecter' 
                     onClick={handleLogin}/>
                 <IonText onClick={() => {history.push('/registerUser')}} className='text-btn ion-text-center ion-margin-bottom'>
                     <h3 className='text-title'>S'inscrire</h3>
@@ -109,12 +109,12 @@ const Login: React.FC = () => {
                 <div id='line-login'>
                     <span>ou</span>
                 </div>
-                <ButtonComponent classP='ion-padding-horizontal ion-margin-horizontal ion-margin-top' text='Se connecter avec Facebook'
+                <ButtonComponent classP='btns-login ion-padding-horizontal ion-margin-horizontal ion-margin-top' text='Se connecter avec Facebook'
                     onClick={() => {signInWith("facebook")}}
                     iconName={facebook}
                     styleP = {{ '--ion-color-primary': '#2b5c93', }}
                 />
-                <ButtonComponent classP='btn-google ion-padding-horizontal ion-margin-horizontal ion-margin-top' text='Se connecter avec Google'
+                <ButtonComponent classP='btns-login btn-google ion-padding-horizontal ion-margin-horizontal ion-margin-top' text='Se connecter avec Google'
                     onClick={() => {signInWith("google")}}
                     iconName={google}
                 />
