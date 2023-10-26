@@ -31,21 +31,31 @@ h1 {
 }
 
 
-
-img {
+.farmer_img_round {
     width: 40vw;
     max-width: 200px !important;
-    max-height: 200px!important; /* Une largeur maximale pour éviter que l'image ne devienne trop grande */
-    min-width: 10px;  /* Une largeur minimale pour éviter que l'image ne devienne trop petite */
-    height:  40vw;  /* Garder les proportions de l'image */
+    max-height: 200px !important;
+    min-width: 10px;
+    height: 40vw;
+    overflow: hidden;
     margin-left: 20px;
-    border-radius: 50%;
+    border-radius: 50%;  /* Rend le conteneur parfaitement rond */
     z-index: 9999;
     position: absolute;
     margin-top: 5%;
-
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e0e0;  /* Pour visualiser la zone */
 }
+
+.farmer_img_round img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;  /* Garde le rapport de l'image tout en couvrant tout l'espace */
+    border-radius: 50%;  /* Rend l'image parfaitement ronde */
+}
+
 
 .IonCardTitle {
     margin-left: 20px;

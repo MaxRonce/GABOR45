@@ -1,14 +1,14 @@
 import { useParams } from "react-router";
 import {IonPage, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonCardTitle, IonButton, IonIcon} from "@ionic/react";
 import { newspaperOutline } from 'ionicons/icons';
-import {UserWithFarmer} from '../../models/UserWithFarmer';
+import {Farmer} from '../../models/Farmer';
 import {getUserWithFarmer} from "../../services/farmerDetailService";
 import React, {useEffect, useState} from "react";
 import './FarmerDetailPage.css';
 const Farmer_detail_page: React.FC = () => {
     const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
     const { farmerId } = useParams<{ farmerId: string }>();
-    const [data, setData] = useState<UserWithFarmer | null>(null);
+    const [data, setData] = useState<Farmer | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,7 +27,7 @@ const Farmer_detail_page: React.FC = () => {
         <IonPage>
             {data ? (
                 <IonPage>
-                    <img src={`${baseUrl}${data.lien_image_user}`} alt="Image de l'agriculteur" />
+                    <img className="farmer_img_round" src={`${baseUrl}${data.lien_image_user}`} alt="Image de l'agriculteur" />
 
                     <div className="header-container">
                         <h1>{data.nom} {data.prenom}</h1>

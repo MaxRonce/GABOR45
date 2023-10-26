@@ -1,19 +1,79 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+ion-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrage vertical */
+    align-items: center; /* Centrage horizontal */
+}
+
+
+
+/* Style pour la liste */
+ion-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* La liste prend toute la largeur */
+}
+
+
+
+
+/* Style pour la carte */
 .farmer-card {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    width: 90%; /* La carte prend 90% de la largeur de son conteneur */
+    height: 15vh;
+    margin-top : 3%;
+    margin-right: 5%;
+    margin-left: 5%;
+
+    /*drop shadow*/
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+
+
 }
 
+/* Style pour l'image */
 .farmer-image {
-    flex: 1;
+    flex: 1; /* Prend le reste de l'espace après farmer-info */
+    height: 100%; /* Prend toute la hauteur de la carte */
+    margin-right: 10px;
+    display: flex; /* Pour centrer verticalement l'image */
+    align-items: center; /* Centrage vertical */
 }
 
+.farmer_img{
+    width: auto;
+    height: 100%;
+    overflow: hidden; /* Pour éviter le débordement d'image */
+
+}
+
+ion-img {
+    padding: 0;
+    margin : 0;
+}
+
+ion-img img {
+    width: 100%; /* L'image prend toute la largeur disponible */
+    object-fit: cover; /* Conserve le rapport hauteur/largeur */
+    padding: 0;
+    margin : 0;
+}
+
+/* Style pour l'info */
 .farmer-info {
-    flex: 2;
+    flex: 2; /* Prend deux fois plus d'espace que farmer-image */
     padding-left: 10px;
 }
-/* Farmers.css */
-.farmer-card div {
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-}
+
