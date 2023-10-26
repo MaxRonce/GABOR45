@@ -1,8 +1,8 @@
 // src/pages/Login.tsx
-import '../theme/custom.css';
-import '../theme/variables.css';
+import '../../theme/custom.css';
+import '../../theme/variables.css';
 import React, { useState } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../../supabaseClient';
 import { IonButton, useIonToast, IonItem, IonLabel, IonInput, IonText, IonPage, IonContent,
      IonImg, IonIcon, IonGrid, IonRow, IonCol, IonTabButton } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
