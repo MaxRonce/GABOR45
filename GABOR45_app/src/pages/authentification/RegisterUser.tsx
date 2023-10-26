@@ -84,7 +84,7 @@ const RegisterUser: React.FC = () => {
                     onIconClick={showPasswordHandler}
                     iconP={showPassword ? showP : hideP}
                 />
-                <ButtonComponent classP='ion-margin-horizontal ion-padding-horizontal' text='Se connecter'
+                <ButtonComponent classP='ion-margin-horizontal ion-padding-horizontal' text="S'inscrire"
                     onClick={handleLogin}/>
 
             </IonContent>
