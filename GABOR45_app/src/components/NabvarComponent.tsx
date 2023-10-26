@@ -3,7 +3,7 @@ import '../theme/custom.css';
 import React, { useState } from 'react';
 import arrowLeft from '../icons/arrowLeft.svg';
 const NabvarComponent = () => {
-    const [isActive, setIsActive] = useState([false, false , false]);
+    const [isActive, setIsActive] = useState([true, false , false]);
     const handleClick = (index:any) => {
         const updateActive = [...isActive];
         updateActive[index] = !updateActive[index];
