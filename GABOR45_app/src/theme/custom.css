@@ -92,7 +92,7 @@ ion-button.btn-google {
 
 #line-login {
     height: 2px;
-    background: gray;
+    background: rgb(128, 128, 128);
     text-align: center;
     position: relative;
 }
@@ -152,6 +152,17 @@ ion-button.btn-google {
     overflow: hidden;
     text-overflow: ellipsis; 
 }
+
+.transition-white-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 10000; /* Assurez-vous que cette valeur est suffisamment élevée pour couvrir tout le contenu */
+}
+
 
 
   

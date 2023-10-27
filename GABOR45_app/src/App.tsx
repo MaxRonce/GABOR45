@@ -1,7 +1,9 @@
 import './theme/variables.css';
 import './theme/custom.css';
-import { Redirect, Route } from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
+/* Theme variables */
 import {
+  createAnimation,
   IonApp,
   IonIcon,
   IonLabel,
@@ -11,8 +13,8 @@ import {
   IonTabs,
   setupIonicReact
 } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { images, square, triangle } from 'ionicons/icons';
+import {IonReactRouter} from '@ionic/react-router';
+import {square} from 'ionicons/icons';
 import Tab1 from './pages/test_tabs_todelete/Tab1';
 import Tab2 from './pages/test_tabs_todelete/Tab2';
 import Tab3 from './pages/test_tabs_todelete/Tab3';
@@ -21,8 +23,6 @@ import Login from './pages/authentification/Login';
 import RegisterUser from './pages/authentification/RegisterUser';
 import FarmerPage from './pages/farmers/Farmers';
 import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
-
-
 
 
 /* Icons imports */
@@ -49,21 +49,32 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
-/* Theme variables */
+export const fadeTransition = (rootElement: any) => {
+  const enteringAnimation = createAnimation()
+      .addElement(document.createElement('div')) // Ajout d'un élément vide
+      .duration(100)
+      .fromTo('opacity', '0', '1');
 
+  const leavingAnimation = createAnimation()
+      .addElement(document.createElement('div')) // Ajout d'un élément vide
+      .duration(100)
+      .fromTo('opacity', '1', '0');
 
-
+  return createAnimation()
+      .duration(100)
+      .addAnimation([enteringAnimation, leavingAnimation]);
+};
 
 
 setupIonicReact();
 
+// @ts-ignore
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonTabs>
 
-        <IonRouterOutlet>
-
+        <IonRouterOutlet animation={fadeTransition}>
           <Route exact path="/home">
             <Tab1 />
           </Route>

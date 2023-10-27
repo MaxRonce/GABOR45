@@ -46,7 +46,7 @@ h1 {
     z-index: 9999;
     position: absolute;
 }
-@media (max-width: 425px) {
+@media (max-width: 500px) {
     .farmer_img_round {
         width: 100%;
     }
@@ -57,7 +57,7 @@ h1 {
     }
 }
 
-@media (min-width: 425px) {
+@media (min-width: 500px) {
     .farmer_img_round {
         width: 100%;
     }
@@ -136,6 +136,26 @@ button[color="secondary"] {
     border-radius: 43px;
     color: #03a852;
 
+}
+
+h2{
+    padding : 0;
+    margin: 0;
+    color : #164550;
+    font-weight: bolder!important;
+}
+
+.page_content{
+    padding: 5%;
+}
+
+.production{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-top: #164550 solid 1px;
+    border-bottom: #164550 solid 1px;
 }
 
 

@@ -1,0 +1,16 @@
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Utilisez toute la hauteur de la vue */
+}
+
+.loading-logo {
+    width: 7vh; /* ou la taille que vous préférez */
+    animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import {getUsersWithFarmers} from '../../services/farmerService';
 import './Farmers.css';
 import { Geolocation } from '@capacitor/geolocation'; // Importez Geolocation directement
-
+import LoadingScreen from "../../components/LoadingScreen";
 
 function calculateDistance(lat1: number | null, lon1: number | null, lat2: number | null, lon2: number | null) {
     if (lat1 === null || lon1 === null || lat2 === null || lon2 === null) {
@@ -29,20 +29,48 @@ function toRad(value: number) {
     return (value * Math.PI) / 180;
 }
 
+import { Capacitor } from '@capacitor/core';
+
+async function requestLocationPermission() {
+    try {
+        if (Capacitor.getPlatform() !== 'web') {
+            await Geolocation.requestPermissions();
+        }
+    } catch (error) {
+        console.error('Error requesting location permissions', error);
+    }
+}
+
+function sleep(ms: number | undefined) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
 const FarmerPage: React.FC = () => {
     const [farmers, setFarmers] = useState<Farmer[]>([]);
     const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
     const history = useHistory(); // Ajoutez cette ligne
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await getUsersWithFarmers();
-            setFarmers(data);
+            setIsLoading(true);
+            try {
+                const data = await getUsersWithFarmers();
+                setFarmers(data);
+            } catch (error) {
+                console.error('Error fetching farmers', error);
+            }
+            setIsLoading(false);
         };
 
+        requestLocationPermission().then(r => console.log(r));
+
         const getLocation = async () => {
+            setIsLoading(true);
             try {
+                await requestLocationPermission();
                 const coordinates = await Geolocation.getCurrentPosition();
                 setUserLocation({
                     latitude: coordinates.coords.latitude,
@@ -51,10 +79,11 @@ const FarmerPage: React.FC = () => {
             } catch (err) {
                 console.error('Could not get user location', err);
             }
+            setIsLoading(false);
         };
 
-        fetchData();
-        getLocation();
+        fetchData().then(r => console.log(r));
+        getLocation().then(r => console.log(r));
     }, []);
 
     const handleCardClick = (farmerId: string) => {
@@ -71,8 +100,13 @@ const FarmerPage: React.FC = () => {
 
     // @ts-ignore
     return (
+
         <IonPage>
             <IonContent>
+                {isLoading ? (
+                    <LoadingScreen />
+                ) : (
+
                 <IonList>
                     {farmers.map(farmer => (
                         <div key={farmer.id_utilisateur} onClick={() => handleCardClick(farmer.id_utilisateur)}>
@@ -98,8 +132,10 @@ const FarmerPage: React.FC = () => {
                         </div>
                     ))}
                 </IonList>
+                )}
             </IonContent>
         </IonPage>
+
     );
 };
 
