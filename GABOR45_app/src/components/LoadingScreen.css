@@ -2,12 +2,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Utilisez toute la hauteur de la vue */
+    height: 100vh;
 }
 
 .loading-logo {
-    width: 7vh; /* ou la taille que vous préférez */
-    animation: spin 0.5s linear infinite;
+    width: 7vh;
+    animation: spin 1.5s cubic-bezier(0.4, 0, 0.3, 1) infinite;
 }
 
 @keyframes spin {
