@@ -20,7 +20,6 @@
     /*align item on the right*/
     justify-content: flex-end;
     padding-right: 5%;
-
 }
 h1 {
     color: white;
@@ -32,29 +31,55 @@ h1 {
 
 
 .farmer_img_round {
-    width: 40vw;
-    max-width: 200px !important;
-    max-height: 200px !important;
-    min-width: 10px;
-    height: 40vw;
-    overflow: hidden;
-    margin-left: 20px;
-    border-radius: 50%;  /* Rend le conteneur parfaitement rond */
-    z-index: 9999;
-    position: absolute;
-    margin-top: 5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #e0e0e0;  /* Pour visualiser la zone */
+
+    width: 100%;
 }
 
-.farmer_img_round img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;  /* Garde le rapport de l'image tout en couvrant tout l'espace */
-    border-radius: 50%;  /* Rend l'image parfaitement ronde */
+.image_mask {
+
+    margin-left: 5%;
+    margin-top: 5%;
+    display: inline-block;
+
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 9999;
+    position: absolute;
 }
+@media (max-width: 500px) {
+    .farmer_img_round {
+        width: 100%;
+    }
+    .image_mask {
+
+        width: 40vw;
+        height: 40vw;
+    }
+}
+
+@media (min-width: 500px) {
+    .farmer_img_round {
+        width: 100%;
+    }
+    .image_mask {
+        margin-left: 2%;
+        margin-top: 2%;
+        width: 25vh;
+        height: 25vh;
+    }
+    .header-container {
+        padding-left:30%;
+        justify-content: flex-start;
+
+    }
+
+    h1{
+        font-size: xxx-large!important;
+    }
+
+}
+
+
 
 
 .IonCardTitle {
@@ -111,6 +136,26 @@ button[color="secondary"] {
     border-radius: 43px;
     color: #03a852;
 
+}
+
+h2{
+    padding : 0;
+    margin: 0;
+    color : #164550;
+    font-weight: bolder!important;
+}
+
+.page_content{
+    padding: 5%;
+}
+
+.production{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-top: #164550 solid 1px;
+    border-bottom: #164550 solid 1px;
 }
 
 

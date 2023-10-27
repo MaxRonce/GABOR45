@@ -4,77 +4,52 @@ import './Tab3.css';
 import { supabase } from '../../supabaseClient';
 import React, { useEffect, useState } from 'react';
 
-
-
-async function fetchPhrase() {
-    const { data, error } = await supabase
-        .from('test')
-        .select('phrase')
-        .single();
-    if (error) {
-        console.error(error);
-        return;
-    }
-    return data?.phrase;
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
+    const R = 6371; // Rayon de la terre en km
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; // Distance en km
+    return distance;
 }
 
-async function test(){
-    const { data } = await supabase.from("test").select("*");
+function toRad(value: number) {
+    return (value * Math.PI) / 180;
 }
+
 
 
 
 const Tab3: React.FC = () => {
-    const [phrase, setPhrase] = useState<string | null>(null);
 
+    const [userLocation, setUserLocation] = useState<{ latitude: number, longitude: number } | null>(null);
     useEffect(() => {
-        async function getPhrase() {
-            const fetchedPhrase = await fetchPhrase();
-            setPhrase(fetchedPhrase);
-        }
-        getPhrase();
+        // iut O 47.84320395442471,1.9266173309022316
+        setUserLocation({ latitude: 47.84320395442471, longitude: 1.9266173309022316 });
     }, []);
 
-    async function signInWithFacebook() {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'facebook',
-        });
-        if (error) console.error(error);
-        else console.log('Connexion réussie :', data);
-    }
+    // Un lieu spécifique, par exemple la Tour Eiffel 48.85835473209913, 2.2944613664788105
+    const destination = { latitude: 48.85835473209913, longitude: 2.2944613664788105 };
 
-    async function signOut() {
-        const { error } = await supabase.auth.signOut();
-        if (error) console.error(error);
-        else console.log('Déconnexion réussie');
-    }
-
-
+    // Calculer la distance.Tsx
+    const distance = userLocation
+        ? calculateDistance(userLocation.latitude, userLocation.longitude, destination.latitude, destination.longitude)
+        : null;
 
     return (
         <IonPage>
-            <IonHeader>
-                <IonToolbar>
-                    <IonTitle>Tab 3</IonTitle>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent fullscreen>
-                <IonHeader collapse="condense">
-                    <IonToolbar>
-                        <IonTitle size="large">Tab 3</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
+            {distance !== null && (
                 <IonCard>
                     <IonCardContent>
-                        {phrase}
+                        Distance à la Tour Eiffel: {distance.toFixed(2)} km
                     </IonCardContent>
                 </IonCard>
-                <IonButton onClick={signInWithFacebook}>Se connecter avec Facebook</IonButton>
-                <IonButton onClick={signOut}>Se déconnecter</IonButton>
-            </IonContent>
+            )}
         </IonPage>
     );
 };
-
-export default Tab3;
-
+export default Tab3

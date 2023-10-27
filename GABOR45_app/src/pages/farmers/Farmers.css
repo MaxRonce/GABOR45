@@ -1,7 +1,12 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
 * {
     box-sizing: border-box;
-    margin: 0;
     padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;  /* Assurez-vous d'importer cette police */
+
 }
 
 ion-content {
@@ -9,6 +14,7 @@ ion-content {
     flex-direction: column;
     justify-content: center; /* Centrage vertical */
     align-items: center; /* Centrage horizontal */
+    background-color: #F6FCFB;
 }
 
 
@@ -31,16 +37,48 @@ ion-list {
     width: 90%; /* La carte prend 90% de la largeur de son conteneur */
     height: 15vh;
     margin-top : 3%;
+    margin-bottom: 3%;
     margin-right: 5%;
     margin-left: 5%;
 
     /*drop shadow*/
 
-    background: #FFFFFF;
+    background: #FFFFFF !important;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
 
 
+}
+
+
+
+ion-card-content{
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+}
+
+@media (max-height: 825px) {
+    .farm_name{font-size: large!important;}
+    .nom_prenom_agri{font-size: small!important;}
+
+}
+
+@media (min-height: 825px) {
+    .farm_name{font-size: large!important;}
+    .nom_prenom_agri{font-size: small!important;}
+
+}
+
+
+.farm_name{
+    font-weight: bolder;
+    color: #164550;
+}
+
+.nom_prenom_agri{
+    font-weight: normal!important;
+    font-size: large!important;
+    color: #0d0d0d;
 }
 
 /* Style pour l'image */
@@ -59,6 +97,8 @@ ion-list {
 
 }
 
+
+
 ion-img {
     padding: 0;
     margin : 0;
@@ -75,5 +115,9 @@ ion-img img {
 .farmer-info {
     flex: 2; /* Prend deux fois plus d'espace que farmer-image */
     padding-left: 10px;
+}
+
+.distance{
+    text-align: right;
 }
 

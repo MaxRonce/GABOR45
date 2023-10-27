@@ -13,4 +13,6 @@ export interface Farmer {
     twitter :string | null;
     type_produit_principal :string | null;
     website :string | null;
+    latitude:number|null;
+    longitude:number|null;
 }

@@ -10,7 +10,7 @@ ion-tab-button.tab-selected ion-icon {
 ion-searchbar.searchBar {
     --border-radius: 30px;
     --icon-color: transparent;
-    
+
 }
 
 
@@ -38,7 +38,7 @@ ion-icon {
 .custom-input ion-input {
     position: relative;
 }
-ion-button.btn-google {     
+ion-button.btn-google {
     --border-color : #000;
     --border-style: solid;
     --border-width: 1px;
@@ -61,7 +61,7 @@ ion-col.input-col {
 
 .input-pass ion-icon {
     width: 30px;
-    float: right;   
+    float: right;
     cursor: pointer;
     position: relative;
     z-index: 2;
@@ -98,7 +98,7 @@ ion-col.input-col {
 
 #line-login {
     height: 2px;
-    background: gray;
+    background: rgb(128, 128, 128);
     text-align: center;
     position: relative;
 }
@@ -123,8 +123,8 @@ ion-col.input-col {
     float: right;
     position: absolute;
     z-index: 1;
-    right: 30px;    
-    
+    right: 30px;
+
 }
 
 
@@ -168,3 +168,18 @@ ion-col.input-col {
     overflow: hidden;
     text-overflow: ellipsis; 
 }
+
+.transition-white-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 10000; /* Assurez-vous que cette valeur est suffisamment élevée pour couvrir tout le contenu */
+}
+
+
+
+  
+
