@@ -27,8 +27,9 @@ const Farmer_detail_page: React.FC = () => {
         <IonPage>
             {data ? (
                 <IonPage>
+                    <div className="image_mask">
                     <img className="farmer_img_round" src={`${baseUrl}${data.lien_image_user}`} alt="Image de l'agriculteur" />
-
+                    </div>
                     <div className="header-container">
                         <h1>{data.nom} {data.prenom}</h1>
                     </div>

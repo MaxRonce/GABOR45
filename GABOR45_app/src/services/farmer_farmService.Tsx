@@ -1,10 +1,9 @@
-import {Farmer} from '../models/Farmer';
 import {supabase} from '../supabaseClient';
 
-export const getUsersWithFarmers = async () => {
+export const get_agriculteur_ferme_info = async () => {
 
     let { data, error } = await supabase
-        .rpc('get_all_agriculteurs_distance_info')
+        .rpc('get_agriculteur_ferme_info')
 
     if (error) console.error(error)
     else console.log(data)
