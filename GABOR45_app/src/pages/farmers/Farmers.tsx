@@ -4,6 +4,7 @@ import { Farmer } from '../../models/Farmer';
 import { useHistory } from 'react-router-dom';
 import {getUsersWithFarmers} from '../../services/farmerService';
 import './Farmers.css';
+import NabvarComponent from '../../components/NabvarComponent';
 
 const FarmerPage: React.FC = () => {
     const [farmers, setFarmers] = useState<Farmer[]>([]);
@@ -32,6 +33,7 @@ const FarmerPage: React.FC = () => {
     return (
         <IonPage>
             <IonContent>
+                <NabvarComponent/>
                 <IonList>
                     {farmers.map(farmer => (
                         <div key={farmer.id_utilisateur} onClick={() => handleCardClick(farmer.id_utilisateur)}>
@@ -52,6 +54,7 @@ const FarmerPage: React.FC = () => {
                         </div>
                     ))}
                 </IonList>
+                
             </IonContent>
         </IonPage>
     );

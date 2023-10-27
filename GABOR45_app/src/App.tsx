@@ -1,5 +1,6 @@
 import './theme/variables.css';
 import './theme/custom.css';
+import { useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -58,6 +59,7 @@ import '@ionic/react/css/display.css';
 setupIonicReact();
 
 const App: React.FC = () => (
+  
   <IonApp>
     <IonReactRouter>
       <IonTabs>

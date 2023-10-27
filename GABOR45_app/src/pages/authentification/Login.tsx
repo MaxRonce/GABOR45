@@ -3,8 +3,9 @@ import '../../theme/custom.css';
 import '../../theme/variables.css';
 import React, { useState } from 'react';
 import { supabase } from '../../supabaseClient';
-import { IonButton, useIonToast, IonItem, IonLabel, IonInput, IonText, IonPage, IonContent,
-     IonImg, IonIcon, IonGrid, IonRow, IonCol, IonTabButton } from '@ionic/react';
+import { useIonToast, IonText, IonPage, IonContent,
+     IonIcon, 
+     IonAlert} from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import ButtonComponent from '../../components/ButtonComponent';
 import InputComponent from '../../components/InputComponent';
@@ -21,8 +22,13 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState<string>("");
     const [showToast ] = useIonToast();
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    
+    const [showAlert, setShowAlert] = useState<boolean>(false);
 
+    const handleAlert = async () => {
+        console.log("entro al funcion");
+        console.log(showAlert);
+        await setShowAlert(!showAlert);
+    };
     const history = useHistory();
 
     //function to login with email and password
@@ -66,6 +72,7 @@ const Login: React.FC = () => {
     };
     //show and hide password
     const showPasswordHandler = () => {
+        console.log("Push show password");
         setShowPassword(!showPassword);
     };
 
@@ -97,10 +104,42 @@ const Login: React.FC = () => {
                     classIcon="login-icon ion-icon"
                     onIconClick={showPasswordHandler}
                     iconP={showPassword ? showP : hideP}
+                    styleP = {{
+                        'zIndex': '1',
+                        'position': 'relative',
+                    }}
                 />
-                <IonText onClick={() => {history.push('/registerUser')}} id='motOublie' className='text-btn ion-padding-horizontal ion-float-right ion-margin-horizontal ion-margin-bottom'>
+                <IonText onClick={handleAlert} id='motOublie' className='text-btn ion-padding-horizontal ion-float-right ion-margin-horizontal ion-margin-bottom'>
                     Mot de passe oublié ?
                 </IonText>
+                <IonAlert
+                  header="réinitialiser le mot de passe"
+                  message="vous recevrez un courriel pour réinitialiser votre mot de passe"
+                  buttons={[
+                    {
+                      text: 'Annuler',
+                      role: 'cancel',
+                      handler: () => {
+                        console.log('Cancelado');
+                        closeAlert();
+                      },
+                    },
+                    {
+                      text: 'OK',
+                      handler: handleAlert,
+                    },
+                  ]}
+                  onDidDismiss={handleAlert}
+                  isOpen={showAlert}
+                  inputs={[
+                    {
+                      name: 'email',
+                      type: 'email',
+                      placeholder: 'Email',
+                    },
+                    ]
+                    }
+                />
                 <ButtonComponent classP='btns-login ion-margin-horizontal ion-padding-horizontal' text='Se connecter'
                     onClick={handleLogin}/>
                 <IonText onClick={() => {history.push('/registerUser')}} className='text-btn ion-text-center ion-margin-bottom'>

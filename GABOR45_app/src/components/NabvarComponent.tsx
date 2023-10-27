@@ -1,8 +1,10 @@
-import { IonHeader, IonSearchbar, IonToolbar, IonIcon, IonItem, IonGrid, IonRow, IonCol, IonText } from "@ionic/react";
+import { IonSearchbar, IonToolbar, IonIcon, IonItem, IonGrid, IonRow, IonCol, IonText, IonFooter } from "@ionic/react";
 import '../theme/custom.css';
 import React, { useState } from 'react';
 import arrowLeft from '../icons/arrowLeft.svg';
-const NabvarComponent = () => {
+import search from '../icons/search.svg';
+
+const NabvarComponent: React.FC = () => {
     const [isActive, setIsActive] = useState([true, false , false]);
     const handleClick = (index:any) => {
         const updateActive = [...isActive];
@@ -18,11 +20,14 @@ const NabvarComponent = () => {
 
       const navClass = (index:any) => `nav-line ${isActive[index] ? 'active' : ''}`;
     return (
-        <IonHeader>
+        <IonFooter>
             <IonToolbar>
                 <IonItem lines="none" className="ion-margin-top">
                     <IonIcon src={arrowLeft} className='nav-icon ion-icon' />
-                    <IonSearchbar placeholder="SEARCH" className="ion-justify-content-end"></IonSearchbar>
+                    <IonSearchbar placeholder="SEARCH" className="ion-justify-content-end searchBar">
+                        <IonIcon src={search} slot="end" className="search-icon"/>
+                    </IonSearchbar>
+                    
                 </IonItem>
                 <IonGrid class="ion-margin-horizontal">
                     <IonRow>
@@ -45,8 +50,8 @@ const NabvarComponent = () => {
 
                 </IonGrid> 
             </IonToolbar>
-        </IonHeader>
-    );
+        </IonFooter>
+    )
 };
 
 export default NabvarComponent;

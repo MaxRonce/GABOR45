@@ -7,6 +7,13 @@ ion-tab-button:active ion-icon,
 ion-tab-button.tab-selected ion-icon {
     color: #03a852;
 }
+ion-searchbar.searchBar {
+    --border-radius: 30px;
+    --icon-color: transparent;
+    
+}
+
+
 
 ion-icon {
     min-height: 15px;
@@ -17,7 +24,6 @@ ion-icon {
     height: 20%;
     margin: 0 40%;
 
-    
 }
 
 .login-input {
@@ -25,23 +31,23 @@ ion-icon {
     border: 1px solid #A7A7A7;
     border-radius: 5px;
     padding: 10px;
-    height: 90%;
 }
 
-.custom-input {
-    border-bottom: none;
-}
 
-.custom-input:focus {
-    box-shadow: none;
-    border-bottom: none;
+
+.custom-input ion-input {
+    position: relative;
 }
-ion-button.btn-google {
+ion-button.btn-google {     
     --border-color : #000;
     --border-style: solid;
     --border-width: 1px;
     --background: #fff;
     --color: #000;
+}
+
+ion-col.input-col {
+    margin-bottom: 10px;
 }
 
 .text-title {
@@ -52,15 +58,15 @@ ion-button.btn-google {
     margin-left: 10px; /* Ajusta el margen izquierdo según tus necesidades */
   }
 
-.input-pass {
-    position: relative;
-}
+
 .input-pass ion-icon {
-    float: right;
-    right: 10px; /* Ajusta la posición del icono a tu preferencia */
-    top: 50%;
-    transform: translateY(-130%);
+    width: 30px;
+    float: right;   
     cursor: pointer;
+    position: relative;
+    z-index: 2;
+    margin-top: 16px;
+    margin-bottom: 16px;
 }
 @media (max-width: 425px) {
     .text-title {
@@ -77,10 +83,10 @@ ion-button.btn-google {
   /* Media query para pantallas más grandes (ajusta según tus necesidades) */
   @media (min-width: 768px) {
     .text-title {
-      font-size: 60px; /* Tamaño de fuente más grande para pantallas más grandes */
+      font-size: 40px; /* Tamaño de fuente más grande para pantallas más grandes */
     }
     .btns-login{
-        font-size: 30px;
+        font-size: 25px;
     }
     .icon-input {
         font-size: 20px;
@@ -111,6 +117,16 @@ ion-button.btn-google {
     color: #374856;
     
 }
+.search-icon {
+    font-size: 20px;
+    color: #374856;
+    float: right;
+    position: absolute;
+    z-index: 1;
+    right: 30px;    
+    
+}
+
 
 .nav-icon {
     font-size: 30px;
@@ -152,7 +168,3 @@ ion-button.btn-google {
     overflow: hidden;
     text-overflow: ellipsis; 
 }
-
-
-  
-
