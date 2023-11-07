@@ -21,6 +21,7 @@ import Profile from "./pages/profile/Profile";
 import Login from './pages/authentification/Login';
 import RegisterUser from './pages/authentification/RegisterUser';
 import FarmerPage from './pages/farmers/Farmers';
+import FarmerSearchPage from './pages/farmers/FarmersSearch';
 import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
 
 
@@ -74,6 +75,7 @@ const App: React.FC = () => (
           </Route>
           <Route path="/farmers/:farmerId" component={FarmerDetailPage} exact />
           <Route path="/farmers" component={FarmerPage} exact />
+          <Route path="/farmers/search/:searchQuery" component={FarmerSearchPage} exact />
 
           <Route exact path="/position">
             <Tab2 />

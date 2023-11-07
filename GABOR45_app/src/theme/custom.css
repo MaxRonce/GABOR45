@@ -2,7 +2,6 @@ ion-icon {
     color: #ffffff;
 }
 
-
 ion-tab-button:active ion-icon,
 ion-tab-button.tab-selected ion-icon {
     color: #03a852;
@@ -23,7 +22,7 @@ ion-icon {
     width: 20%;
     height: 20%;
     margin: 0 40%;
-
+    position: relative;
 }
 
 .login-input {
@@ -60,7 +59,6 @@ ion-col.input-col {
 
 
 .input-pass ion-icon {
-    width: 30px;
     float: right;   
     cursor: pointer;
     position: relative;
@@ -103,7 +101,7 @@ ion-col.input-col {
     position: relative;
 }
 
-#line-login span {
+#line-login ion-text {
     position: relative; 
     background-color: #fff;
     padding: 0 10px; 

@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import {IonPage, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonCardTitle, IonButton, IonIcon} from "@ionic/react";
 import { newspaperOutline } from 'ionicons/icons';
 import {Farmer} from '../../models/Farmer';
-import {getUserWithFarmer} from "../../services/farmerDetailService";
+import {getUserWithFarmer} from "../../services/farmerDetailService"; 
 import React, {useEffect, useState} from "react";
 import './FarmerDetailPage.css';
 const Farmer_detail_page: React.FC = () => {
@@ -14,6 +14,7 @@ const Farmer_detail_page: React.FC = () => {
         const fetchData = async () => {
             try {
                 const userData = await getUserWithFarmer(farmerId);
+                console.log("setData", userData);
                 setData(userData);
             } catch (error) {
                 console.error("Failed to fetch data:", error);
