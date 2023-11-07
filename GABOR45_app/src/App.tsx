@@ -21,7 +21,7 @@ import Tab3 from './pages/test_tabs_todelete/Tab3';
 import Profile from "./pages/profile/Profile";
 import Login from './pages/authentification/Login';
 import RegisterUser from './pages/authentification/RegisterUser';
-import FarmerPage from './pages/farmers/Farmers';
+import indexFarmers from './pages/farmers/IndexFarmers';
 import FarmerSearchPage from './pages/farmers/FarmersSearch';
 import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
 import NewsFarmerPage from './pages/farmers/NewsFarmerPage'
@@ -84,7 +84,7 @@ const App: React.FC = () => (
           <Route path="/events" component={MyFeedPage} exact/>
 
           <Route path="/farmers/:farmerId" component={FarmerDetailPage} exact />
-          <Route path="/farmers" component={FarmerPage} exact />
+          <Route path="/farmers" component={indexFarmers} exact />
           <Route path="/farmers/search/:searchQuery" component={FarmerSearchPage} exact />
           <Route path="/news-farmer/:farmerId" component={NewsFarmerPage} exact />
 

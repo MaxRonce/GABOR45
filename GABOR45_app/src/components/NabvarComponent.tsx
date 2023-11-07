@@ -4,14 +4,14 @@ import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import arrowLeft from '../icons/arrowLeft.svg';
 import search from '../icons/search.svg';
-import { getUserWithFarmerSearch } from "../services/searchBarService";
 
-const NabvarComponent: React.FC = () => {
-    const [isActive, setIsActive] = useState([true, false , false]);
-    const history = useHistory(); // Ajoutez cette ligne            
+const NabvarComponent = (props:any) => {
+    const { changeView } = props;  
+    console.log("Props: ", changeView);
+    const [isActive, setIsActive] = useState([true, false]);
+    const history = useHistory(); // Ajoutez cette ligne   
     //control the button active
     const handleClick = (index:any) => {
-
         const updateActive = [...isActive];
         updateActive[index] = !updateActive[index];
         for (let i = 0; i < updateActive.length; i++) {
@@ -52,19 +52,14 @@ const NabvarComponent: React.FC = () => {
                 </IonItem>
                 <IonGrid class="ion-margin-horizontal">
                     <IonRow>
-                        <IonCol size="4" class="custom-center">
-                            <div className={navClass(0)} onClick={() => {handleClick(0)}}>
+                        <IonCol size="6" class="custom-center">
+                            <div className={navClass(0)} onClick={() => {changeView('proximity'); handleClick(0)}}>
                                 <IonText className="nav-text ion-text-center">à proximité</IonText>
                             </div>
                         </IonCol>
-                        <IonCol size="4" class="custom-center">
-                            <div className={navClass(1)} onClick={() => {handleClick(1)}}>
+                        <IonCol size="6" class="custom-center">
+                            <div className={navClass(1)} onClick={() => {changeView('produits'); handleClick(1)}}>
                                 <IonText className="nav-text ion-text-center">Produits</IonText>
-                            </div>
-                        </IonCol>
-                        <IonCol size="4" class="custom-center">
-                            <div className={navClass(2)} onClick={() => {handleClick(2)}}>
-                                <IonText className="nav-text ion-text-center">Producteurs</IonText>
                             </div>
                         </IonCol>
                     </IonRow>

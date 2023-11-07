@@ -9,7 +9,6 @@ import { useIonToast, IonText, IonPage, IonContent,
 import { useHistory } from 'react-router-dom';
 import ButtonComponent from '../../components/ButtonComponent';
 import InputComponent from '../../components/InputComponent';
-import logo_Gabor45 from '../../icons/logo_Gabor45.svg';
 import mail from '../../icons/mail.svg';
 import facebook from '../../icons/facebook.svg';
 import bloquer from '../../icons/bloquer.svg';
@@ -20,6 +19,7 @@ import LogoGaborComponent from '../../components/LogoGaborComponent';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>("");
+    const [resetEmail, setResetEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [showToast ] = useIonToast();
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -27,9 +27,11 @@ const Login: React.FC = () => {
 
 
     const openAlert = () => {
+        setResetEmail(" ");
         setShowAlert(true);
       };
     const handleAlertClose = () => {
+        setResetEmail("");
         setShowAlert(false);
     };
     const history = useHistory();
@@ -86,6 +88,7 @@ const Login: React.FC = () => {
 
     //function to send reset password
     const handleSendResetPassword = async (e: any) => {
+        setResetEmail(" ");
         console.log("email ", e.email);
         try {
             const { error } = await supabase.auth.resetPasswordForEmail(
@@ -95,6 +98,7 @@ const Login: React.FC = () => {
                 await showToast({ message: 'Error to send', duration: 2000, color: 'danger' });
             } else {
                 await showToast({ message: 'Success', duration: 2000, color: 'success' });
+                setResetEmail("");
                 handleAlertClose();
             }
         } catch (error) {
@@ -146,7 +150,7 @@ const Login: React.FC = () => {
                     {
                       text: 'Annuler',
                       role: 'cancel',
-                      handler: () => {
+                      handler: (e) => {
                         console.log('Cancelado');
                         handleAlertClose();
                       },
@@ -162,6 +166,7 @@ const Login: React.FC = () => {
                       name: 'email',
                       type: 'email',
                       placeholder: 'Email',
+                      value: resetEmail,
                     },
                     ]
                     }
