@@ -172,6 +172,36 @@ h2{
     border-top: #164550 solid 1px;
     border-bottom: #164550 solid 1px;
 }
+.social-media-links {
+    display: flex; /* Alignez les icônes horizontalement */
+        align-items: center; /* Alignez verticalement les icônes au centre */
+    margin-top: 10px; /* Espacement au-dessus des icônes */
+}
+
+.social-media-links a {
+    display: inline-block; /* Assurez-vous que les liens sont alignés horizontalement */
+    margin-right: 10px; /* Espacement autour des liens */
+
+}
+
+
+.social-media-links img {
+    width: 24px; /* Taille des icônes */
+    height: auto; /* Gardez le ratio de l'image */
+    fill: #164550; /* Cette propriété ne fonctionnera pas pour un élément img */
+}
+
+/* Assurez-vous que les liens des icônes SVG changent de couleur */
+.social-media-links a {
+    color: #164550; /* Couleur des liens */
+}
+
+/* Utilisez une classe pour changer la couleur des icônes SVG */
+.icon-svg {
+    filter: invert(23%) sepia(95%) saturate(1352%) hue-rotate(184deg) brightness(89%) contrast(88%);
+}
+
+
 
 
 

@@ -13,6 +13,12 @@ import {User} from "@supabase/supabase-js";
 import {useHistory} from "react-router-dom";
 import { supabase } from '../../supabaseClient'; // Assurez-vous d'importer votre client Supabase
 
+import facebookIcon from '../../icons/facebook_mini.svg';
+import instagramIcon from '../../icons/instagram_mini.svg';
+import globeIcon from '../../icons/globe.svg';
+
+
+
 const Farmer_detail_page: React.FC = () => {
     const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
     const { farmerId } = useParams<{ farmerId: string }>();
@@ -23,6 +29,8 @@ const Farmer_detail_page: React.FC = () => {
     const history = useHistory();
 
     const [isFollowing, setIsFollowing] = useState(false); // Nouvel état pour suivre si l'utilisateur suit l'agriculteur
+
+
 
     // Fonction pour vérifier si l'utilisateur suit déjà l'agriculteur
     const checkIfUserIsFollowing = async () => {
@@ -123,6 +131,7 @@ const Farmer_detail_page: React.FC = () => {
         };
     }, [farmerId]);
 
+
     return (
         <IonPage>
             {isLoading ? (
@@ -143,7 +152,10 @@ const Farmer_detail_page: React.FC = () => {
                             >
                                 {isFollowing ? 'Suivi' : 'Suivre'}
                             </button>
-                            <button color="secondary">
+                            <button
+                                color="secondary"
+                                onClick={() => history.push(`/news-farmer/${farmerId}`)}
+                            >
                                 <IonIcon slot="start" icon={newspaperOutline} />
                                 News
                             </button>
@@ -152,8 +164,28 @@ const Farmer_detail_page: React.FC = () => {
                             <div>
                                 <h2>{data.nom} {data.prenom}</h2>
                             </div>
+                            <div className="social-media-links">
+                                {data.facebook && (
+                                    <a href={data.facebook} target="_blank" rel="noopener noreferrer">
+                                        <img src={facebookIcon} alt="Facebook" className="icon-svg" />
+                                    </a>
+                                )}
+                                {data.instagram && (
+                                    <a href={data.instagram} target="_blank" rel="noopener noreferrer">
+                                        <img src={instagramIcon} alt="Instagram" className="icon-svg" />
+                                    </a>
+                                )}
+                                {data.website && (
+                                    <a href={`https://${data.website}`} target="_blank" rel="noopener noreferrer">
+                                        <img src={globeIcon} alt="Website" className="icon-svg" />
+                                    </a>
+                                )}
+                            </div>
                             <div>
                                 <p className="production"><b>Production : </b>{data.description}</p>
+                                {/* Ici, nous ajoutons la section pour les liens de réseaux sociaux */}
+
+
                             </div>
                         </div>
                     </>

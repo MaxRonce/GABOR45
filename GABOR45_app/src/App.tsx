@@ -24,6 +24,7 @@ import RegisterUser from './pages/authentification/RegisterUser';
 import FarmerPage from './pages/farmers/Farmers';
 import FarmerSearchPage from './pages/farmers/FarmersSearch';
 import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
+import NewsFarmerPage from './pages/farmers/NewsFarmerPage'
 
 
 /* Icons imports */
@@ -85,6 +86,7 @@ const App: React.FC = () => (
           <Route path="/farmers/:farmerId" component={FarmerDetailPage} exact />
           <Route path="/farmers" component={FarmerPage} exact />
           <Route path="/farmers/search/:searchQuery" component={FarmerSearchPage} exact />
+          <Route path="/news-farmer/:farmerId" component={NewsFarmerPage} exact />
 
           <Route exact path="/position">
             <Tab2 />
