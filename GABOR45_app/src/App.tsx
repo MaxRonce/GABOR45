@@ -25,7 +25,7 @@ import FarmerPage from './pages/farmers/Farmers';
 import FarmerSearchPage from './pages/farmers/FarmersSearch';
 import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
 import NewsFarmerPage from './pages/farmers/NewsFarmerPage'
-
+import MyFeedPage from "./pages/events/MyFeedPage";
 
 /* Icons imports */
 import home from '../src/icons/home.svg';
@@ -50,6 +50,7 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
+
 
 export const fadeTransition = (rootElement: any) => {
   const enteringAnimation = createAnimation()
@@ -80,9 +81,8 @@ const App: React.FC = () => (
           <Route exact path="/home">
             <Tab1 />
           </Route>
-          <Route exact path="/events">
-            <Tab2 />
-          </Route>
+          <Route path="/events" component={MyFeedPage} exact/>
+
           <Route path="/farmers/:farmerId" component={FarmerDetailPage} exact />
           <Route path="/farmers" component={FarmerPage} exact />
           <Route path="/farmers/search/:searchQuery" component={FarmerSearchPage} exact />
@@ -113,9 +113,11 @@ const App: React.FC = () => (
           <IonTabButton tab="home" href="/home">
             <IonIcon src={home} />
           </IonTabButton>
+
           <IonTabButton tab="events" href="/events">
             <IonIcon src={calendar} />
           </IonTabButton>
+
           <IonTabButton tab="farmers" href="/farmers">
             <IonIcon src={farmer} />
           </IonTabButton>
