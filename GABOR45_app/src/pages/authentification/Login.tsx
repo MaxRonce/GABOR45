@@ -36,7 +36,6 @@ const Login: React.FC = () => {
 
     //function to login with email and password
     const handleLogin = async () => {
-        console.log("entra a la funcion");
         try {
           const { data, error } = await supabase.auth.signInWithPassword({
             email: email,
@@ -49,8 +48,14 @@ const Login: React.FC = () => {
           } else {
             setPassword('');
             setEmail('');
-            await showToast({ message: 'Success', duration: 2000, color: 'success' });
-            // Inicio de sesión exitoso, puedes redirigir a otra página aquí
+              await showToast({
+                  message: 'Connexion réussie',
+                  duration: 1000,
+                  color: 'success',
+                  position: 'middle' // Assurez-vous que la position est définie sur middle
+              });
+
+              // Inicio de sesión exitoso, puedes redirigir a otra página aquí
             history.push('/profile');
           }
         } catch (error) {
