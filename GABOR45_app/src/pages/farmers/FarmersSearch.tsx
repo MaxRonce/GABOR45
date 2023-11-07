@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import './Farmers.css';
 import { useParams } from "react-router";
 import { IonContent, IonPage, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg, IonList } from '@ionic/react';
 import { Farmer } from '../../models/Farmer';
 import { useHistory } from 'react-router-dom';
 import {getUserWithFarmerSearch} from '../../services/searchBarService';
-import './Farmers.css';
+
 import NabvarComponent from '../../components/NabvarComponent';
 
 const FarmerSearchPage: React.FC = () => {
@@ -17,6 +18,7 @@ const FarmerSearchPage: React.FC = () => {
     useEffect(() => {
         const fetchData = async () => {
             const query = "%" + searchQuery + "%";
+            console.log("query", query);
             const userData = await getUserWithFarmerSearch(query);
             console.log("data", userData);
             setData(userData);
@@ -66,7 +68,7 @@ const FarmerSearchPage: React.FC = () => {
                   </div>
                 ))
               ) : (
-                // Solo un resultado
+                // just one farmer
                 <div onClick={() => handleCardClick(id)}>
                   <IonCard className="farmer-card">
                     <img className="farmer_img" src={`${baseUrl}${data?.lien_image_user}`} alt="Image de l'agriculteur" />
