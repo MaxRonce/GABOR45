@@ -6,12 +6,11 @@ import { IonButton, useIonToast, IonItem, IonLabel, IonInput, IonText, IonPage, 
 import { useHistory } from 'react-router-dom';
 import ButtonComponent from '../../components/ButtonComponent';
 import InputComponent from '../../components/InputComponent';
-import logo_Gabor45 from '../../icons/logo_Gabor45.svg';
 import mail from '../../icons/mail.svg';
 import bloquer from '../../icons/bloquer.svg';
 import showP from '../../icons/showP.svg'
 import hideP from '../../icons/hideP.svg'
-
+import LogoGaborComponent from '../../components/LogoGaborComponent';
 import '../../theme/custom.css';
 import '../../theme/variables.css';
 
@@ -61,7 +60,7 @@ const RegisterUser: React.FC = () => {
     return (
         <IonPage>
             <IonContent>
-                <IonIcon src={logo_Gabor45} className="gabor45-logo" />
+                <LogoGaborComponent />
                 <IonText className="ion-text-center">
                     <h1 className='text-title'>Inscription</h1>
                 </IonText>

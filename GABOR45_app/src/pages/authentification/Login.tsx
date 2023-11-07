@@ -16,6 +16,7 @@ import bloquer from '../../icons/bloquer.svg';
 import showP from '../../icons/showP.svg';
 import hideP from '../../icons/hideP.svg';
 import google from '../../icons/google.svg';
+import LogoGaborComponent from '../../components/LogoGaborComponent';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>("");
@@ -24,10 +25,12 @@ const Login: React.FC = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showAlert, setShowAlert] = useState<boolean>(false);
 
-    const handleAlert = async () => {
-        console.log("entro al funcion");
-        console.log(showAlert);
-        await setShowAlert(!showAlert);
+
+    const openAlert = () => {
+        setShowAlert(true);
+      };
+    const handleAlertClose = () => {
+        setShowAlert(false);
     };
     const history = useHistory();
 
@@ -76,12 +79,31 @@ const Login: React.FC = () => {
         setShowPassword(!showPassword);
     };
 
+    //function to send reset password
+    const handleSendResetPassword = async (e: any) => {
+        console.log("email ", e.email);
+        try {
+            const { error } = await supabase.auth.resetPasswordForEmail(
+                e.email
+            );
+            if (error) {
+                await showToast({ message: 'Error to send', duration: 2000, color: 'danger' });
+            } else {
+                await showToast({ message: 'Success', duration: 2000, color: 'success' });
+                handleAlertClose();
+            }
+        } catch (error) {
+            console.log(error);
+            await showToast({ message: 'Error to send', duration: 2000, color: 'danger' });
+        }
+    };
+
 
 
     return (
         <IonPage>
             <IonContent class='ion-text-center'>
-                <IonIcon src={logo_Gabor45} className="gabor45-logo" />
+                <LogoGaborComponent />
                 <IonText className="ion-margin-horizontal text-title">
                     Connexion
                 </IonText>
@@ -109,7 +131,7 @@ const Login: React.FC = () => {
                         'position': 'relative',
                     }}
                 />
-                <IonText onClick={handleAlert} id='motOublie' className='text-btn ion-padding-horizontal ion-float-right ion-margin-horizontal ion-margin-bottom'>
+                <IonText onClick={openAlert} id='motOublie' className='text-btn ion-padding-horizontal ion-float-right ion-margin-horizontal ion-margin-bottom'>
                     Mot de passe oublié ?
                 </IonText>
                 <IonAlert
@@ -121,15 +143,14 @@ const Login: React.FC = () => {
                       role: 'cancel',
                       handler: () => {
                         console.log('Cancelado');
-                        closeAlert();
+                        handleAlertClose();
                       },
                     },
                     {
-                      text: 'OK',
-                      handler: handleAlert,
+                      text: 'Envoyer',
+                      handler: (e) => handleSendResetPassword(e),
                     },
                   ]}
-                  onDidDismiss={handleAlert}
                   isOpen={showAlert}
                   inputs={[
                     {
@@ -146,7 +167,7 @@ const Login: React.FC = () => {
                     <h3 className='text-title'>S'inscrire</h3>
                 </IonText>
                 <div id='line-login'>
-                    <span>ou</span>
+                    <IonText>ou</IonText>
                 </div>
                 <ButtonComponent classP='btns-login ion-padding-horizontal ion-margin-horizontal ion-margin-top' text='Se connecter avec Facebook'
                     onClick={() => {signInWith("facebook")}}
