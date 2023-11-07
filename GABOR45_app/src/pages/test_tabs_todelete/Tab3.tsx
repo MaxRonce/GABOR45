@@ -1,8 +1,7 @@
-import {IonButton, IonCard, IonCardContent, IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
-import ExploreContainer from '../../components/ExploreContainer';
+import React, { useEffect, useState } from 'react';
+import { IonCard, IonCardContent, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './Tab3.css';
 import { supabase } from '../../supabaseClient';
-import React, { useEffect, useState } from 'react';
 
 function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
     const R = 6371; // Rayon de la terre en km
@@ -40,15 +39,34 @@ const Tab3: React.FC = () => {
         ? calculateDistance(userLocation.latitude, userLocation.longitude, destination.latitude, destination.longitude)
         : null;
 
+    // Embedded Map with adjusted style
+    const mapIframe = `
+    <iframe
+      src="https://www.google.com/maps/d/u/0/embed?mid=1ny_1TOrj65dwzkjIgKCLnqCDwkyzhjA&ehbc=2E312F&z=10"
+      class="mapFrame"
+    ></iframe>`;
+
+
+
     return (
         <IonPage>
-            {distance !== null && (
-                <IonCard>
-                    <IonCardContent>
-                        Distance à la Tour Eiffel: {distance.toFixed(2)} km
-                    </IonCardContent>
-                </IonCard>
-            )}
+            <IonHeader>
+                <IonToolbar>
+                    <IonTitle>Debug Tab</IonTitle>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent fullscreen>
+                {/* ... existing content ... */}
+                {distance !== null && (
+                    <IonCard>
+                        <IonCardContent>
+                            Distance to the Eiffel Tower: {distance.toFixed(2)} km
+                        </IonCardContent>
+                    </IonCard>
+                )}
+                {/* Embedded Map */}
+                <div dangerouslySetInnerHTML={{ __html: mapIframe }} />
+            </IonContent>
         </IonPage>
     );
 };

@@ -1,20 +1,109 @@
 import { useParams } from "react-router";
-import {IonPage, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonCardTitle, IonButton, IonIcon} from "@ionic/react";
+import {IonPage, IonIcon} from "@ionic/react";
 import { newspaperOutline } from 'ionicons/icons';
+import { IonAlert } from '@ionic/react';
 import {Farmer} from '../../models/Farmer';
 import {getUserWithFarmer} from "../../services/farmerDetailService";
+import {followFarmer, unfollowFarmer} from '../../services/follow_service';
+
 import React, {useEffect, useState} from "react";
 import './FarmerDetailPage.css';
 import LoadingScreen from "../../components/LoadingScreen";
-import { IonLoading } from '@ionic/react';
+import {User} from "@supabase/supabase-js";
+import {useHistory} from "react-router-dom";
+import { supabase } from '../../supabaseClient'; // Assurez-vous d'importer votre client Supabase
 
 const Farmer_detail_page: React.FC = () => {
     const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
     const { farmerId } = useParams<{ farmerId: string }>();
     const [data, setData] = useState<Farmer | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [showLoginAlert, setShowLoginAlert] = useState(false);  // Nouveau state pour la popup
+    const [user, setUser] = useState<User | null>(null);  // Définissez l'état initial comme null ou User
+    const history = useHistory();
+
+    const [isFollowing, setIsFollowing] = useState(false); // Nouvel état pour suivre si l'utilisateur suit l'agriculteur
+
+    // Fonction pour vérifier si l'utilisateur suit déjà l'agriculteur
+    const checkIfUserIsFollowing = async () => {
+        if (user) {
+            try {
+
+                const { data, error } = await supabase
+                    .from('follow')
+                    .select('*')
+                    .eq('id_utilisateur', user.id)
+                    .eq('id_agriculteur', farmerId);
+
+
+                setIsFollowing(!!data); // Si data existe, l'utilisateur suit l'agriculteur
+            } catch (error) {
+                console.error('Erreur lors de la vérification du suivi:', error);
+            }
+        }
+    };
+    const handleFollow = async () => {
+        if (user) {
+            try {
+                await followFarmer(user.id, farmerId);
+                console.log('Agriculteur suivi!');
+                setIsFollowing(true); // Assurez-vous de mettre à jour l'état ici
+            } catch (error) {
+                console.error('Erreur lors du suivi de l\'agriculteur:', error);
+            }
+        } else {
+            setShowLoginAlert(true);
+        }
+    };
+
+    const handleUnfollow = async () => {
+        if (user) {
+            try {
+                await unfollowFarmer(user.id, farmerId);
+                console.log('Vous ne suivez plus cet agriculteur.');
+                setIsFollowing(false); // Mettre à jour l'état ici aussi
+            } catch (error) {
+                console.error('Erreur lors de l\'arrêt du suivi de l\'agriculteur:', error);
+            }
+        } else {
+            setShowLoginAlert(true);
+        }
+    };
+
 
     useEffect(() => {
+        // Fonction pour vérifier si l'utilisateur suit déjà l'agriculteur
+        const checkIfUserIsFollowing = async () => {
+            if (user && farmerId) { // Ajoutez cette vérification pour vous assurer que user et farmerId sont définis
+                try {
+                    const { data, error } = await supabase
+                        .from('follow')
+                        .select('*')
+                        .eq('id_utilisateur', user.id)
+                        .eq('id_agriculteur', farmerId)
+                        .maybeSingle(); // Utilisez maybeSingle pour retourner null si pas trouvé
+
+                    setIsFollowing(!!data); // Si data existe, l'utilisateur suit l'agriculteur
+                } catch (error) {
+                    console.error('Erreur lors de la vérification du suivi:', error);
+                }
+            }
+        };
+
+        checkIfUserIsFollowing();
+    }, [user, farmerId]);
+
+    useEffect(() => {
+
+
+        // Souscrivez aux modifications de session pour obtenir les mises à jour de l'utilisateur
+        const { data: authListener } = supabase.auth.onAuthStateChange(
+            async (event, session) => {
+                const currentUser = session?.user;  // Obtenez l'utilisateur de la session
+                // @ts-ignore
+                setUser(currentUser);
+            }
+        );
         const fetchData = async () => {
             try {
                 const userData = await getUserWithFarmer(farmerId);
@@ -27,6 +116,11 @@ const Farmer_detail_page: React.FC = () => {
         };
 
         fetchData().then(r => console.log(r));
+
+        // Annulez la souscription lorsque le composant est démonté
+        return () => {
+            authListener?.subscription.unsubscribe();
+        };
     }, [farmerId]);
 
     return (
@@ -43,7 +137,12 @@ const Farmer_detail_page: React.FC = () => {
                             <h1>{data.nom_ferme}</h1>
                         </div>
                         <div className="button_rows">
-                            <button id="follow_button">Suivre</button>
+                            <button
+                                className={`follow_button ${isFollowing ? 'followed' : ''}`}
+                                onClick={isFollowing ? handleUnfollow : handleFollow}
+                            >
+                                {isFollowing ? 'Suivi' : 'Suivre'}
+                            </button>
                             <button color="secondary">
                                 <IonIcon slot="start" icon={newspaperOutline} />
                                 News
@@ -62,6 +161,29 @@ const Farmer_detail_page: React.FC = () => {
                     <LoadingScreen />
                 )
             )}
+            <IonAlert
+                isOpen={showLoginAlert}
+                onDidDismiss={() => setShowLoginAlert(false)}
+                header={'Connexion requise'}
+                message={'Vous devez être connecté pour suivre cet agriculteur.'}
+                buttons={[
+                    {
+                        text: 'Annuler',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: blah => {
+                            console.log('Confirm Cancel');
+                        }
+                    },
+                    {
+                        text: 'Se connecter',
+                        handler: () => {
+                            // Rediriger vers la page de connexion
+                            history.push('/login');
+                        }
+                    }
+                ]}
+            />
         </IonPage>
     );
 }

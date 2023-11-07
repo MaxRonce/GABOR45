@@ -1,0 +1,17 @@
+
+/* Ajustements pour la carte */
+.mapFrame {
+    width: 50%; /* Utiliser la largeur de la fenêtre d'affichage */
+    height: 100%; /* Utiliser 80% de la hauteur de la fenêtre d'affichage pour la carte */
+    position: relative; /* Ajustement pour positionner correctement dans le conteneur */
+    border: none; /* Supprimer la bordure par défaut de l'iframe */
+    overflow: hidden; /* Empêcher le débordement de l'iframe hors du conteneur */
+}
+
+/* Assurez-vous que le conteneur de la carte ne déborde pas de l'écran */
+.mapContainer {
+    position: relative; /* Position relative pour que les pourcentages de top et left fonctionnent correctement */
+    overflow: hidden; /* Cela va couper tout contenu qui déborde */
+    padding-top: 56.25%; /* Ratio pour une carte avec un aspect 16:9 */
+    height: 0; /* Aide à maintenir le ratio d'aspect */
+}
