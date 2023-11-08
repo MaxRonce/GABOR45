@@ -1,26 +1,31 @@
-import React, { useState } from 'react';
-import { IonContent, IonPage,} from '@ionic/react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router";
+import { IonContent, IonPage } from '@ionic/react';
 import FarmerPage from './Farmers';
 import './Farmers.css';
 import NabvarComponent from '../../components/NabvarComponent';
 import FarmerProduit from './FarmerProduit';
+import FarmerSearchPage from './FarmersSearch';
 
+const IndexFarmers: React.FC<{ hide: string }> = ({ hide }) => {
+  const { page } = useParams<{ page: string }>();
+  const [searchQuery, setSearchQuery] = useState<string>(""); // Estado para el término de búsqueda
 
-const indexFarmers: React.FC = () => {
-    const [currentView, setCurrentView] = useState<String>("proximity");
-    const changeView = (view: string) => {
-        setCurrentView(view);
-    };
-    return (
-        <IonPage>
-            <IonContent>
-                <NabvarComponent changeView={changeView}/>
-                {currentView === 'proximity' && <FarmerPage />}
-                {currentView === 'produits' && <FarmerProduit />}
-
-            </IonContent>
-        </IonPage>
-    );
+  return (
+    <IonPage>
+      <IonContent>
+        <NabvarComponent setSearchQuery={setSearchQuery} /> {/* Pasar setSearchQuery a NabvarComponent */}
+        {searchQuery !== "" ? ( // Si hay un término de búsqueda, mostrar el resultado de la búsqueda
+          <FarmerSearchPage searchQuery={searchQuery} />
+        ) : ( // De lo contrario, mostrar el contenido por defecto
+          <>
+            {page === 'producteurs' ? <FarmerPage /> : null}
+            {page === 'produits' ? <FarmerProduit /> : null}
+          </>
+        )}
+      </IonContent>
+    </IonPage>
+  );
 }
 
-export default indexFarmers;
+export default IndexFarmers;
