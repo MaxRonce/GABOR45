@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonPage, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg, IonList } from '@ionic/react';
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg, IonList } from '@ionic/react';
 import { Farmer } from '../../models/Farmer';
 import { useHistory } from 'react-router-dom';
 import {getUsersWithFarmers} from '../../services/farmerService';
 import './Farmers.css';
-import NabvarComponent from '../../components/NabvarComponent';
-
-const FarmerPage: React.FC = () => {
+const FarmerPage= () => {
     const [farmers, setFarmers] = useState<Farmer[]>([]);
 
     const history = useHistory(); // Ajoutez cette ligne
@@ -22,8 +20,9 @@ const FarmerPage: React.FC = () => {
     }, []);
 
     const handleCardClick = (farmerId: string) => {
+        console.log("id: ", farmerId);
         history.push({
-            pathname: `/farmers/${farmerId}`,
+            pathname: `/farmers/producteurs/${farmerId}`,
             state: { farmerId: farmerId }
         });
     };
@@ -31,9 +30,7 @@ const FarmerPage: React.FC = () => {
     const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
 
     return (
-        <IonPage>
             <IonContent>
-                <NabvarComponent/>
                 <IonList>
                     {farmers.map(farmer => (
                         <div key={farmer.id_utilisateur} onClick={() => handleCardClick(farmer.id_utilisateur)}>
@@ -56,7 +53,6 @@ const FarmerPage: React.FC = () => {
                 </IonList>
                 
             </IonContent>
-        </IonPage>
     );
 };
 

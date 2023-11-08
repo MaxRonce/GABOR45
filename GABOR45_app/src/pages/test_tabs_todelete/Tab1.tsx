@@ -7,7 +7,6 @@ const Tab1: React.FC = () => {
   return (
     <IonPage>
       <IonContent fullscreen>
-      <NabvarComponent/>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Tab 1</IonTitle>

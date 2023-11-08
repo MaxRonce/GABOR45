@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import './Farmers.css';
 import { useParams } from "react-router";
-import { IonContent, IonPage, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg, IonList } from '@ionic/react';
+import { IonContent, IonPage, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList } from '@ionic/react';
 import { Farmer } from '../../models/Farmer';
 import { useHistory } from 'react-router-dom';
 import {getUserWithFarmerSearch} from '../../services/searchBarService';
 
-import NabvarComponent from '../../components/NabvarComponent';
-
-const FarmerSearchPage: React.FC = () => {
+const FarmerSearchPage : React.FC<{ searchQuery: string }> = ({ searchQuery }) => {
     const [id, setId] = useState<string>("");
     const [data, setData] = useState<Farmer | null>(null);
-    const { searchQuery } = useParams<{ searchQuery: string }>();
     const history = useHistory(); // Ajoutez cette ligne
-
+    const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
 
     useEffect(() => {
         const fetchData = async () => {
             const query = "%" + searchQuery + "%";
             console.log("query", query);
             const userData = await getUserWithFarmerSearch(query);
-            console.log("data", userData);
+            console.log("data c", userData);
             setData(userData);
             if (Array.isArray(userData)) {
               // Si hay varios resultados, selecciona el primero por defecto
@@ -35,18 +32,17 @@ const FarmerSearchPage: React.FC = () => {
     }, []);
 
     const handleCardClick = (farmerId: string) => {
-        history.push({
-            pathname: `/farmers/${farmerId}`,
-            state: { farmerId: farmerId }
-        });
-    };
+      console.log("id: ", farmerId);
+      history.push({
+          pathname: `/farmers/producteurs/${farmerId}`,
+          state: { farmerId: farmerId }
+      });
+  };
 
-    const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
+    
 
     return (
-        <IonPage>
           <IonContent>
-            <NabvarComponent />
             <IonList>
               {Array.isArray(data) ? (
                 data.map(farmer => (
@@ -88,7 +84,6 @@ const FarmerSearchPage: React.FC = () => {
               )}
             </IonList>
           </IonContent>
-        </IonPage>
       );
 };
 

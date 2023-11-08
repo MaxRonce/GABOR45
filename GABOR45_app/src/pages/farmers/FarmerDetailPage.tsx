@@ -4,7 +4,7 @@ import { newspaperOutline } from 'ionicons/icons';
 import {Farmer} from '../../models/Farmer';
 import {getUserWithFarmer} from "../../services/farmerDetailService"; 
 import React, {useEffect, useState} from "react";
-import './FarmerDetailPage.css';
+import './FarmerDetailPage.css'; 
 const Farmer_detail_page: React.FC = () => {
     const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
     const { farmerId } = useParams<{ farmerId: string }>();

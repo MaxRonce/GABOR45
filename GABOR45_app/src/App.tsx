@@ -20,7 +20,7 @@ import Tab3 from './pages/test_tabs_todelete/Tab3';
 import Profile from "./pages/profile/Profile";
 import Login from './pages/authentification/Login';
 import RegisterUser from './pages/authentification/RegisterUser';
-import indexFarmers from './pages/farmers/IndexFarmers';
+import IndexFarmers from './pages/farmers/IndexFarmers';
 import FarmerSearchPage from './pages/farmers/FarmersSearch';
 import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
 
@@ -73,9 +73,11 @@ const App: React.FC = () => (
           <Route exact path="/events">
             <Tab2 />
           </Route>
-          <Route path="/farmers/:farmerId" component={FarmerDetailPage} exact />
-          <Route path="/farmers" component={indexFarmers} exact />
-          <Route path="/farmers/search/:searchQuery" component={FarmerSearchPage} exact />
+          <Route path="/farmers/:page/:farmerId" component={FarmerDetailPage} exact />
+          <Route exact path="/farmers/:page">
+            <IndexFarmers hide="yes" />
+          </Route>
+          <Route path="/farmers/:page/search/:searchQuery" component={FarmerSearchPage} exact />
 
           <Route exact path="/position">
             <Tab2 />
@@ -105,7 +107,7 @@ const App: React.FC = () => (
           <IonTabButton tab="events" href="/events">
             <IonIcon src={calendar} />
           </IonTabButton>
-          <IonTabButton tab="farmers" href="/farmers">
+          <IonTabButton tab="farmers" href="/farmers/producteurs">
             <IonIcon src={farmer} />
           </IonTabButton>
           <IonTabButton tab="position" href="/position">
