@@ -1,14 +1,19 @@
 // src/pages/Profile.tsx
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../supabaseClient';
-import { IonPage, IonContent, IonButton } from '@ionic/react';
-import { useHistory } from 'react-router-dom';
-import { User } from '@supabase/supabase-js';  // Importez le type User
+import { IonPage, IonContent, IonButton, IonTitle } from '@ionic/react';
+import { useHistory, useParams } from 'react-router-dom';
+import { Utilisateur } from '../../models/User';
+import { User } from '@supabase/supabase-js';
+import {getUserInfo} from "../../services/userService";
 import { Database} from "../../types/supabase";
+import LoadingScreen from '../../components/LoadingScreen';
 
 const Profile: React.FC = () => {
-    const [user, setUser] = useState<User | null>(null);  // Définissez l'état initial comme null ou User
+    const [user, setUser] = useState<User | null>(null);
+    const [util, setUtil] = useState<Utilisateur | null>(null)
     const history = useHistory();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         // Souscrivez aux modifications de session pour obtenir les mises à jour de l'utilisateur
@@ -20,12 +25,31 @@ const Profile: React.FC = () => {
             }
         );
 
-        // Annulez la souscription lorsque le composant est démonté
+        const fetchData = async () => {
+            try {
+                if (user != null) {
+                    const userData = await getUserInfo(user.id);
+                    setUtil(userData);
+                }
+            } catch (error) {
+                console.error("Failed to fetch data:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData().then(r => console.log(r));
+
+        // Annule la souscription lorsque le composant est démonté
         return () => {
             authListener?.subscription.unsubscribe();
         };
 
-    }, []);
+        if (!user) {
+            history.push('/login');
+        }
+
+    }, [user, history]);
 
     const redirectToLogin = () => {
         history.push('/login');
@@ -37,16 +61,30 @@ const Profile: React.FC = () => {
             console.error(error);
         } else {
             console.log('Déconnexion réussie');
-            history.push('/profile');  // Redirige vers la page de connexion après la déconnexion réussie
+            redirectToLogin();  // Redirige vers la page de connexion après la déconnexion réussie
         }
     }
 
     return (
         <IonPage>
+            {isLoading ? (
+                <LoadingScreen/>
+            ) : (
+            <>
+            <IonTitle>
+                {util ? (
+                    <h1>
+                        {util.nom}
+                        {util.prenom}
+                    </h1>
+                ) : null}
+            </IonTitle>
             <IonContent>
-                {user ? (
+                {util ? (
                     <div>
-                        Bonjour {user.email}
+                        {util.num_tel}
+                        {util.email}
+                        <IonButton>Modifier</IonButton>
                         <IonButton onClick={signOut}>Se déconnecter</IonButton>
                     </div>
                 ) : (
@@ -56,6 +94,7 @@ const Profile: React.FC = () => {
                     </div>
                 )}
             </IonContent>
+            </>)}
         </IonPage>
     );
 };
