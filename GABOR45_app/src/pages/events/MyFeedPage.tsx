@@ -9,15 +9,16 @@ import {
     IonModal,
     IonIcon,
     IonButton,
-    IonRefresher, IonRefresherContent,
+    IonRefresher, IonRefresherContent, IonAvatar, IonChip, IonLabel,
 } from '@ionic/react';
 import { getNewsForUser } from '../../services/newsService';
 import { News } from '../../models/News';
 import { useAuth } from '../../hooks/useAuth';
 import { closeCircle } from 'ionicons/icons';
 import logo from '../../assets/logo_Gabor45_notxt.svg'; // Assurez-vous que le chemin d'accès est correct
-import { chevronDownCircleOutline } from 'ionicons/icons';
 import '../farmers/NewsFarmerPage.css';
+import '../../components/LoadingScreen.css';
+import './MyFeedPage.css'
 
 
 
@@ -26,6 +27,7 @@ const MyFeedPage: React.FC = () => {
     const [newsList, setNewsList] = useState<News[]>([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedImage, setSelectedImage] = useState('');
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const openImageModal = (imageUrl: string) => {
         setSelectedImage(imageUrl);
@@ -55,6 +57,7 @@ const MyFeedPage: React.FC = () => {
 
     // Définissez l'URL de base pour vos images, si elle est différente
     const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/news/images/";
+    const user_baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
 
     if (!user) {
         return (
@@ -67,11 +70,12 @@ const MyFeedPage: React.FC = () => {
         );
     }
 
+
     const doRefresh = (event: CustomEvent) => {
-        // Fonction pour rafraîchir les données
+        setIsRefreshing(true);
         fetchNews().then(() => {
-            // Une fois les données rafraîchies, complétez le refresher
             event.detail.complete();
+            setIsRefreshing(false);
         });
     };
 
@@ -83,36 +87,51 @@ const MyFeedPage: React.FC = () => {
         }
     };
 
+
     return (
         <IonPage>
             <IonContent>
                 <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
                     <IonRefresherContent
-                        pullingIcon={logo} // Your custom SVG icon
                         pullingText="Tirez pour rafraîchir"
-                    >
-                        <div className="loading-container" slot="refreshing-content">
-                            <img src={logo} alt="Loading..." className="loading-logo" />
-                        </div>
-                    </IonRefresherContent>
+                    />
                 </IonRefresher>
+
+                {isRefreshing && (
+                    <div className="loading-container">
+                        <img src={logo} alt="Loading..." className="loading-logo-fast" />
+                    </div>
+                )}
 
                 {newsList.map((newsItem: News) => (
                     <IonCard key={newsItem.id_evenement}>
                         <IonCardHeader>
-                            <IonCardTitle>{newsItem.nom_evenement}</IonCardTitle>
+                            <IonCardTitle>
+                                <div className="title_containter">
+                                <div className="avatar-container">
+                                    <IonAvatar>
+                                        <img src={`${user_baseUrl}${newsItem.lien_image_user}`} alt="Profile" />
+                                    </IonAvatar>
+                                </div>
+                                <IonLabel>{newsItem.nom_evenement}</IonLabel>
+                                </div>
+                            </IonCardTitle>
                         </IonCardHeader>
-                        {newsItem.image && (
-                            <img
-                                src={`${baseUrl}${newsItem.image}`}
-                                alt={newsItem.nom_evenement}
-                                onClick={() => openImageModal(`${baseUrl}${newsItem.image}`)}
-                            />
-                        )}
+
                         <IonCardContent>
+                            {newsItem.image && (
+                                <img
+                                    src={`${baseUrl}${newsItem.image}`}
+                                    alt={newsItem.nom_evenement}
+                                    onClick={() => openImageModal(`${baseUrl}${newsItem.image}`)}
+                                />
+                            )}
                             {newsItem.description}
                         </IonCardContent>
                     </IonCard>
+
+
+
                 ))}
 
                 <IonModal isOpen={showModal} onDidDismiss={closeModal} className='my-custom-class'>

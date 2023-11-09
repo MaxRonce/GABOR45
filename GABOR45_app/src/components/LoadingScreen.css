@@ -2,13 +2,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
 }
 
 .loading-logo {
     width: 7vh;
     animation: spin 1.5s cubic-bezier(0.4, 0, 0.3, 1) infinite;
 }
+
+.loading-logo-fast {
+    width: 7vh;
+    animation: spin 0.5s cubic-bezier(0.4, 0, 0.3, 1) infinite;
+}
+
+
+
 
 @keyframes spin {
     0% { transform: rotate(0deg); }

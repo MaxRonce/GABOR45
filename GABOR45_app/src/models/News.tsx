@@ -4,5 +4,6 @@ export interface News {
     description: string;
     date_creation: string;
     id_agriculteur: string;
+    lien_image_user: string;
     image?: string;
 }

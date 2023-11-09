@@ -184,7 +184,7 @@ const Farmer_detail_page: React.FC = () => {
                             <div>
                                 <p className="production"><b>Production : </b>{data.description}</p>
                                 {/* Ici, nous ajoutons la section pour les liens de réseaux sociaux */}
-
+                                
 
                             </div>
                         </div>
