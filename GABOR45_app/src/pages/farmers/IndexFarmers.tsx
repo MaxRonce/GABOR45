@@ -14,7 +14,7 @@ const IndexFarmers: React.FC<{ hide: string }> = ({ hide }) => {
   return (
     <IonPage>
       <IonContent>
-        <NabvarComponent setSearchQuery={setSearchQuery} /> {/* Pasar setSearchQuery a NabvarComponent */}
+        <NabvarComponent setSearchQuery={setSearchQuery} /> 
         {searchQuery !== "" ? ( // Si hay un término de búsqueda, mostrar el resultado de la búsqueda
           <FarmerSearchPage searchQuery={searchQuery} />
         ) : ( // De lo contrario, mostrar el contenido por defecto

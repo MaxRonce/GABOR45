@@ -15,7 +15,8 @@ import bloquer from '../../icons/bloquer.svg';
 import showP from '../../icons/showP.svg';
 import hideP from '../../icons/hideP.svg';
 import google from '../../icons/google.svg';
-import LogoGaborComponent from '../../components/LogoGaborComponent';
+import logo_Gabor45 from '../../icons/logo_Gabor45.svg';
+import '../../theme/custom.css'
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>("");
@@ -46,7 +47,8 @@ const Login: React.FC = () => {
           });
           console.log(data);
     
-          if (error) {
+          if (!data) {
+            console.error("Login failed:", error);
             await showToast({ message: 'Error to sigUp', duration: 2000, color: 'danger' });
           } else {
             setPassword('');
@@ -55,8 +57,8 @@ const Login: React.FC = () => {
             // Inicio de sesión exitoso, puedes redirigir a otra página aquí
             history.push('/profile');
           }
-        } catch (error) {
-
+        } catch (error) { 
+            console.error("Unexpected error during login:", error);
             await showToast({ message: 'Error to sigUp', duration: 2000, color: 'danger' });
         }
     };
@@ -107,7 +109,7 @@ const Login: React.FC = () => {
     return (
         <IonPage>
             <IonContent class='ion-text-center'>
-                <LogoGaborComponent />
+                <IonIcon src={logo_Gabor45} className="gabor45-logo" />
                 <IonText className="ion-margin-horizontal text-title">
                     Connexion
                 </IonText>
