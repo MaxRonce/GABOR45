@@ -32,10 +32,30 @@ const Home: React.FC = () => {
                 setNewsList(newsFromService); // newsFromService est déjà de type News[]
         };
         fetchNews();
-    });
+    }, []);
 
     // define the base url for your images
     const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/news/images/";
+    function calcul_temps(newsItem: News): React.ReactNode {
+        //calcul la différence entre la date actuelle et la date de l'évènement et retourne une valeure en jours, heures, minutes ou secondes
+        const date_evenement = new Date(newsItem.date_creation);
+        const date_actuelle = new Date();
+        const diff = date_actuelle.getTime() - date_evenement.getTime();
+        const diff_jours = diff / (1000 * 3600 * 24);
+        const diff_heures = diff / (1000 * 3600);
+        const diff_minutes = diff / (1000 * 60);
+        const diff_secondes = diff / 1000;
+        if (diff_secondes < 60) {
+            return Math.round(diff_secondes) + " secondes";
+        } else if (diff_minutes < 60) {
+            return Math.round(diff_minutes) + " minutes";
+        } else if (diff_heures < 24) {
+            return Math.round(diff_heures) + " heures";
+        } else {
+            return Math.round(diff_jours) + " jours";
+        }
+    }
+
     return (
         <IonPage>
             <IonContent>
@@ -59,6 +79,9 @@ const Home: React.FC = () => {
                         <IonCardContent>
                             {newsItem.description}
                         </IonCardContent>
+                        <p className="distance">
+                            {calcul_temps(newsItem)}
+                        </p>
                     </IonCard>
                 ))}
 
