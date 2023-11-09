@@ -75,7 +75,7 @@ const NabvarComponent = ({ setSearchQuery }: { setSearchQuery: (query: string) =
                     <IonRow>
                         <IonCol size="6" class="custom-center">
                             <div className={navClass(0)} onClick={() => { handleClick(0)}}>
-                                <IonText className="nav-text ion-text-center">Producteurs</IonText>
+                                <IonText className="nav-text ion-text-center">à proximité</IonText>
                             </div>
                         </IonCol>
                         <IonCol size="6" class="custom-center">
