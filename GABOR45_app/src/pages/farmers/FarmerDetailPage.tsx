@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import {IonPage, IonIcon} from "@ionic/react";
+import {IonPage, IonIcon, IonToolbar, IonBackButton, IonButtons} from "@ionic/react";
 import { newspaperOutline } from 'ionicons/icons';
 import { IonAlert } from '@ionic/react';
 import {Farmer} from '../../models/Farmer';
@@ -150,9 +150,13 @@ const Farmer_detail_page: React.FC = () => {
             ) : (
                 data ? (
                     <>
+
                         <div className="image_mask">
                             <img className="farmer_img_round" src={`${baseUrl}${data.lien_image_user}`} alt="Image de l'agriculteur" />
                         </div>
+                        <IonButtons slot="start" className="back_button">
+                            <IonBackButton defaultHref="/farmer" /> {/* Utilisez IonBackButton pour une meilleure gestion de la pile */}
+                        </IonButtons>
                         <div className="header-container">
                             <h1>{data.nom_ferme}</h1>
                         </div>
