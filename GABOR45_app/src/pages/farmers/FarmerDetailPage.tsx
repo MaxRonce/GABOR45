@@ -8,6 +8,7 @@ import {followFarmer, unfollowFarmer} from '../../services/follow_service';
 
 import React, {useEffect, useState} from "react";
 import './FarmerDetailPage.css';
+import './FarmerDetailPage.css';
 import LoadingScreen from "../../components/LoadingScreen";
 import {User} from "@supabase/supabase-js";
 import {useHistory} from "react-router-dom";
@@ -184,7 +185,7 @@ const Farmer_detail_page: React.FC = () => {
                             <div>
                                 <p className="production"><b>Production : </b>{data.description}</p>
                                 {/* Ici, nous ajoutons la section pour les liens de réseaux sociaux */}
-                                
+
 
                             </div>
                         </div>

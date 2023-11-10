@@ -7,7 +7,7 @@ export const getUserWithFarmerSearch = async (prenom: string): Promise<Farmer> =
             prenom_search : prenom
         })
 
-    if (error) console.error(error)
+    if (error) console.error("error:",error)
     else console.log(data)
 
 

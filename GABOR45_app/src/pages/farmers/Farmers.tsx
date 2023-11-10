@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IonContent, IonPage, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg, IonList } from '@ionic/react';
+import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg, IonList } from '@ionic/react';
 import { Farmer } from '../../models/Farmer';
 import { useHistory } from 'react-router-dom';
 import {getUsersWithFarmers} from '../../services/farmerService';
@@ -89,8 +89,9 @@ const FarmerPage: React.FC = () => {
     }, []);
 
     const handleCardClick = (farmerId: string) => {
+        console.log("id: ", farmerId);
         history.push({
-            pathname: `/farmers/${farmerId}`,
+            pathname: `/farmers/producteurs/${farmerId}`,
             state: { farmerId: farmerId }
         });
     };
@@ -102,8 +103,6 @@ const FarmerPage: React.FC = () => {
 
     // @ts-ignore
     return (
-
-        <IonPage>
             <IonContent>
                 <NabvarComponent/>
                 {isLoading ? (
@@ -137,8 +136,6 @@ const FarmerPage: React.FC = () => {
                 </IonList>
                 )}
             </IonContent>
-        </IonPage>
-
     );
 };
 
