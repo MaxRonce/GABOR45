@@ -8,8 +8,10 @@ import { User } from '@supabase/supabase-js';
 import {getUserInfo} from "../../services/userService";
 import { Database} from "../../types/supabase";
 import LoadingScreen from '../../components/LoadingScreen';
+import './Profile.css';
 
 const Profile: React.FC = () => {
+    const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
     const [user, setUser] = useState<User | null>(null);
     const [util, setUtil] = useState<Utilisateur | null>(null)
     const history = useHistory();
@@ -38,14 +40,9 @@ const Profile: React.FC = () => {
             }
         };
 
-        fetchData().then(r => console.log(r));
+        fetchData();
 
-        // Annule la souscription lorsque le composant est démonté
-        return () => {
-            authListener?.subscription.unsubscribe();
-        };
-
-        if (!user) {
+        if (!user && !util) {
             history.push('/login');
         }
 
@@ -54,6 +51,11 @@ const Profile: React.FC = () => {
     const redirectToLogin = () => {
         history.push('/login');
     };
+
+    const redirectToProfileEdit = () => {
+        if (user != null)
+        history.replace(`/profile-edit/${user.id}`);
+    }
 
     const signOut = async () => {
         const { error } = await supabase.auth.signOut();
@@ -70,31 +72,34 @@ const Profile: React.FC = () => {
             {isLoading ? (
                 <LoadingScreen/>
             ) : (
-            <>
-            <IonTitle>
-                {util ? (
+            util ? (
+                <>
+                <div className="image_mask"> 
+                <img className="user_img_round" src={`${baseUrl}${util.lien_image ? util.lien_image : 'default.jfif'}`} alt="Image de l'utilisateur" />
+                </div>
+                <div className="header-container">
                     <h1>
-                        {util.nom}
-                        {util.prenom}
+                        {util.prenom} {util.nom}
                     </h1>
-                ) : null}
-            </IonTitle>
-            <IonContent>
-                {util ? (
-                    <div>
-                        {util.num_tel}
-                        {util.email}
-                        <IonButton>Modifier</IonButton>
-                        <IonButton onClick={signOut}>Se déconnecter</IonButton>
+                </div>
+                <div className='content'>
+                    <div className='information'>
+                        <div className="numTel">{util.num_tel}</div>
+                        <div className="email">{util.email}</div>
                     </div>
-                ) : (
-                    <div>
-                        Vous n'êtes pas connecté.
-                        <IonButton onClick={redirectToLogin}>Se connecter</IonButton>
-                    </div>
-                )}
-            </IonContent>
-            </>)}
+                    <IonButton onClick={redirectToProfileEdit}>Modifier</IonButton>
+                </div>
+                <div className="deconnexion">
+                    <IonButton onClick={signOut}>Déconnexion</IonButton>
+                </div>
+                </>
+            ) : (
+                <div>
+                    Vous n'êtes pas connecté.
+                    <IonButton onClick={redirectToLogin}>Se connecter</IonButton>
+                </div>
+            )
+            )}
         </IonPage>
     );
 };
