@@ -169,7 +169,7 @@ const Farmer_detail_page: React.FC = () => {
                             </button>
                             <button
                                 color="secondary"
-                                onClick={() => history.push(`/news-farmer/${farmerId}`)}
+                                onClick={() => history.push(`/farmers/${farmerId}/news`)}
                             >
                                 <IonIcon slot="start" icon={newspaperOutline} />
                                 News

@@ -37,7 +37,7 @@ const NewsFarmerPage: React.FC = () => {
 
         fetchNews();
     }, [farmerId]);
-
+    console.log(newsList);
     // define the base url for your images
     const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/news/images/";
     return (

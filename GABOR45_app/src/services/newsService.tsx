@@ -3,11 +3,13 @@ import { supabase } from '../supabaseClient';
 import { News } from '../models/News';
 
 export const getNewsByFarmer = async (farmerId: string): Promise<News[]> => {
+    console.log("farmerid", farmerId);
     let { data, error } = await supabase
         .from('news')
         .select('*')
         .eq('id_agriculteur', farmerId);
 
+    console.log("datanews", data);
     if (error) {
         console.error('Error fetching news', error);
         return []; // Retournez un tableau vide en cas d'erreur

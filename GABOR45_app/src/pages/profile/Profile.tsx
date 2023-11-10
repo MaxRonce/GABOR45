@@ -40,7 +40,6 @@ const Profile: React.FC = () => {
             }
         };
 
-        fetchData();
 
         if (!user && !util) {
             history.push('/login');
