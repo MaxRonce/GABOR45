@@ -26,7 +26,6 @@ const RegisterUser: React.FC = () => {
 
     //function to login with email and password
     const handleLogin = async () => {
-        console.log("entra a la funcion");
         try {
           const { data, error } = await supabase.auth.signUp({
             email: email,

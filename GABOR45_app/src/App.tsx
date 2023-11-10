@@ -21,12 +21,14 @@ import Tab3 from './pages/test_tabs_todelete/Tab3';
 import Profile from "./pages/profile/Profile";
 import Login from './pages/authentification/Login';
 import RegisterUser from './pages/authentification/RegisterUser';
-import FarmerPage from './pages/farmers/Farmers';
+import IndexFarmers from './pages/farmers/IndexFarmers';
 import FarmerSearchPage from './pages/farmers/FarmersSearch';
 import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
 import NewsFarmerPage from './pages/farmers/NewsFarmerPage'
 import MyFeedPage from "./pages/events/MyFeedPage";
 import ProfileEdit from "./pages/profile/ProfileEdit";
+import Home from "./pages/Home";
+import MapPage from "./pages/map/Map";
 
 /* Icons imports */
 import home from '../src/icons/home.svg';
@@ -79,18 +81,18 @@ const App: React.FC = () => (
       <IonTabs>
 
         <IonRouterOutlet animation={fadeTransition}>
-          <Route exact path="/home">
+          <Route path="/home" component={Home} exact/>
             <Tab1 />
-          </Route>
           <Route path="/events" component={MyFeedPage} exact/>
 
-          <Route path="/farmers/:farmerId" component={FarmerDetailPage} exact />
-          <Route path="/farmers" component={FarmerPage} exact />
-          <Route path="/farmers/search/:searchQuery" component={FarmerSearchPage} exact />
-          <Route path="/news-farmer/:farmerId" component={NewsFarmerPage} exact />
+            <Route path="/farmers/:page/:farmerId" component={FarmerDetailPage} exact />
+            <Route exact path="/farmers/:page">
+                <IndexFarmers hide="yes" />
+            </Route>
+            <Route path="/farmers/:page/search/:searchQuery" component={FarmerSearchPage} exact />
 
-          <Route exact path="/position">
-            <Tab2 />
+            <Route exact path="/position">
+              <MapPage />
           </Route>
           <Route exact path="/profile">
             <Profile />
@@ -101,6 +103,7 @@ const App: React.FC = () => (
           <Route path="/tab3">
             <Tab3 />
           </Route>
+
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
@@ -121,8 +124,7 @@ const App: React.FC = () => (
           <IonTabButton tab="events" href="/events">
             <IonIcon src={calendar} />
           </IonTabButton>
-
-          <IonTabButton tab="farmers" href="/farmers">
+          <IonTabButton tab="farmers" href="/farmers/producteurs">
             <IonIcon src={farmer} />
           </IonTabButton>
           <IonTabButton tab="position" href="/position">
@@ -131,14 +133,22 @@ const App: React.FC = () => (
           <IonTabButton tab="profile" href="/profile">
             <IonIcon src={user} />
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>DEBUG TAB</IonLabel>
-          </IonTabButton>
+
+
+
+
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>
   </IonApp>
 );
+
+/*
+*
+* <IonTabButton tab="tab3" href="/tab3">
+            <IonIcon aria-hidden="true" icon={square} />
+            <IonLabel>DEBUG TAB</IonLabel>
+          </IonTabButton>
+* */
 
 export default App;

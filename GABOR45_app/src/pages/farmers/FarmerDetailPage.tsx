@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import {IonPage, IonIcon} from "@ionic/react";
+import {IonPage, IonIcon, IonToolbar, IonBackButton, IonButtons} from "@ionic/react";
 import { newspaperOutline } from 'ionicons/icons';
 import { IonAlert } from '@ionic/react';
 import {Farmer} from '../../models/Farmer';
@@ -7,6 +7,7 @@ import {getUserWithFarmer} from "../../services/farmerDetailService";
 import {followFarmer, unfollowFarmer} from '../../services/follow_service';
 
 import React, {useEffect, useState} from "react";
+import './FarmerDetailPage.css';
 import './FarmerDetailPage.css';
 import LoadingScreen from "../../components/LoadingScreen";
 import {User} from "@supabase/supabase-js";
@@ -17,6 +18,8 @@ import facebookIcon from '../../icons/facebook_mini.svg';
 import instagramIcon from '../../icons/instagram_mini.svg';
 import globeIcon from '../../icons/globe.svg';
 
+import { Horaires } from "../../models/Horaires";
+import { getHorairesFerme } from "../../services/horaires_point_de_vente";
 
 
 const Farmer_detail_page: React.FC = () => {
@@ -30,6 +33,7 @@ const Farmer_detail_page: React.FC = () => {
 
     const [isFollowing, setIsFollowing] = useState(false); // Nouvel état pour suivre si l'utilisateur suit l'agriculteur
 
+    const [horairesList, setHorairesList] = useState<Horaires[]>([]); // Utilisez le type Horaires[] pour l'état
 
 
     // Fonction pour vérifier si l'utilisateur suit déjà l'agriculteur
@@ -131,6 +135,13 @@ const Farmer_detail_page: React.FC = () => {
         };
     }, [farmerId]);
 
+    useEffect(() => {
+        const fetchHoraires = async () => {
+            const horairesFromService = await getHorairesFerme(farmerId);
+            setHorairesList(horairesFromService); // horairesFromService est déjà de type Horaires[]
+        };
+        fetchHoraires();
+    }, [farmerId]);
 
     return (
         <IonPage>
@@ -139,9 +150,13 @@ const Farmer_detail_page: React.FC = () => {
             ) : (
                 data ? (
                     <>
+
                         <div className="image_mask">
                             <img className="farmer_img_round" src={`${baseUrl}${data.lien_image_user}`} alt="Image de l'agriculteur" />
                         </div>
+                        <IonButtons slot="start" className="back_button">
+                            <IonBackButton defaultHref="/farmer" /> {/* Utilisez IonBackButton pour une meilleure gestion de la pile */}
+                        </IonButtons>
                         <div className="header-container">
                             <h1>{data.nom_ferme}</h1>
                         </div>
@@ -184,9 +199,26 @@ const Farmer_detail_page: React.FC = () => {
                             <div>
                                 <p className="production"><b>Production : </b>{data.description}</p>
                                 {/* Ici, nous ajoutons la section pour les liens de réseaux sociaux */}
-
-
                             </div>
+
+
+                                {horairesList != null && (
+                            <div>
+                                <b>Horaires : </b>
+                                <table className="horaires">
+                                    
+                                    <tbody>
+                                        {horairesList && horairesList.map((horairesItem: Horaires) => (
+                                            <tr key={horairesItem.id_horaires}>
+                                                <td><b>{horairesItem.jour}</b> : </td>
+                                                <td>{horairesItem.heure_debut_matin?.slice(0,5)}-{horairesItem.heure_fin_matin?.slice(0,5)}</td>
+                                                <td>{horairesItem.heure_debut_apres_midi?.slice(0,5)}-{horairesItem.heure_fin_apres_midi?.slice(0,5)}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                            )}
                         </div>
                     </>
                 ) : (
