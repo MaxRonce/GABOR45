@@ -199,30 +199,26 @@ const Farmer_detail_page: React.FC = () => {
                             <div>
                                 <p className="production"><b>Production : </b>{data.description}</p>
                                 {/* Ici, nous ajoutons la section pour les liens de réseaux sociaux */}
-
-
                             </div>
+
+
+                                {horairesList != null && (
                             <div>
-                                <p className="production"><b>Horaires : </b></p>
+                                <b>Horaires : </b>
                                 <table className="horaires">
-                                    <thead>
-                                        <tr>
-                                            <th>Jour</th>
-                                            <th>Matin</th>
-                                            <th>Après-midi</th>
-                                        </tr>
-                                    </thead>
+                                    
                                     <tbody>
-                                        {horairesList.map((horairesItem: Horaires) => (
+                                        {horairesList && horairesList.map((horairesItem: Horaires) => (
                                             <tr key={horairesItem.id_horaires}>
-                                                <td>{horairesItem.jour}</td>
-                                                <td>{horairesItem.heure_debut_matin} - {horairesItem.heure_fin_matin}</td>
-                                                <td>{horairesItem.heure_debut_apres_midi} - {horairesItem.heure_fin_apres_midi}</td>
+                                                <td><b>{horairesItem.jour}</b> : </td>
+                                                <td>{horairesItem.heure_debut_matin?.slice(0,5)}-{horairesItem.heure_fin_matin?.slice(0,5)}</td>
+                                                <td>{horairesItem.heure_debut_apres_midi?.slice(0,5)}-{horairesItem.heure_fin_apres_midi?.slice(0,5)}</td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
                             </div>
+                            )}
                         </div>
                     </>
                 ) : (
