@@ -42,10 +42,6 @@ const Tab3: React.FC = () => {
     // Un lieu spécifique, par exemple la Tour Eiffel 48.85835473209913, 2.2944613664788105
     const destination = { latitude: 48.85835473209913, longitude: 2.2944613664788105 };
 
-    // Calculer la distance.Tsx
-    const distance = userLocation
-        ? calculateDistance(userLocation.latitude, userLocation.longitude, destination.latitude, destination.longitude)
-        : null;
 
     // Embedded Map with adjusted style
     const mapIframe = `

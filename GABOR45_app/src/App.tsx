@@ -26,6 +26,7 @@ import FarmerSearchPage from './pages/farmers/FarmersSearch';
 import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
 import NewsFarmerPage from './pages/farmers/NewsFarmerPage'
 import MyFeedPage from "./pages/events/MyFeedPage";
+import MapPage from "./pages/map/Map";
 
 /* Icons imports */
 import home from '../src/icons/home.svg';
@@ -90,14 +91,16 @@ const App: React.FC = () => (
             <Route path="/farmers/:page/search/:searchQuery" component={FarmerSearchPage} exact />
 
             <Route exact path="/position">
-            <Tab2 />
+              <MapPage />
           </Route>
           <Route exact path="/profile">
             <Profile />
           </Route>
+
           <Route path="/tab3">
             <Tab3 />
           </Route>
+
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
@@ -127,14 +130,22 @@ const App: React.FC = () => (
           <IonTabButton tab="profile" href="/profile">
             <IonIcon src={user} />
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>DEBUG TAB</IonLabel>
-          </IonTabButton>
+
+
+
+
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>
   </IonApp>
 );
+
+/*
+*
+* <IonTabButton tab="tab3" href="/tab3">
+            <IonIcon aria-hidden="true" icon={square} />
+            <IonLabel>DEBUG TAB</IonLabel>
+          </IonTabButton>
+* */
 
 export default App;
