@@ -121,3 +121,25 @@ ion-img img {
     text-align: right;
 }
 
+.back_button {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    z-index: 100;
+    color: white; /* Cela définit la couleur de la flèche sur blanc */
+    background: transparent; /* Rend l'arrière-plan du bouton transparent */
+    border: none; /* Supprime les bordures par défaut si elles existent */
+    box-shadow: none; /* Supprime les ombres par défaut si elles existent */
+}
+
+/* Style pour l'effet de pression sur le bouton de retour */
+.back_button:active {
+    background: rgba(255, 255, 255, 0.2); /* Légère teinte blanche pour le feedback de pression */
+    transition: background-color 0.3s; /* Transition douce pour le changement de couleur */
+}
+
+/* Vous pouvez également cibler spécifiquement l'icône à l'intérieur du bouton si nécessaire */
+.back_button .button-inner {
+    color: white; /* Cela s'assure que le texte ou les icônes à l'intérieur du bouton sont également blancs */
+}
+

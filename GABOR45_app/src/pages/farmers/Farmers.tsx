@@ -104,7 +104,6 @@ const FarmerPage: React.FC = () => {
     // @ts-ignore
     return (
             <IonContent>
-                <NabvarComponent/>
                 {isLoading ? (
                     <LoadingScreen />
                 ) : (
