@@ -26,6 +26,7 @@ import FarmerSearchPage from './pages/farmers/FarmersSearch';
 import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
 import NewsFarmerPage from './pages/farmers/NewsFarmerPage'
 import MyFeedPage from "./pages/events/MyFeedPage";
+import ProfileEdit from "./pages/profile/ProfileEdit";
 import Home from "./pages/Home";
 import MapPage from "./pages/map/Map";
 
@@ -96,7 +97,9 @@ const App: React.FC = () => (
           <Route exact path="/profile">
             <Profile />
           </Route>
-
+          <Route exact path="profile-edit/:user.id">
+            <ProfileEdit />
+          </Route>
           <Route path="/tab3">
             <Tab3 />
           </Route>
