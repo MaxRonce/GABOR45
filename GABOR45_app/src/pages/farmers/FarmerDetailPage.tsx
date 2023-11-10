@@ -18,6 +18,8 @@ import facebookIcon from '../../icons/facebook_mini.svg';
 import instagramIcon from '../../icons/instagram_mini.svg';
 import globeIcon from '../../icons/globe.svg';
 
+import { Horaires } from "../../models/Horaires";
+import { getHorairesFerme } from "../../services/horaires_point_de_vente";
 
 
 const Farmer_detail_page: React.FC = () => {
@@ -31,6 +33,7 @@ const Farmer_detail_page: React.FC = () => {
 
     const [isFollowing, setIsFollowing] = useState(false); // Nouvel état pour suivre si l'utilisateur suit l'agriculteur
 
+    const [horairesList, setHorairesList] = useState<Horaires[]>([]); // Utilisez le type Horaires[] pour l'état
 
 
     // Fonction pour vérifier si l'utilisateur suit déjà l'agriculteur
@@ -132,6 +135,13 @@ const Farmer_detail_page: React.FC = () => {
         };
     }, [farmerId]);
 
+    useEffect(() => {
+        const fetchHoraires = async () => {
+            const horairesFromService = await getHorairesFerme(farmerId);
+            setHorairesList(horairesFromService); // horairesFromService est déjà de type Horaires[]
+        };
+        fetchHoraires();
+    }, [farmerId]);
 
     return (
         <IonPage>
@@ -187,6 +197,27 @@ const Farmer_detail_page: React.FC = () => {
                                 {/* Ici, nous ajoutons la section pour les liens de réseaux sociaux */}
 
 
+                            </div>
+                            <div>
+                                <p className="production"><b>Horaires : </b></p>
+                                <table className="horaires">
+                                    <thead>
+                                        <tr>
+                                            <th>Jour</th>
+                                            <th>Matin</th>
+                                            <th>Après-midi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {horairesList.map((horairesItem: Horaires) => (
+                                            <tr key={horairesItem.id_horaires}>
+                                                <td>{horairesItem.jour}</td>
+                                                <td>{horairesItem.heure_debut_matin} - {horairesItem.heure_fin_matin}</td>
+                                                <td>{horairesItem.heure_debut_apres_midi} - {horairesItem.heure_fin_apres_midi}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </>

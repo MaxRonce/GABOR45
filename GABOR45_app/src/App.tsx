@@ -26,6 +26,7 @@ import FarmerSearchPage from './pages/farmers/FarmersSearch';
 import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
 import NewsFarmerPage from './pages/farmers/NewsFarmerPage'
 import MyFeedPage from "./pages/events/MyFeedPage";
+import Home from "./pages/Home";
 
 /* Icons imports */
 import home from '../src/icons/home.svg';
@@ -78,9 +79,8 @@ const App: React.FC = () => (
       <IonTabs>
 
         <IonRouterOutlet animation={fadeTransition}>
-          <Route exact path="/home">
+          <Route path="/home" component={Home} exact/>
             <Tab1 />
-          </Route>
           <Route path="/events" component={MyFeedPage} exact/>
 
             <Route path="/farmers/:page/:farmerId" component={FarmerDetailPage} exact />
