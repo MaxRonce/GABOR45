@@ -91,7 +91,7 @@ const App: React.FC = () => (
             </Route>
             <Route path="/farmers/:page/search/:searchQuery" component={FarmerSearchPage} exact />
 
-            <Route path="/farmers/:farmerId/news" component={NewsFarmerPage} exact />
+            <Route path="/farmers/:page/:farmerId/news" component={NewsFarmerPage} exact />
 
             <Route exact path="/position">
               <MapPage />
