@@ -53,8 +53,11 @@ const Profile: React.FC = () => {
     };
 
     const redirectToProfileEdit = () => {
-        if (user != null)
-        history.push(`/profile-edit/${user.id}`);
+        if (user) {
+            history.push(`/profile_edit/${user.id}`);
+        } else {
+            history.push('/login');
+        }
     }
 
     const signOut = async () => {
@@ -74,6 +77,7 @@ const Profile: React.FC = () => {
                     <div>
                         Bonjour {user.email}
                         <IonButton onClick={signOut}>Se déconnecter</IonButton>
+                        <IonButton onClick={redirectToProfileEdit}> Edit </IonButton>
                     </div>
                 ) : (
                     <div>
