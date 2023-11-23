@@ -86,7 +86,7 @@ const App: React.FC = () => (
 
             <Route path="/farmers/:page/:farmerId" component={FarmerDetailPage} exact />
             <Route exact path="/farmers/:page">
-                <IndexFarmers hide="yes" />
+                <IndexFarmers/>
             </Route>
             <Route path="/farmers/:page/search/:searchQuery" component={FarmerSearchPage} exact />
 
@@ -130,10 +130,6 @@ const App: React.FC = () => (
           <IonTabButton tab="profile" href="/profile">
             <IonIcon src={user} />
           </IonTabButton>
-
-
-
-
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>
