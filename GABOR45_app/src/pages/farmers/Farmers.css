@@ -32,6 +32,7 @@ ion-list {
 }
 .category-container {
     flex-basis: 50%; /* Ajusta según tus necesidades, puede ser 50% también */
+    margin-bottom: -15px; /* Para compensar el padding de la lista */
 }
 
 
@@ -77,6 +78,7 @@ ion-card-content{
     .category-title{white-space: nowrap !important; overflow: hidden !important;
          text-overflow: ellipsis !important; font-size: small !important;} 
     .category-card{max-width: 200px;}
+    
 
 }
 
@@ -85,6 +87,7 @@ ion-card-content{
     .nom_prenom_agri{font-size: small!important;}
 
 }
+
 
 
 .farm_name{
