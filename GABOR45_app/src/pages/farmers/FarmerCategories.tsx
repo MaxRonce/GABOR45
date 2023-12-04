@@ -1,14 +1,18 @@
 import {IonList, IonCard, IonCardContent, IonContent, IonCardHeader, IonCardTitle, IonImg} from '@ionic/react';
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import './Farmers.css';
 import { supabase } from '../../supabaseClient';
 import LoadingScreen from "../../components/LoadingScreen";
+interface FarmerCategoriesProps {
+    selectedCategory: string | null;
+    onSelectCategory: (category: string) => void;
+  }
 
-
-const FarmerCategories= () => { 
+const FarmerCategories: React.FC<FarmerCategoriesProps> = ({ selectedCategory, onSelectCategory }) => {
     const [categories, setCategories] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-
+    const history = useHistory(); // Ajoutez cette ligne
     const getCategories = async () => {
         try {
             let { data, error } = await supabase
@@ -42,8 +46,9 @@ const FarmerCategories= () => {
     }, []); 
     const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/categories/images/";
   
-    const handleCardClick = (farmerId: string) => {
-        console.log("id: ", farmerId);
+    const handleCardClick = (categoryId: string) => {
+        console.log("id: ", categoryId);
+        onSelectCategory(categoryId);
     };
 
     return (

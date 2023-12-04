@@ -8,13 +8,27 @@ import arrowLeft from '../../icons/arrowLeft.svg';
 import search from '../../icons/search.svg';
 import FarmerCategories from './FarmerCategories';
 import FarmerSearchPage from './FarmersSearch';
+import FarmersByCategory from './FarmersByCategory';
 
 const IndexFarmers: React.FC = () => {
   const [page, setPage] = useState<string>("producteurs"); // Estado para la página actual [producteurs, produits
   const [searchQuery, setSearchQuery] = useState<string>(""); // Estado para el término de búsqueda
   const [isActive, setIsActive] = useState([true, false]); 
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  useEffect(() => {
+    // reset the page when the component is loaded
+    const handleBeforeUnload = () => {  
+        setPage("producteurs");
+        setSearchQuery("");
+        setIsActive([true, false]);
+        setSelectedCategory(null);
+    };
+    window.addEventListener('focusout', handleBeforeUnload);
+  }, []);
     //control the button active
     const handleClick = (index:any) => {
+        setSelectedCategory(null);
         const updateActive = [...isActive];
         updateActive[index] = !updateActive[index];
         for (let i = 0; i < updateActive.length; i++) {
@@ -51,7 +65,13 @@ const IndexFarmers: React.FC = () => {
     }
     const handleBack = () => {
         setSearchQuery("");
+        setPage("producteurs");
+        setSelectedCategory(null);
     }
+    const showFarmersCategory =( category: string) => {
+        setSelectedCategory(category);
+        setPage("");
+        }
 
 
       const navClass = (index:any) => `nav-line ${isActive[index] ? 'active' : ''}`;
@@ -93,7 +113,9 @@ const IndexFarmers: React.FC = () => {
         ) : ( // De lo contrario, mostrar el contenido por defecto
           <>
             {page === 'producteurs' ? <FarmerPage /> : null}
-            {page === 'produits' ? <FarmerCategories /> : null}
+            {page === 'produits' ? <FarmerCategories selectedCategory={selectedCategory}
+                onSelectCategory={(category) => showFarmersCategory(category)}/> : null}
+            {selectedCategory ? <FarmersByCategory categoryId={selectedCategory} /> : null}
           </>
         )}
       </IonContent>
