@@ -82,6 +82,8 @@ const App: React.FC = () => (
 
                 <IonRouterOutlet animation={fadeTransition}>
 
+                    <Route path="/home" component={Home} exact/>
+
                     <Route path="/events" component={MyFeedPage} exact/>
 
                     <Route path="/farmers/:page/:farmerId" component={FarmerDetailPage} exact/>
