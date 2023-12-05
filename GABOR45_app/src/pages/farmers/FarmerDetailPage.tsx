@@ -102,7 +102,7 @@ const Farmer_detail_page: React.FC = () => {
             }
         };
 
-        checkIfUserIsFollowing();
+        checkIfUserIsFollowing().then(r => console.log(r));
     }, [user, farmerId]);
 
     useEffect(() => {
