@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 * {
@@ -15,6 +14,7 @@ ion-content {
     justify-content: center; /* Centrage vertical */
     align-items: center; /* Centrage horizontal */
     background-color: #F6FCFB;
+    
 }
 
 
@@ -26,7 +26,20 @@ ion-list {
     width: 100%; /* La liste prend toute la largeur */
 }
 
+.categories-card {
+    padding: 10px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    flex: 1;
+    height: 85%;
+    margin-top: 10px;
 
+}
+.category-container {
+    flex-basis: 50%; /* Ajusta según tus necesidades, puede ser 50% también */
+
+
+}
 
 
 /* Style pour la carte */
@@ -50,17 +63,39 @@ ion-list {
 
 }
 
-
-
 ion-card-content{
     margin-left: 0 !important;
     padding-left: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+.category-content {
+    padding: 0% !important;
+    height: 80% !important;
+}
+.category-card {
+    height: 90% !important;
+     
+}
+
+.category-title {
+    margin-top: 10px !important;
 }
 
 @media (max-height: 825px) {
     .farm_name{font-size: large!important;}
     .nom_prenom_agri{font-size: small!important;}
 
+}
+@media (max-width: 425px) {
+    .category-title{white-space: nowrap !important; overflow: hidden !important;
+         text-overflow: ellipsis !important; font-size: large !important;} 
+    .category-card{max-width: 180px;}    
+}
+@media (max-width: 375px) {
+    .category-card{max-width: 150px;}
+}
+@media (min-width: 375px) {
 }
 
 @media (min-height: 825px) {
@@ -70,10 +105,12 @@ ion-card-content{
 }
 
 
+
 .farm_name{
     font-weight: bolder;
     color: #164550;
 }
+
 
 .nom_prenom_agri{
     font-weight: normal!important;
@@ -97,6 +134,11 @@ ion-card-content{
 
 }
 
+.categorie_img {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
 
 ion-img {
@@ -115,6 +157,9 @@ ion-img img {
 .farmer-info {
     flex: 2; /* Prend deux fois plus d'espace que farmer-image */
     padding-left: 10px;
+    height: 100%; /* Prend toute la hauteur de la carte */
+    background-color: red;
+    padding-bottom: 10px;
 }
 
 .distance{

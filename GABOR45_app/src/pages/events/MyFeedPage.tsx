@@ -19,6 +19,7 @@ import logo from '../../assets/logo_Gabor45_notxt.svg'; // Assurez-vous que le c
 import '../farmers/NewsFarmerPage.css';
 import '../../components/LoadingScreen.css';
 import './MyFeedPage.css'
+import {Link, useHistory} from 'react-router-dom';
 
 
 
@@ -28,6 +29,7 @@ const MyFeedPage: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedImage, setSelectedImage] = useState('');
     const [isRefreshing, setIsRefreshing] = useState(false);
+    const history = useHistory(); // Ajoutez cette ligne
 
     const openImageModal = (imageUrl: string) => {
         setSelectedImage(imageUrl);
@@ -80,11 +82,20 @@ const MyFeedPage: React.FC = () => {
     };
 
     const fetchNews = async () => {
-        // Fonction pour récupérer les nouvelles, similaire à celle utilisée dans useEffect
+        // Fonction to get the news for the user
         if (user) {
             const newsFromService = await getNewsForUser(user.id);
             setNewsList(newsFromService);
         }
+    };
+
+    //function to handle click on farmer card and redirect to farmer page
+    const redirectToFarmerProfile = (farmerId: string) => {
+        console.log("id: ", farmerId);
+        history.push({
+            pathname: `/farmers/producteurs/${farmerId}`,
+            state: { farmerId: farmerId }
+        });
     };
 
 
@@ -110,7 +121,7 @@ const MyFeedPage: React.FC = () => {
                                 <div className="title_containter">
                                 <div className="avatar-container">
                                     <IonAvatar>
-                                        <img src={`${user_baseUrl}${newsItem.lien_image_user}`} alt="Profile" />
+                                        <img src={`${user_baseUrl}${newsItem.lien_image_user}`} alt="Profile" onClick={() => redirectToFarmerProfile(newsItem.id_agriculteur)} />
                                     </IonAvatar>
                                 </div>
                                 <IonLabel>{newsItem.nom_evenement}</IonLabel>
