@@ -11,6 +11,9 @@ ion-searchbar.searchBar {
     --icon-color: transparent;
 
 }
+.searchbar-input.sc-ion-searchbar-md {
+    padding-left: 15px !important; 
+}
 
 
 

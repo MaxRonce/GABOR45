@@ -4,7 +4,7 @@
     font-family: 'Poppins', sans-serif;
     font-style: normal;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     color: #000000;
 }
 
@@ -26,6 +26,24 @@
     text-align: center;
     margin: 1vh 0.5vh;
     cursor: pointer;
-    width: 10vh;
+    width: 8vh;
 
+}
+
+@media (min-width: 425px) {
+    .button-category {
+        width: 10vh;
+    }
+    .title-category {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 350px) {
+    .button-category {
+        width: 7vh;
+    }
+    .title-category {
+        font-size: 15px;
+    }
 }

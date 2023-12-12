@@ -11,8 +11,8 @@ import FarmerSearchPage from './FarmersSearch';
 import FarmersByCategory from './FarmersByCategory';
 
 const IndexFarmers: React.FC = () => {
-  const [page, setPage] = useState<string>("producteurs"); // Estado para la página actual [producteurs, produits
-  const [searchQuery, setSearchQuery] = useState<string>(""); // Estado para el término de búsqueda
+  const [page, setPage] = useState<string>("producteurs"); // State for the initial page [producteurs, produits
+  const [searchQuery, setSearchQuery] = useState<string>(""); // State for the search query
   const [isActive, setIsActive] = useState([true, false]); 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
@@ -46,7 +46,7 @@ const IndexFarmers: React.FC = () => {
       };
     //handle the button produits
     const handleProduit = () => {
-        const page = 'produits';
+        const page = 'categories';
         setPage(page);
     }
     //handle the button nearby
@@ -60,7 +60,9 @@ const IndexFarmers: React.FC = () => {
         if (value) {
             const searchQuery = value.toLowerCase();
             setSearchQuery(searchQuery);
-    
+        }
+        else {
+            setSearchQuery("");
         }
     }
     const handleBack = () => {
@@ -83,8 +85,8 @@ const IndexFarmers: React.FC = () => {
                 <IonItem lines="none" className="ion-margin-top">
                     <IonIcon src={arrowLeft} onClick={handleBack} className='nav-icon ion-icon' />
                     <IonSearchbar placeholder="SEARCH"
-                        value={""}
-                        onIonChange={(e) => handleSearch(e.detail.value)}
+                        value={searchQuery}
+                        onKeyDown={(e) => handleSearch(e.currentTarget.value)}
                         className="ion-justify-content-end searchBar">
                         <IonIcon src={search} slot="end" className="search-icon"/>
                     </IonSearchbar>
@@ -108,12 +110,12 @@ const IndexFarmers: React.FC = () => {
             </IonToolbar>
         </IonHeader>
       <IonContent>
-        {searchQuery !== "" ? ( // Si hay un término de búsqueda, mostrar el resultado de la búsqueda
-          <FarmerSearchPage searchQuery={searchQuery} />
-        ) : ( // De lo contrario, mostrar el contenido por defecto
+        {searchQuery !== "" ? ( // if searchQuery is not empty, show the search page
+          <FarmerSearchPage searchQuery={searchQuery} page={page} />
+        ) : ( // else show the page selected
           <>
             {page === 'producteurs' ? <FarmerPage /> : null}
-            {page === 'produits' ? <FarmerCategories selectedCategory={selectedCategory}
+            {page === 'categories' ? <FarmerCategories selectedCategory={selectedCategory}
                 onSelectCategory={(category) => showFarmersCategory(category)}/> : null}
             {selectedCategory ? <FarmersByCategory categoryId={selectedCategory} /> : null}
           </>

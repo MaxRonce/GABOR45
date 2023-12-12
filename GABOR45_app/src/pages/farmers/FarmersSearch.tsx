@@ -6,7 +6,7 @@ import { Farmer } from '../../models/Farmer';
 import { useHistory } from 'react-router-dom';
 import {getUserWithFarmerSearch} from '../../services/searchBarService';
 
-const FarmerSearchPage : React.FC<{ searchQuery: string }> = ({ searchQuery }) => {
+const FarmerSearchPage : React.FC<{ searchQuery: string, page: string }> = ({ searchQuery, page }) => {
     const [id, setId] = useState<string>("");
     const [data, setData] = useState<Farmer | null>(null);
     const history = useHistory(); // Ajoutez cette ligne
@@ -16,20 +16,21 @@ const FarmerSearchPage : React.FC<{ searchQuery: string }> = ({ searchQuery }) =
         const fetchData = async () => {
             const query = "%" + searchQuery + "%";
             console.log("query", query);
-            const userData = await getUserWithFarmerSearch(query);
+            let userData = null;
+            if (page === "producteurs") {
+              console.log("page producteurs");
+              userData = await getUserWithFarmerSearch(query);
+              setData(userData);
+              setId(userData.id_utilisateur);
+            }else {
+              console.log("page categorires");
+            }
             console.log("data c", userData);
             setData(userData);
-            if (Array.isArray(userData)) {
-              // Si hay varios resultados, selecciona el primero por defecto
-              setId(userData[0].id_utilisateur);
-            } else {
-              // Si solo hay un resultado, selecciona ese
-              setId(userData.id_utilisateur);
-            }
           };
           console.log("dataUse: ", data);
         fetchData().then(r => console.log("data", r));
-    }, []);
+    }, [searchQuery]);
 
     const handleCardClick = (farmerId: string) => {
       console.log("id: ", farmerId);

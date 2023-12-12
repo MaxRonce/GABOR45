@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import './Farmers.css';
 import { supabase } from '../../supabaseClient';
 import LoadingScreen from "../../components/LoadingScreen";
+// interface for the props of the component
 interface FarmerCategoriesProps {
     selectedCategory: string | null;
     onSelectCategory: (category: string) => void;
@@ -12,7 +13,8 @@ interface FarmerCategoriesProps {
 const FarmerCategories: React.FC<FarmerCategoriesProps> = ({ selectedCategory, onSelectCategory }) => {
     const [categories, setCategories] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const history = useHistory(); // Ajoutez cette ligne
+    const history = useHistory(); 
+    // function to get the categories from the database
     const getCategories = async () => {
         try {
             let { data, error } = await supabase
@@ -33,6 +35,7 @@ const FarmerCategories: React.FC<FarmerCategoriesProps> = ({ selectedCategory, o
         
     };
 
+    // useEffect to get the categories from the database
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);

@@ -1,8 +1,7 @@
-import {IonList, IonCard, IonCardContent, IonContent, IonCardHeader, IonCardTitle, IonImg, IonTitle, IonButton} from '@ionic/react';
+import {IonList, IonCard, IonCardContent, IonContent, IonCardHeader, IonCardTitle, IonImg, IonTitle, IonButton, IonText} from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Categories.css';
-import { supabase } from '../../supabaseClient';
 import LoadingScreen from "../../components/LoadingScreen";
 import {getUsersWithFarmersByCategory} from '../../services/CategorieService';
 import { Farmer } from '../../models/Farmer';
@@ -34,13 +33,13 @@ const FarmersByCategory: React.FC<{ categoryId: string }> = ({ categoryId }) => 
     const history = useHistory(); // Ajoutez cette ligne
     const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
 
+    // function to get the categories from the database
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
             const cate = await getUsersWithFarmersByCategory(categoryId);
             console.log("data: ", cate);
             setData(cate);
-            console.log("dataC: ", data);
             setIsLoading(false);
         };
 
@@ -64,6 +63,11 @@ const FarmersByCategory: React.FC<{ categoryId: string }> = ({ categoryId }) => 
                 ) : (
                     <>
                     {data != null ? (
+                        <>
+                        <div className='header-content'>
+                            <IonText className="title-category">Agriculteurs producteurs de : </IonText>
+                            <IonText className='button-category'>{data[0].type_produit_principal}</IonText>
+                        </div>
                         <IonList>
                             {data.map(farmer => (
                                 <div key={farmer.id_utilisateur} onClick={() => handleCardClick(farmer.id_utilisateur)}>
@@ -89,6 +93,7 @@ const FarmersByCategory: React.FC<{ categoryId: string }> = ({ categoryId }) => 
                                 </div>
                             ))}
                         </IonList>
+                        </>
                     ) : (
                         <p>Aucun agriculteur disponible dans cette catégorie.</p>
                     )}
