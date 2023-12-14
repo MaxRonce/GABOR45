@@ -1,0 +1,202 @@
+/* FarmerDetailPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+.ion-page {
+    display: block !important;
+}
+
+*{
+    font-family: 'Poppins', sans-serif;  /* Assurez-vous d'importer cette police */
+}
+
+/* Conteneur pour le rectangle vert et le nom/prénom */
+.header-container {
+    display: flex;
+    align-items: center;
+    background-color: #4CAF50; /* Couleur verte */
+    height: 19%;
+    padding-left:50%;
+
+    /*align item on the right*/
+    justify-content: flex-end;
+    padding-right: 5%;
+}
+h1 {
+    color: white;
+    font-weight: 700 !important;
+    font-size: xx-large !important;
+
+    font-family: 'Poppins', sans-serif;  /* Assurez-vous d'importer cette police */
+}
+
+
+.farmer_img_round {
+
+    width: 100%;
+}
+
+.image_mask {
+
+    margin-left: 5%;
+    margin-top: 5%;
+    display: inline-block;
+
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 9999;
+    position: absolute;
+}
+@media (max-width: 500px) {
+    .farmer_img_round {
+        width: 100%;
+    }
+    .image_mask {
+
+        width: 40vw;
+        height: 40vw;
+    }
+}
+
+@media (min-width: 500px) {
+    .farmer_img_round {
+        width: 100%;
+    }
+    .image_mask {
+        margin-left: 2%;
+        margin-top: 2%;
+        width: 25vh;
+        height: 25vh;
+    }
+    .header-container {
+        padding-left:30%;
+        justify-content: flex-start;
+
+    }
+
+    h1{
+        font-size: xxx-large!important;
+    }
+
+}
+
+
+
+
+.IonCardTitle {
+    margin-left: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.button_rows{
+    margin:0 !important;
+    padding:0!important;
+}
+
+.button_rows {
+    display: flex;               /* Display buttons in a row */
+    justify-content: space-between;  /* Distribute the buttons evenly */
+    margin-left: 50% !important;            /* Start from the middle of the page */
+    margin-top: -10px;           /* Adjust as needed to position right below the green rectangle */
+    /* Space between the buttons */
+}
+
+/* Adjust the width of the individual buttons */
+button {
+    width: 45%;                  /* Adjusted width to fit two buttons in a row with a gap */
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+
+}
+
+button[color="secondary"] {
+    background-color: #164550;  /* Couleur verte */
+    color: white;
+    border-radius: 43px;
+    padding-left: 3px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+
+}
+
+.IonIcon {
+    margin-right: 5px;
+}
+
+
+/* Style pour le bouton non suivi */
+.follow_button {
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border: 2px solid #03A852;
+    padding: 5px;
+    border-radius: 43px;
+    color: #03a852;
+
+}
+
+/* Style pour le bouton quand l'utilisateur suit déjà */
+.follow_button.followed {
+    box-sizing: border-box;
+    background: #03a852;
+    border: 2px solid #03a852;
+    padding: 5px;
+    border-radius: 43px;
+    color: white;
+}
+
+
+
+
+h2{
+    padding : 0;
+    margin: 0;
+    color : #164550;
+    font-weight: bolder!important;
+}
+
+.page_content{
+    padding: 5%;
+}
+
+.production{
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-top: #164550 solid 1px;
+    border-bottom: #164550 solid 1px;
+}
+.social-media-links {
+    display: flex; /* Alignez les icônes horizontalement */
+        align-items: center; /* Alignez verticalement les icônes au centre */
+    margin-top: 10px; /* Espacement au-dessus des icônes */
+}
+
+.social-media-links a {
+    display: inline-block; /* Assurez-vous que les liens sont alignés horizontalement */
+    margin-right: 10px; /* Espacement autour des liens */
+
+}
+
+
+.social-media-links img {
+    width: 24px; /* Taille des icônes */
+    height: auto; /* Gardez le ratio de l'image */
+    fill: #164550; /* Cette propriété ne fonctionnera pas pour un élément img */
+}
+
+/* Assurez-vous que les liens des icônes SVG changent de couleur */
+.social-media-links a {
+    color: #164550; /* Couleur des liens */
+}
+
+/* Utilisez une classe pour changer la couleur des icônes SVG */
+.icon-svg {
+    filter: invert(23%) sepia(95%) saturate(1352%) hue-rotate(184deg) brightness(89%) contrast(88%);
+}

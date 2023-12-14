@@ -1,0 +1,19 @@
+{
+    "root": "apps/GABOR45/",
+    "sourceRoot": "apps/GABOR45/src",
+    "projectType": "application",
+
+    "targets": {
+      "test": {
+        "executor": "@nx/jest:jest",
+        "options": {
+        }
+      },
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+            "command": "tsc && vite build"
+        }
+      }
+    }
+}
