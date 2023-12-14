@@ -27,7 +27,10 @@
     margin: 1vh 0.5vh;
     cursor: pointer;
     width: 8vh;
-
+    white-space: nowrap !important; 
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    flex-grow: 1 !important;
 }
 
 @media (min-width: 425px) {

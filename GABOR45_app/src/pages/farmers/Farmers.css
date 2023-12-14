@@ -31,7 +31,7 @@ ion-list {
     flex-wrap: wrap;
     flex-direction: row;
     flex: 1;
-    margin-top: 10px;
+    height: 90% !important;
 
 }
 .category-container {
@@ -78,6 +78,7 @@ ion-card-content{
 
 .category-title {
     margin-top: 10px !important;
+    height: 100% !important;
 }
 
 @media (max-height: 825px) {
@@ -85,9 +86,9 @@ ion-card-content{
     .nom_prenom_agri{font-size: small!important;}
 
 }
-@media (max-width: 400px) {
+@media (max-width: 430px) {
     .category-title{white-space: nowrap !important; overflow: hidden !important;
-         text-overflow: ellipsis !important; font-size: large !important;} 
+         text-overflow: ellipsis !important; font-size: large !important; flex-grow: 1 !important;} 
     .category-card{max-width: 180px;}   
     .farm_name{font-size: medium!important;} 
     .nom_prenom_agri {
