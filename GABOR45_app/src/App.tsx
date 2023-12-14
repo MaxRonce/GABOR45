@@ -3,15 +3,15 @@ import './theme/custom.css';
 import {Redirect, Route} from 'react-router-dom';
 /* Theme variables */
 import {
-  createAnimation,
-  IonApp,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
-  setupIonicReact
+    createAnimation,
+    IonApp,
+    IonIcon,
+    IonLabel,
+    IonRouterOutlet,
+    IonTabBar,
+    IonTabButton,
+    IonTabs,
+    setupIonicReact
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
 import {square} from 'ionicons/icons';
@@ -56,19 +56,19 @@ import '@ionic/react/css/display.css';
 
 
 export const fadeTransition = (rootElement: any) => {
-  const enteringAnimation = createAnimation()
-      .addElement(document.createElement('div')) // Ajout d'un élément vide
-      .duration(100)
-      .fromTo('opacity', '0', '1');
+    const enteringAnimation = createAnimation()
+        .addElement(document.createElement('div')) // Ajout d'un élément vide
+        .duration(100)
+        .fromTo('opacity', '0', '1');
 
-  const leavingAnimation = createAnimation()
-      .addElement(document.createElement('div')) // Ajout d'un élément vide
-      .duration(100)
-      .fromTo('opacity', '1', '0');
+    const leavingAnimation = createAnimation()
+        .addElement(document.createElement('div')) // Ajout d'un élément vide
+        .duration(100)
+        .fromTo('opacity', '1', '0');
 
-  return createAnimation()
-      .duration(100)
-      .addAnimation([enteringAnimation, leavingAnimation]);
+    return createAnimation()
+        .duration(100)
+        .addAnimation([enteringAnimation, leavingAnimation]);
 };
 
 
@@ -76,14 +76,15 @@ setupIonicReact();
 
 // @ts-ignore
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
+    <IonApp>
+        <IonReactRouter>
+            <IonTabs>
 
-        <IonRouterOutlet animation={fadeTransition}>
-          <Route path="/home" component={Home} exact/>
-            <Tab1 />
-          <Route path="/events" component={MyFeedPage} exact/>
+                <IonRouterOutlet animation={fadeTransition}>
+
+                    <Route path="/home" component={Home} exact/>
+
+                    <Route path="/events" component={MyFeedPage} exact/>
 
             <Route path="/farmers/:page/:farmerId" component={FarmerDetailPage} exact />
             <Route exact path="/farmers/:page">
@@ -91,37 +92,39 @@ const App: React.FC = () => (
             </Route>
             <Route path="/farmers/:page/search/:searchQuery" component={FarmerSearchPage} exact />
 
-            <Route path="/farmers/:page/:farmerId/news" component={NewsFarmerPage} exact />
+                    <Route path="/farmers/:page/:farmerId/news" component={NewsFarmerPage} exact/>
 
-            <Route exact path="/position">
-              <MapPage />
-          </Route>
-          <Route exact path="/profile">
-            <Profile />
-          </Route>
-          <Route exact path="profile-edit/:user.id">
-            <ProfileEdit />
-          </Route>
-          <Route path="/tab3">
-            <Tab3 />
-          </Route>
+                    <Route exact path="/position">
+                        <MapPage/>
+                    </Route>
 
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-          <Route exact path="/login">
-            <Login />
-          </Route>
-          <Route exact path="/registerUser">
-            <RegisterUser />
-          </Route>
-        </IonRouterOutlet>
+                    <Route exact path="/profile">
+                        <Profile/>
+                    </Route>
 
 
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="home" href="/home">
-            <IonIcon src={home} />
-          </IonTabButton>
+                    <Route exact path="/profile_edit/:user_id" component={ProfileEdit}/>
+
+                    <Route path="/tab3">
+                        <Tab3/>
+                    </Route>
+
+                    <Route exact path="/">
+                        <Redirect to="/home"/>
+                    </Route>
+                    <Route exact path="/login">
+                        <Login/>
+                    </Route>
+                    <Route exact path="/registerUser">
+                        <RegisterUser/>
+                    </Route>
+                </IonRouterOutlet>
+
+
+                <IonTabBar slot="bottom">
+                    <IonTabButton tab="home" href="/home">
+                        <IonIcon src={home}/>
+                    </IonTabButton>
 
           <IonTabButton tab="events" href="/events">
             <IonIcon src={calendar} />

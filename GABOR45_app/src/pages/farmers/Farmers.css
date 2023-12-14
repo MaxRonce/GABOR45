@@ -15,6 +15,7 @@ ion-content {
     align-items: center; /* Centrage horizontal */
     background-color: #F6FCFB;
     
+    
 }
 
 
@@ -121,10 +122,12 @@ ion-card-content{
 
 
 
+
 .farm_name{
     font-weight: bolder;
     color: #164550;
 }
+
 
 .nom_prenom_agri{
     font-weight: normal!important;
@@ -152,6 +155,11 @@ ion-card-content{
     height: 100%;
     overflow: hidden;
 }
+.categorie_img {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
 
 ion-img {
@@ -170,6 +178,9 @@ ion-img img {
 .farmer-info {
     flex: 2; /* Prend deux fois plus d'espace que farmer-image */
     padding-left: 10px;
+    height: 100%; /* Prend toute la hauteur de la carte */
+    background-color: red;
+    padding-bottom: 10px;
 }
 
 .distance{

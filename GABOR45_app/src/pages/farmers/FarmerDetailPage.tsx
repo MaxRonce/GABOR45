@@ -102,7 +102,7 @@ const Farmer_detail_page: React.FC = () => {
             }
         };
 
-        checkIfUserIsFollowing();
+        checkIfUserIsFollowing().then(r => console.log(r));
     }, [user, farmerId]);
 
     useEffect(() => {
@@ -169,7 +169,7 @@ const Farmer_detail_page: React.FC = () => {
                             </button>
                             <button
                                 color="secondary"
-                                onClick={() => history.push(`/farmers/${farmerId}/news`)}
+                                onClick={() => history.push(`/farmers/producteurs/${farmerId}/news`)}
                             >
                                 <IonIcon slot="start" icon={newspaperOutline} />
                                 News
