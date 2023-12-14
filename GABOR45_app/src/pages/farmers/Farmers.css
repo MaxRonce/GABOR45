@@ -31,7 +31,6 @@ ion-list {
     flex-wrap: wrap;
     flex-direction: row;
     flex: 1;
-    height: 85%;
     margin-top: 10px;
 
 }
@@ -48,7 +47,7 @@ ion-list {
     flex-direction: row;
     align-items: center;
     width: 90%; /* La carte prend 90% de la largeur de son conteneur */
-    height: 15vh;
+    height: 16vh;
     margin-top : 3%;
     margin-bottom: 3%;
     margin-right: 5%;
@@ -66,6 +65,7 @@ ion-list {
 ion-card-content{
     margin-left: 0 !important;
     padding-left: 0 !important;
+    margin-top: -17px !important;
 }
 .category-content {
     padding: 0% !important;
@@ -85,22 +85,38 @@ ion-card-content{
     .nom_prenom_agri{font-size: small!important;}
 
 }
-@media (max-width: 425px) {
+@media (max-width: 400px) {
     .category-title{white-space: nowrap !important; overflow: hidden !important;
          text-overflow: ellipsis !important; font-size: large !important;} 
-    .category-card{max-width: 180px;}    
+    .category-card{max-width: 180px;}   
+    .farm_name{font-size: medium!important;} 
+    .nom_prenom_agri {
+        font-size: small !important;
+      }
+    
 }
 @media (max-width: 375px) {
     .category-card{max-width: 150px;}
-}
-@media (min-width: 375px) {
-}
-
-@media (min-height: 825px) {
-    .farm_name{font-size: large!important;}
     .nom_prenom_agri{font-size: small!important;}
-
 }
+@media (min-width: 400px) {
+    ion-card-content{
+        margin-top: 0 !important;
+    }
+    
+}
+
+@media (min-width: 420px){
+    .produit_principal{font-size: medium!important;}
+}
+
+@media (min-width: 700px){
+    .farm_name{font-size: x-large!important;}
+    .nom_prenom_agri{font-size: x-large!important;}
+    .produit_principal{font-size: x-large!important;}
+    .distance{font-size: x-large!important;}
+}
+
 
 
 
@@ -111,7 +127,6 @@ ion-card-content{
 
 .nom_prenom_agri{
     font-weight: normal!important;
-    font-size: large!important;
     color: #0d0d0d;
 }
 
