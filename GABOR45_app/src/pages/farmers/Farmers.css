@@ -96,9 +96,10 @@ ion-card-content{
       }
     
 }
-@media (max-width: 375px) {
+@media (max-width: 374px) {
     .category-card{max-width: 150px;}
     .nom_prenom_agri{font-size: small!important;}
+    .farm_name{font-size: small!important;} 
 }
 @media (min-width: 400px) {
     ion-card-content{
@@ -112,10 +113,11 @@ ion-card-content{
 }
 
 @media (min-width: 700px){
-    .farm_name{font-size: x-large!important;}
-    .nom_prenom_agri{font-size: x-large!important;}
-    .produit_principal{font-size: x-large!important;}
-    .distance{font-size: x-large!important;}
+    .farm_name{font-size: large!important;}
+    .nom_prenom_agri{font-size: large!important;}
+    .produit_principal{font-size: large!important;}
+    .distance{font-size: large!important;}
+    .farmer-card{height: 20vh;}
 }
 
 
