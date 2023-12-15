@@ -72,6 +72,6 @@ Ensure you adhere to our branch naming convention and commit rules. All Pull Req
 Contact and Support
 Project Lead: Maxime RONCERAY 
 
-Technical Support: Maxime RONCERAY - Louis NOEL - Damien RABIER - Endres ENRIQUE
+Technical Support: Maxime RONCERAY - Louis NOEL - Damien RABIER - Andres ORTIZ
 
 For assistance or to report an issue, please open a ticket in the Issues section of the repository.
