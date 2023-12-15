@@ -96,7 +96,7 @@ ion-card-content{
       }
     
 }
-@media (max-width: 374px) {
+@media (max-width: 375px) {
     .category-card{max-width: 150px;}
     .nom_prenom_agri{font-size: small!important;}
     .farm_name{font-size: small!important;} 
