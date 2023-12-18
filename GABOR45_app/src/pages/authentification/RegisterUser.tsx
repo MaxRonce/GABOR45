@@ -13,6 +13,7 @@ import hideP from '../../icons/hideP.svg'
 import LogoGaborComponent from '../../components/LogoGaborComponent';
 import '../../theme/custom.css';
 import '../../theme/variables.css';
+import './RegisterUser.css';
 
 
 const RegisterUser: React.FC = () => {
