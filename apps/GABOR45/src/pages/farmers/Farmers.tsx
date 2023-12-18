@@ -107,7 +107,7 @@ const FarmerPage: React.FC = () => {
                     <LoadingScreen />
                 ) : (
 
-                <IonList>
+                <IonList className="farmer_list">
                     {farmers.map(farmer => (
                         <div key={farmer.id_utilisateur} onClick={() => handleCardClick(farmer.id_utilisateur)}>
                             <IonCard className="farmer-card">
@@ -116,7 +116,7 @@ const FarmerPage: React.FC = () => {
                                     <IonCardHeader>
                                         <IonCardTitle className="farm_name">{farmer.nom_ferme}</IonCardTitle>
                                     </IonCardHeader>
-                                    <IonCardContent>
+                                    <IonCardContent className="card_content">
                                         <p className="produit_principal">{farmer.type_produit_principal}</p>
                                         <p className="nom_prenom_agri">
                                             {farmer.prenom} {farmer.nom}</p>

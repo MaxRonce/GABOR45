@@ -8,19 +8,47 @@
 
 }
 
-ion-content {
+
+.farmer-card {
     display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centrage vertical */
-    align-items: center; /* Centrage horizontal */
-    background-color: #F6FCFB;
-    
-    
+    align-items: center;
+    width: 90%;
+    background: #FFFFFF;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+
 }
 
 
 
-/* Style pour la liste */
+.distance{
+    text-align: right;
+}
+
+.farm_name{
+    font-weight: bolder;    
+    font-size: 1.2rem;
+    color: #164550;
+
+}
+
+.nom_prenom_agri{
+    color: #0d0d0d;
+}
+
+.farmer_img{
+    width: auto;
+    background-color: white ;
+    border-radius: 10px;
+}
+
+.card_content{
+    padding-top: 0 !important;
+}
+
+
+
+/*CATEGORY PART*/
 ion-list {
     display: flex;
     flex-direction: column;
@@ -38,173 +66,23 @@ ion-list {
     padding: 10px;
     flex-wrap: wrap;
     flex-direction: row;
+    height: 90% ;
     flex: 1;
 
 }
 .category-container {
-    flex-basis: 50%; /* Ajusta según tus necesidades, puede ser 50% también */
-
-
+    flex-basis: 50%;
 }
 
-
-/* Style pour la carte */
-.farmer-card {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 90%; /* La carte prend 90% de la largeur de son conteneur */
-    height: 16vh;
-    margin-top : 3%;
-    margin-bottom: 3%;
-    margin-right: 5%;
-    margin-left: 5%;
-
-    /*drop shadow*/
-
-    background: #FFFFFF !important;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-
-
-}
-
-ion-card-content{
-    margin-left: 0 !important;
-    padding-left: 0 !important;
-    margin-top: -17px !important;
-}
 .category-content {
     padding: 0% !important;
-    height: 80% !important;
+    height: 80% 
 }
-.category-card {
-    height: 90% !important;
-     
-}
+
 
 .category-title {
-    margin-top: 10px !important;
     height: 100% !important;
-}
-
-@media (max-height: 825px) {
-    .farm_name{font-size: large!important;}
-    .nom_prenom_agri{font-size: small!important;}
-
-}
-@media (max-width: 430px) {
-    .category-title{white-space: nowrap !important; overflow: hidden !important;
-         text-overflow: ellipsis !important; font-size: large !important; flex-grow: 1 !important;} 
-    .category-card{max-width: 180px;}   
-    .farm_name{font-size: medium!important;} 
-    .nom_prenom_agri {
-        font-size: small !important;
-      }
-    
-}
-@media (max-width: 375px) {
-    .category-card{max-width: 150px;}
-    .nom_prenom_agri{font-size: small!important;}
-    .farm_name{font-size: small!important;} 
-}
-@media (min-width: 400px) {
-    ion-card-content{
-        margin-top: 0 !important;
-    }
-    
-}
-
-@media (min-width: 420px){
-    .produit_principal{font-size: medium!important;}
-}
-
-@media (min-width: 700px){
-    .farm_name{font-size: large!important;}
-    .nom_prenom_agri{font-size: large!important;}
-    .produit_principal{font-size: large!important;}
-    .distance{font-size: large!important;}
-    .farmer-card{height: 20vh;}
+    font-size: 0.8rem !important;
 }
 
 
-
-
-
-.farm_name{
-    font-weight: bolder;
-    color: #164550;
-}
-
-
-.nom_prenom_agri{
-    font-weight: normal!important;
-    color: #0d0d0d;
-}
-
-/* Style pour l'image */
-.farmer-image {
-    flex: 1; /* Prend le reste de l'espace après farmer-info */
-    height: 100%; /* Prend toute la hauteur de la carte */
-    margin-right: 10px;
-    display: flex; /* Pour centrer verticalement l'image */
-    align-items: center; /* Centrage vertical */
-}
-
-.farmer_img{
-    width: auto;
-    height: 100%;
-    overflow: hidden; /* Pour éviter le débordement d'image */
-
-}
-
-.categorie_img {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-
-ion-img {
-    padding: 0;
-    margin : 0;
-}
-
-ion-img img {
-    width: 100%; /* L'image prend toute la largeur disponible */
-    object-fit: cover; /* Conserve le rapport hauteur/largeur */
-    padding: 0;
-    margin : 0;
-}
-
-/* Style pour l'info */
-.farmer-info {
-    flex: 2; /* Prend deux fois plus d'espace que farmer-image */
-    padding-left: 10px;
-}
-
-.distance{
-    text-align: right;
-}
-
-.back_button {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    z-index: 100;
-    color: white; /* Cela définit la couleur de la flèche sur blanc */
-    background: transparent; /* Rend l'arrière-plan du bouton transparent */
-    border: none; /* Supprime les bordures par défaut si elles existent */
-    box-shadow: none; /* Supprime les ombres par défaut si elles existent */
-}
-
-/* Style pour l'effet de pression sur le bouton de retour */
-.back_button:active {
-    background: rgba(255, 255, 255, 0.2); /* Légère teinte blanche pour le feedback de pression */
-    transition: background-color 0.3s; /* Transition douce pour le changement de couleur */
-}
-
-/* Vous pouvez également cibler spécifiquement l'icône à l'intérieur du bouton si nécessaire */
-.back_button .button-inner {
-    color: white; /* Cela s'assure que le texte ou les icônes à l'intérieur du bouton sont également blancs */
-}
