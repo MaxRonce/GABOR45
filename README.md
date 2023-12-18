@@ -29,7 +29,7 @@ yarn install
 To launch the GABOR45 application:
 
 ```bash
-npx nx run GABOR45:dev
+npx nx run GABOR45:serve
 ```
 For more details, refer to the GABOR45 application README.
 
