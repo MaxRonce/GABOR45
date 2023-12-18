@@ -1,0 +1,36 @@
+{
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "react",
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off", // React 17+ n'a plus besoin d'importer React pour JSX
+      "react/prop-types": "off", // Désactivé si vous utilisez TypeScript pour le typage des props
+      "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+      // Ajoutez ici d'autres règles selon vos besoins
+    },
+    "settings": {
+      "react": {
+        "version": "detect" // Détecte automatiquement la version de React
+      }
+    },
+    "parserOptions": {
+      "ecmaVersion": 2020, // Permet l'analyse des fonctionnalités modernes de JavaScript
+      "sourceType": "module", // Permet l'utilisation des modules ES6
+      "ecmaFeatures": {
+        "jsx": true // Permet le support de JSX
+      }
+    },
+    "env": {
+      "browser": true, // Active les variables globales du navigateur
+      "es6": true, // Active les fonctionnalités d'ES6
+      "node": true // Active les variables globales Node.js
+    }
+  }
+  

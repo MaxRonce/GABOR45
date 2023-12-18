@@ -1,0 +1,40 @@
+{
+    "name" : "GABOR45",
+    "root": "apps/GABOR45/",
+    "sourceRoot": "apps/GABOR45/src",
+    "projectType": "application",
+
+    "targets": {
+      "test": {
+        "executor": "@nx/jest:jest",
+        "options": {
+        }
+      },
+      "build": {
+        "executor": "nx:run-commands",
+        "options": {
+            "command": "tsc && vite build"
+        }
+      },
+      "lint": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "npx eslint \"apps/GABOR45/**/*.{ts,tsx,js,jsx}\" --ignore-pattern \"apps/GABOR45/node_modules/**\""
+        }
+      },
+      "generate_types": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "npx supabase gen types typescript --project-id sktoqgbcjidoohzeobcz > ./src/types/supabase.ts"
+        }
+      },
+      
+      "serve": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "cd apps/GABOR45 && ionic serve"
+        }
+      }
+          
+    }
+}

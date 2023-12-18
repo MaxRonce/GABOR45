@@ -1,0 +1,20 @@
+.deconnexion{
+    padding: 5%;
+    margin: 5%;
+    border-top: #164550 solid 1px;
+}
+
+.content{
+    margin: 5%;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.information{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+}
+
