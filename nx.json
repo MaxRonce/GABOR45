@@ -6,9 +6,6 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "lint": {
-      "cache": true
-    },
     "e2e": {
       "cache": true
     }
