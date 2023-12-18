@@ -1,7 +1,0 @@
-{
-  "name": "GABOR45",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react-vite"
-}
