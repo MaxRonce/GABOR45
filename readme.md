@@ -29,7 +29,7 @@ yarn install
 To launch the GABOR45 application:
 
 ```bash
-npx nx run GABOR45:dev
+npx nx run GABOR45:serve
 ```
 For more details, refer to the GABOR45 application README.
 
@@ -62,7 +62,7 @@ We use (CI Service Name) for our CI/CD pipeline, which handles:
 - Running tests.
 - Generating documentation.
 - Creating and storing artifacts.
-  To view the results of the latest builds, visit (link to the CI dashboard).
+To view the results of the latest builds, visit (link to the CI dashboard).
 
 ## Contributing
 To contribute to this project, please follow our detailed contribution guide in CONTRIBUTING.md.
@@ -70,7 +70,7 @@ To contribute to this project, please follow our detailed contribution guide in 
 Ensure you adhere to our branch naming convention and commit rules. All Pull Requests must pass CI tests and undergo peer review before merging.
 
 Contact and Support
-Project Lead: Maxime RONCERAY
+Project Lead: Maxime RONCERAY 
 
 Technical Support: Maxime RONCERAY - Louis NOEL - Damien RABIER - Andres ORTIZ
 
