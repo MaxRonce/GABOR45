@@ -27,6 +27,14 @@
         "options": {
           "command": "npx supabase gen types typescript --project-id sktoqgbcjidoohzeobcz > ./src/types/supabase.ts"
         }
+      },
+      
+      "serve": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "cd apps/GABOR45 && ionic serve"
+        }
       }
+          
     }
 }
