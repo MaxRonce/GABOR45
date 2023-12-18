@@ -2,9 +2,8 @@ import {IonList, IonCard, IonCardContent, IonContent, IonCardHeader, IonCardTitl
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Farmers.css';
-import { getAllCategories } from '../../services/categoryService';
+import { supabase } from '../../supabaseClient';
 import LoadingScreen from "../../components/LoadingScreen";
-import { Categories } from '../../models/Categories';
 // interface for the props of the component
 interface FarmerCategoriesProps {
     selectedCategory: string | null;
@@ -12,21 +11,37 @@ interface FarmerCategoriesProps {
   }
 
 const FarmerCategories: React.FC<FarmerCategoriesProps> = ({ selectedCategory, onSelectCategory }) => {
-    const [categories, setCategories] = useState<Categories[]>([]);
+    const [categories, setCategories] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const history = useHistory(); 
+    // function to get the categories from the database
+    const getCategories = async () => {
+        try {
+            let { data, error } = await supabase
+                .from('categories')
+                .select('*');
+    
+            if (error) {
+                console.error(error);
+                return [];
+            } else {
+                console.log(data);
+                return data || [];
+            }
+        } catch (error) {
+            console.error(error);
+            return [];
+        }
+        
+    };
 
     // useEffect to get the categories from the database
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
-            try {
-                const data = await getAllCategories();
-                console.log("data", data);
-                setCategories(data || []);
-            } catch (error) {
-                console.error('Error fetching categories', error);
-            }
+            const cate = await getCategories();
+            console.log("data: ", cate);
+            setCategories(cate);
             setIsLoading(false);
         };
 
