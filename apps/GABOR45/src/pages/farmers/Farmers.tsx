@@ -89,7 +89,6 @@ const FarmerPage: React.FC = () => {
     }, []);
 
     const handleCardClick = (farmerId: string) => {
-        console.log("id: ", farmerId);
         history.push({
             pathname: `/farmers/producteurs/${farmerId}`,
             state: { farmerId: farmerId }

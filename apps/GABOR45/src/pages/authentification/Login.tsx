@@ -16,7 +16,6 @@ import showP from '../../icons/showP.svg';
 import hideP from '../../icons/hideP.svg';
 import google from '../../icons/google.svg';
 import logo_Gabor45 from '../../icons/logo_Gabor45.svg';
-import '../../theme/custom.css'
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>("");

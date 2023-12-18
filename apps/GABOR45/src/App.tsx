@@ -82,15 +82,15 @@ const App: React.FC = () => (
 
                 <IonRouterOutlet animation={fadeTransition}>
 
+                    <Route path="/home" component={Home} exact/>
+
                     <Route path="/events" component={MyFeedPage} exact/>
 
-                    <Route path="/farmers/:page/:farmerId" component={FarmerDetailPage} exact/>
-
-                    <Route exact path="/farmers/:page">
-                        <IndexFarmers hide="yes"/>
-                    </Route>
-
-                    <Route path="/farmers/:page/search/:searchQuery" component={FarmerSearchPage} exact/>
+            <Route path="/farmers/:page/:farmerId" component={FarmerDetailPage} exact />
+            <Route exact path="/farmers/:page">
+                <IndexFarmers/>
+            </Route>
+            <Route path="/farmers/:page/search/:searchQuery" component={FarmerSearchPage} exact />
 
                     <Route path="/farmers/:page/:farmerId/news" component={NewsFarmerPage} exact/>
 
@@ -126,24 +126,22 @@ const App: React.FC = () => (
                         <IonIcon src={home}/>
                     </IonTabButton>
 
-                    <IonTabButton tab="events" href="/events">
-                        <IonIcon src={calendar}/>
-                    </IonTabButton>
-                    <IonTabButton tab="farmers" href="/farmers/producteurs">
-                        <IonIcon src={farmer}/>
-                    </IonTabButton>
-                    <IonTabButton tab="position" href="/position">
-                        <IonIcon src={position}/>
-                    </IonTabButton>
-                    <IonTabButton tab="profile" href="/profile">
-                        <IonIcon src={user}/>
-                    </IonTabButton>
-
-
-                </IonTabBar>
-            </IonTabs>
-        </IonReactRouter>
-    </IonApp>
+          <IonTabButton tab="events" href="/events">
+            <IonIcon src={calendar} />
+          </IonTabButton>
+          <IonTabButton tab="farmers" href="/farmers/producteurs">
+            <IonIcon src={farmer} />
+          </IonTabButton>
+          <IonTabButton tab="position" href="/position">
+            <IonIcon src={position} />
+          </IonTabButton>
+          <IonTabButton tab="profile" href="/profile">
+            <IonIcon src={user} />
+          </IonTabButton>
+        </IonTabBar>
+      </IonTabs>
+    </IonReactRouter>
+  </IonApp>
 );
 
 /*
