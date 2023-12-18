@@ -3,7 +3,7 @@ import { supabase } from '../supabaseClient';
 
 export const getUserWithFarmerSearch = async (prenom: string): Promise<Farmer> => {
     let { data, error } = await supabase
-        .rpc('get_search_agriculteur_info', {
+        .rpc('get_search_all_agriculteur_info', {
             prenom_search : prenom
         })
 
