@@ -4,6 +4,7 @@ import { IonContent, IonPage, IonSearchbar, IonToolbar, IonIcon, IonItem, IonGri
    IonRow, IonCol, IonText, IonHeader } from '@ionic/react';
 import FarmerPage from './Farmers';
 import './Farmers.css';
+import './Nabvar.css';
 import arrowLeft from '../../icons/arrowLeft.svg';
 import search from '../../icons/search.svg';
 import FarmerCategories from './FarmerCategories';
@@ -80,16 +81,19 @@ const IndexFarmers: React.FC = () => {
 
   return (
     <IonPage>
+        <div className='full-page'>
       <IonHeader>
             <IonToolbar>
                 <IonItem lines="none" className="ion-margin-top">
-                    <IonIcon src={arrowLeft} onClick={handleBack} className='nav-icon ion-icon' />
-                    <IonSearchbar placeholder="SEARCH"
-                        value={searchQuery}
-                        onKeyDown={(e) => handleSearch(e.currentTarget.value)}
-                        className="ion-justify-content-end searchBar">
-                        <IonIcon src={search} slot="end" className="search-icon"/>
-                    </IonSearchbar>
+                    <div className='nab-content'>
+                        <IonIcon src={arrowLeft} onClick={handleBack} className='nav-icon ion-icon' />
+                        <IonSearchbar placeholder="SEARCH"
+                            value={searchQuery}
+                            onKeyDown={(e) => handleSearch(e.currentTarget.value)}
+                            className="ion-justify-content-end searchBar">
+                            <IonIcon src={search} slot="end" className="search-icon"/>
+                        </IonSearchbar>
+                    </div>
                     
                 </IonItem>
                 <IonGrid class="ion-margin-horizontal">
@@ -121,6 +125,7 @@ const IndexFarmers: React.FC = () => {
           </>
         )}
       </IonContent>
+      </div>
     </IonPage>
   );
 }
