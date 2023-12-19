@@ -46,7 +46,7 @@ const InputComponent = (props: any) => {
 							type={typeP}
 							placeholder={placeholderP}
 							value={valueP}
-							onIonChange={onChange}
+							onIonInput={onChange}
 							className={classI}
 							style={styleP}
 						/>

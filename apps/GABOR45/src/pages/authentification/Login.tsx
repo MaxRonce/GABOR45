@@ -47,22 +47,40 @@ const Login: React.FC = () => {
 	};
 	const history = useHistory();
 
-	//function to login with email and password
+	// function to login with email and password
 	const handleLogin = async () => {
+		// TODO : ecrire des tests pour ces fonctions
+		const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+		if (!expression.test(email)) {
+			await showToast({
+				message: "Email invalide",
+				duration: 2000,
+				color: "danger",
+			});
+			return;
+		}
+		if (password.length < 6) {
+			await showToast({
+				message: "Mot de passe invalide",
+				duration: 2000,
+				color: "danger",
+			});
+			setPassword("");
+			return;
+		}
 		try {
 			const { data, error } = await supabase.auth.signInWithPassword({
 				email: email,
 				password: password,
 			});
-			console.log(data);
 
-			if (!data) {
-				console.error("Login failed:", error);
+			if (error) {
 				await showToast({
-					message: "Error to sigUp",
+					message: "connexion échouée",
 					duration: 2000,
 					color: "danger",
 				});
+				setPassword("");
 			} else {
 				setPassword("");
 				setEmail("");
@@ -78,7 +96,7 @@ const Login: React.FC = () => {
 		} catch (error) {
 			console.error("Unexpected error during login:", error);
 			await showToast({
-				message: "Error to sigUp",
+				message: "connexion échouée",
 				duration: 2000,
 				color: "danger",
 			});
