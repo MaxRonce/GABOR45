@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
+import { useLocation, useHistory } from 'react-router-dom';
 import { IonContent, IonPage, IonSearchbar, IonToolbar, IonIcon, IonItem, IonGrid,
    IonRow, IonCol, IonText, IonHeader } from '@ionic/react';
 import FarmerPage from './Farmers';
@@ -14,29 +15,28 @@ import FarmersByCategory from './FarmersByCategory';
 const IndexFarmers: React.FC = () => {
   const [page, setPage] = useState<string>("producteurs"); // State for the initial page [producteurs, produits
   const [searchQuery, setSearchQuery] = useState<string>(""); // State for the search query
+  const location = useLocation();
   const [isActive, setIsActive] = useState([true, false]); 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
-    // reset the page when the component is loaded
-    const handleBeforeUnload = () => {  
-        setPage("producteurs");
-        setSearchQuery("");
-        setIsActive([true, false]);
-        setSelectedCategory(null);
-    };
-    window.addEventListener('focusout', handleBeforeUnload);
-  }, []);
+    // Reset the page and search query when the user leaves the page
+    setPage('producteurs');
+    setSearchQuery('');
+    setIsActive([true, false]);
+    setSelectedCategory(null);
+  }, [location.pathname]);
     //control the button active
     const handleClick = (index:any) => {
         setSelectedCategory(null);
         const updateActive = [...isActive];
-        updateActive[index] = !updateActive[index];
-        for (let i = 0; i < updateActive.length; i++) {
-            if (i !== index) {
-                updateActive[i] = false;
+        if (!isActive[index]) { 
+            updateActive[index] = !updateActive[index];
+            for (let i = 0; i < updateActive.length; i++) {
+                if (i !== index) {
+                    updateActive[i] = false;
+                }
             }
-            
         }
         setIsActive(updateActive);
         if(index === 1){

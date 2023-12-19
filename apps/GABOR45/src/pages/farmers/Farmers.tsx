@@ -60,7 +60,14 @@ const FarmerPage: React.FC = () => {
             setIsLoading(true);
             try {
                 const data = await getUsersWithFarmers();
-                setFarmers(data);
+                const sortedFarmers = data.slice().sort((a:any, b:any) => {
+                    const distanceA = calculateDistance(a.latitude ?? null, a.longitude ?? null, userLocation?.latitude ?? null, userLocation?.longitude ?? null);
+                    const distanceB = calculateDistance(b.latitude ?? null, b.longitude ?? null, userLocation?.latitude ?? null, userLocation?.longitude ?? null);
+
+                    // Ordenar de menor a mayor distancia
+                    return distanceA && distanceB ? distanceA - distanceB : 0;
+                });
+                setFarmers(sortedFarmers);
             } catch (error) {
                 console.error('Error fetching farmers', error);
             }

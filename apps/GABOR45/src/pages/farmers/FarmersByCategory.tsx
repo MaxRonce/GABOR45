@@ -48,10 +48,10 @@ const FarmersByCategory: React.FC<{ categoryId: string }> = ({ categoryId }) => 
     const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
 
   
-    const handleCardClick = (categoryId: string) => {
-        console.log("id: ", categoryId);
+    const handleCardClick = (farmerId: string) => {
         history.push({
-            //aqui ira la ruta de la pagina de la categoria
+            pathname: `/farmers/producteurs/${farmerId}`,
+            state: { farmerId: farmerId }
         });
     };
     
