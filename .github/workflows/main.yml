@@ -15,10 +15,8 @@ jobs:
       run: npm cache clean --force
     - name: Install Dependencies
       run: npm install
-    - name: List files
-      run: ls -la
     - name: Run Linter
-      run: npx nx run GABOR45:lint_json
+      run: npx eslint "apps/GABOR45/**/*.{ts,tsx,js,jsx}" --ignore-pattern "apps/GABOR45/node_modules/**" --format=json --output-file="apps/GABOR45/lint-report.json"
     - name: Run Linter HTML Report
       run: npx nx run GABOR45:lint_html
     - name: Upload Lint Report
