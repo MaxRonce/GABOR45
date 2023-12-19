@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+//React and React Router
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useLocation, useHistory } from 'react-router-dom';
 import { IonContent, IonPage, IonSearchbar, IonToolbar, IonIcon, IonItem, IonGrid,
@@ -76,8 +77,8 @@ const IndexFarmers: React.FC = () => {
         setPage("");
         }
 
-
-      const navClass = (index:any) => `nav-line ${isActive[index] ? 'active' : ''}`;
+	const navClass = (index: any) =>
+		`nav-line ${isActive[index] ? "active" : ""}`;
 
   return (
     <IonPage>

@@ -1,17 +1,3 @@
-/* Tab3.css
-.map-container {
-    width: 100%;
-    height: 90vh;
-}
-
-
-.map-iframe {
-    width: 100%;
-    height: 100%;
-}
-*/
-
-/* map.css */
 .map-container iframe.map-iframe {
     width: 100%;
     height: 100%;

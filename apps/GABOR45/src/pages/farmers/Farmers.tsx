@@ -1,59 +1,77 @@
-import React, { useState, useEffect } from 'react';
-import { IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg, IonList } from '@ionic/react';
-import { Farmer } from '../../models/Farmer';
-import { useHistory } from 'react-router-dom';
-import {getUsersWithFarmers} from '../../services/farmerService';
-import './Farmers.css';
-import NabvarComponent from '../../components/NabvarComponent';
+// React and React Router
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 
-import { Geolocation } from '@capacitor/geolocation'; // Importez Geolocation directement
+// Ionic Framework Components
+import {
+	IonContent,
+	IonCard,
+	IonCardHeader,
+	IonCardTitle,
+	IonCardContent,
+	IonList,
+} from "@ionic/react";
+
+// Services and Models
+import { Farmer } from "../../models/Farmer";
+import { getUsersWithFarmers } from "../../services/farmerService";
+
+// Custom Components and Styling
+import "./Farmers.css";
 import LoadingScreen from "../../components/LoadingScreen";
 
-function calculateDistance(lat1: number | null, lon1: number | null, lat2: number | null, lon2: number | null) {
-    if (lat1 === null || lon1 === null || lat2 === null || lon2 === null) {
-        return null;
-    }
-    else {
-        const R = 6371; // Rayon de la terre en km
-        const dLat = toRad(lat2 - lat1);
-        const dLon = toRad(lon2 - lon1);
-        const a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distance = R * c; // Distance en km
-        return Math.round(distance);
-    }
+// Capacitor Geolocation
+import { Geolocation } from "@capacitor/geolocation";
+
+function calculateDistance(
+	lat1: number | null,
+	lon1: number | null,
+	lat2: number | null,
+	lon2: number | null
+) {
+	if (lat1 === null || lon1 === null || lat2 === null || lon2 === null) {
+		return null;
+	} else {
+		const R = 6371; // Earth radius in km
+		const dLat = toRad(lat2 - lat1);
+		const dLon = toRad(lon2 - lon1);
+		const a =
+			Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+			Math.cos(toRad(lat1)) *
+				Math.cos(toRad(lat2)) *
+				Math.sin(dLon / 2) *
+				Math.sin(dLon / 2);
+		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		const distance = R * c; // Distance in km
+		return Math.round(distance);
+	}
 }
 
 function toRad(value: number) {
-    return (value * Math.PI) / 180;
+	return (value * Math.PI) / 180;
 }
 
-import { Capacitor } from '@capacitor/core';
+import { Capacitor } from "@capacitor/core";
 
 async function requestLocationPermission() {
-    try {
-        if (Capacitor.getPlatform() !== 'web') {
-            await Geolocation.requestPermissions();
-        }
-    } catch (error) {
-        console.error('Error requesting location permissions', error);
-    }
+	try {
+		if (Capacitor.getPlatform() !== "web") {
+			await Geolocation.requestPermissions();
+		}
+	} catch (error) {
+		console.error("Error requesting location permissions", error);
+	}
 }
 
 function sleep(ms: number | undefined) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }
-
 
 const FarmerPage: React.FC = () => {
     const [farmers, setFarmers] = useState<Farmer[]>([]);
     const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
-    const history = useHistory(); // Ajoutez cette ligne
+    const history = useHistory();
     const [isLoading, setIsLoading] = useState<boolean>(true);
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -145,8 +163,3 @@ const FarmerPage: React.FC = () => {
 };
 
 export default FarmerPage;
-
-
-
-
-

@@ -109,8 +109,3 @@ const FarmerSearchPage: React.FC<{ searchQuery: string, page: string, category_i
 };
 
 export default FarmerSearchPage;
-
-
-
-
-

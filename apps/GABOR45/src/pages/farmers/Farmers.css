@@ -4,10 +4,8 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: 'Poppins', sans-serif;  /* Assurez-vous d'importer cette police */
-
+    font-family: 'Poppins', sans-serif;
 }
-
 
 .farmer-card {
     display: flex;
@@ -16,10 +14,7 @@
     background: #FFFFFF;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
-
 }
-
-
 
 .distance{
     text-align: right;
@@ -29,7 +24,6 @@
     font-weight: bolder;    
     font-size: 1.2rem;
     color: #164550;
-
 }
 
 .nom_prenom_agri{
@@ -59,7 +53,7 @@
 ion-list {
     display: flex;
     flex-direction: column;
-    width: 100%; /* La liste prend toute la largeur */
+    width: 100%;
 }
 
 .full-page {
@@ -74,8 +68,8 @@ ion-list {
     flex-wrap: wrap;
     flex-direction: row;
     flex: 1;
-
 }
+
 .category-container {
     flex-basis: 50%;
 }
@@ -85,10 +79,7 @@ ion-list {
     height: 80% 
 }
 
-
 .category-title {
     height: 100% !important;
     font-size: 0.8rem !important;
 }
-
-
