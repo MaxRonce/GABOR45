@@ -37,6 +37,24 @@ For more details, refer to the GABOR45 application README.
 `/apps/gabor45` - Contains the source code for the Ionic React GABOR45 application.
 /packages - Packages for documentation and E2E tests.
 
+## Build the app
+
+### Android
+- Make sure to have [Android Studio]() installed.
+- Run the following commands :
+ ```bash
+ npx nx cap build
+ ```
+  ```bash
+ npx nx cap sync
+ ```
+ if your studio64.exe is added to PATH as CAPACITOR_ANDROID_STUDIO_PATH you can run : 
+  ```bash
+ npx nx cap open android
+ ```
+- Otherwise, open android studio and open the folder apps/GABOR45/android as project in Android Studio
+- Build and generate the .apk
+
 ## Testing
 This monorepo is configured with tools to run various types of tests:
 
@@ -60,6 +78,7 @@ We use (CI Service Name) for our CI/CD pipeline, which handles:
 
 - Dependency installation.
 - Running tests.
+- Lint ```nx run GABOR45:lint```
 - Generating documentation.
 - Creating and storing artifacts.
 To view the results of the latest builds, visit (link to the CI dashboard).
