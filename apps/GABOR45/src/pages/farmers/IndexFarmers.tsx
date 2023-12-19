@@ -17,18 +17,18 @@ const IndexFarmers: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>(""); // State for the search query
   const location = useLocation();
   const [isActive, setIsActive] = useState([true, false]); 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   useEffect(() => {
     // Reset the page and search query when the user leaves the page
     setPage('producteurs');
     setSearchQuery('');
     setIsActive([true, false]);
-    setSelectedCategory(null);
+    setSelectedCategory("");
   }, [location.pathname]);
     //control the button active
     const handleClick = (index:any) => {
-        setSelectedCategory(null);
+        setSelectedCategory("");
         const updateActive = [...isActive];
         if (!isActive[index]) { 
             updateActive[index] = !updateActive[index];
@@ -69,10 +69,10 @@ const IndexFarmers: React.FC = () => {
     const handleBack = () => {
         setSearchQuery("");
         setPage("producteurs");
-        setSelectedCategory(null);
+        setSelectedCategory("");
     }
-    const showFarmersCategory =( category: string) => {
-        setSelectedCategory(category);
+    const showFarmersCategory =( category_id: string) => {
+        setSelectedCategory(category_id);
         setPage("");
         }
 
@@ -115,13 +115,13 @@ const IndexFarmers: React.FC = () => {
         </IonHeader>
       <IonContent>
         {searchQuery !== "" ? ( // if searchQuery is not empty, show the search page
-          <FarmerSearchPage searchQuery={searchQuery} page={page} />
+          <FarmerSearchPage searchQuery={searchQuery} page={page} category_id={selectedCategory} />
         ) : ( // else show the page selected
           <>
             {page === 'producteurs' ? <FarmerPage /> : null}
             {page === 'categories' ? <FarmerCategories selectedCategory={selectedCategory}
                 onSelectCategory={(category) => showFarmersCategory(category)}/> : null}
-            {selectedCategory ? <FarmersByCategory categoryId={selectedCategory} /> : null}
+            {selectedCategory != "" ? <FarmersByCategory categoryId={selectedCategory} /> : null}
           </>
         )}
       </IonContent>

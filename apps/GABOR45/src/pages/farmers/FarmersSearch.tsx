@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './Farmers.css';
 import { useParams } from "react-router";
+import { getFarmerByCategorySearch } from '../../services/searchByCategorie';
 import LoadingScreen from "../../components/LoadingScreen";
 import { IonContent, IonPage, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList } from '@ionic/react';
 import { Farmer } from '../../models/Farmer';
 import { useHistory } from 'react-router-dom';
 import { getUserWithFarmerSearch } from '../../services/searchBarService';
+import { Categories } from '../../models/Categories';
 
-const FarmerSearchPage: React.FC<{ searchQuery: string, page: string }> = ({ searchQuery, page }) => {
+const FarmerSearchPage: React.FC<{ searchQuery: string, page: string, category_id:string }> = ({ searchQuery, page, category_id }) => {
   const [id, setId] = useState<string>("");
   const [data, setData] = useState<Farmer | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -25,25 +27,23 @@ const FarmerSearchPage: React.FC<{ searchQuery: string, page: string }> = ({ sea
         if (page === "producteurs") {
           console.log("page producteurs");
           userData = await getUserWithFarmerSearch(query);
-          if (userData === null) {
-            setShowNoResults(true);
-            setIsLoading(false);
-          }else {
-            setData(userData);
-            setId(userData.id_utilisateur);
-            setIsLoading(false);
-          }
         } else {
           console.log("page categorires");
+          userData = await getFarmerByCategorySearch(query, category_id);
         }
-      console.log("dataUse: ", data);
+
+        if(!userData || (Array.isArray(userData) && userData.length === 0)) {
+          setShowNoResults(true);
+        }else {
+          setData(userData);
+        }
+        setIsLoading(false);
     }
 
     fetchData().then(r => console.log("data", r));
   }, [searchQuery]);
 
   const handleCardClick = (farmerId: string) => {
-    console.log("id: ", farmerId);
     history.push({
       pathname: `/farmers/producteurs/${farmerId}`,
       state: { farmerId: farmerId }
@@ -63,7 +63,7 @@ const FarmerSearchPage: React.FC<{ searchQuery: string, page: string }> = ({ sea
           ) : (
             <IonList>
               {Array.isArray(data) ? (
-                data.map(farmer => (
+                data.map((farmer) => (
                   <div key={farmer.id_utilisateur} onClick={() => handleCardClick(farmer.id_utilisateur)}>
                     <IonCard className="farmer-card">
                       <img className="farmer_img" src={`${baseUrl}${farmer.lien_image_user}`} alt="Image de l'agriculteur" />

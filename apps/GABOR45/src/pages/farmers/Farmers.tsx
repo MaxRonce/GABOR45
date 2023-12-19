@@ -60,11 +60,11 @@ const FarmerPage: React.FC = () => {
             setIsLoading(true);
             try {
                 const data = await getUsersWithFarmers();
-                const sortedFarmers = data.slice().sort((a:any, b:any) => {
+                const sortedFarmers =  await data.slice().sort((a:any, b:any) => {
                     const distanceA = calculateDistance(a.latitude ?? null, a.longitude ?? null, userLocation?.latitude ?? null, userLocation?.longitude ?? null);
                     const distanceB = calculateDistance(b.latitude ?? null, b.longitude ?? null, userLocation?.latitude ?? null, userLocation?.longitude ?? null);
 
-                    // Ordenar de menor a mayor distancia
+                    // Sort by distance
                     return distanceA && distanceB ? distanceA - distanceB : 0;
                 });
                 setFarmers(sortedFarmers);
