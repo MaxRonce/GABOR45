@@ -40,6 +40,15 @@
     padding-top: 0 !important;
 }
 
+.farmer-info {
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+
 /*CATEGORY PART*/
 ion-list {
     display: flex;
@@ -58,7 +67,6 @@ ion-list {
     padding: 10px;
     flex-wrap: wrap;
     flex-direction: row;
-    height: 90% ;
     flex: 1;
 }
 

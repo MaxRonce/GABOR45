@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../node_modules/@capacitor/geolocation/src/index.ts"],
+  "sourcesContent": ["import { registerPlugin } from '@capacitor/core';\n\nimport type { GeolocationPlugin } from './definitions';\n\nconst Geolocation = registerPlugin<GeolocationPlugin>('Geolocation', {\n  web: () => import('./web').then(m => new m.GeolocationWeb()),\n});\n\nexport * from './definitions';\nexport { Geolocation };\n"],
+  "mappings": ";;;;;;AAIA,IAAM,cAAc,eAAkC,eAAe;EACnE,KAAK,MAAM,OAAO,mBAAO,EAAE,KAAK,OAAK,IAAI,EAAE,eAAc,CAAE;CAC5D;",
+  "names": []
+}

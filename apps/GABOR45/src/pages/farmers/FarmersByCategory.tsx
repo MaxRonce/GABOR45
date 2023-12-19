@@ -69,15 +69,18 @@ const FarmersByCategory: React.FC<{ categoryId: string }> = ({
 			setIsLoading(false);
 		};
 
-		fetchData().then((r) => console.log("data", r));
-	}, []);
-	const baseUrl =
-		"https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
+            fetchData().then(r => console.log("data", r));
+    }, []); 
+    const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
 
-	const handleCardClick = (categoryId: string) => {
-		console.log("id: ", categoryId);
-		history.push({});
-	};
+  
+    const handleCardClick = (farmerId: string) => {
+        history.push({
+            pathname: `/farmers/producteurs/${farmerId}`,
+            state: { farmerId: farmerId }
+        });
+    };
+    
 
 	return (
 		<IonContent>
