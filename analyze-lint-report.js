@@ -10,7 +10,8 @@ report.forEach(file => {
 });
 
 const totalProblems = errorCount + warningCount;
-// Vous pouvez ajuster la logique de calcul ici en fonction de vos besoins
+//si plus de 10% de problèmes, on sort avec une erreur
+const threshold = totalProblems / 10;
 if (totalProblems > threshold) {
   console.error(`Code quality threshold not met. Found ${totalProblems} problems.`);
   process.exit(1); // Sort avec une erreur
