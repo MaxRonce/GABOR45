@@ -10,12 +10,6 @@
         "options": {
         }
       },
-      "build": {
-        "executor": "nx:run-commands",
-        "options": {
-            "command": "tsc && vite build"
-        }
-      },
       "lint": {
         "executor": "nx:run-commands",
         "options": {
@@ -34,7 +28,24 @@
         "options": {
           "command": "cd apps/GABOR45 && ionic serve"
         }
+      },
+      "build" :{
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "cd apps/GABOR45 && tsc && vite build"
+        }
+      },
+      "android": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "cd apps/GABOR45 && ionic cap open android"
+        }
+      },
+      "sync": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "cd apps/GABOR45 && ionic cap sync"
+        }
       }
-          
     }
 }
