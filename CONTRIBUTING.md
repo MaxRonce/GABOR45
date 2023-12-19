@@ -99,4 +99,31 @@ Each branch should be ascociated with an issue, a feature or any enhancement. Pl
 - flag = #issue_number if it exist
 - branch_name = should be precise and describe what is the goal of the branch
 
+# Commit messages
 
+All the commits messages must follow this template : 
+
+```
+TYPE[TAG]: DESCRIPTION
+
+[optional body]
+
+[optional footer(s)]
+```
+
+**TAG** : #issue_id
+
+**TYPES :**
+- **FEAT** – a new feature is introduced with the changes
+- **FIX** – a bug fix has occurred
+- **CHORE** – changes that do not relate to a fix or feature and don't modify src or test files (for example updating dependencies)
+- **REFACTOR** – refactored code that neither fixes a bug nor adds a feature
+- **DOCS** – updates to documentation such as a the README or other markdown files
+- **STYLE** – changes that do not affect the meaning of the code, likely related to code formatting such as white-space, missing semi-colons, and so on.
+- **TEST** – including new or correcting previous tests
+- **PERF** – performance improvements
+- **CI** – continuous integration related
+- **BUILD** – changes that affect the build system or external dependencies
+- **REVERT** – reverts a previous commit
+
+To see the sources and full documentation please check this [article](https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/).
