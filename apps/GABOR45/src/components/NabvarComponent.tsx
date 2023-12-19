@@ -1,3 +1,8 @@
+// React and React Router
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+
+// Ionic Components
 import {
 	IonSearchbar,
 	IonToolbar,
@@ -9,9 +14,9 @@ import {
 	IonText,
 	IonHeader,
 } from "@ionic/react";
+
+// Custom Styling and Images
 import "../theme/custom.css";
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import arrowLeft from "../icons/arrowLeft.svg";
 import search from "../icons/search.svg";
 

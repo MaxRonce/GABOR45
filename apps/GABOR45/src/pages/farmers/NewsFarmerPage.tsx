@@ -26,7 +26,7 @@ import { closeCircle } from "ionicons/icons";
 
 const NewsFarmerPage: React.FC = () => {
 	const { farmerId } = useParams<{ farmerId: string }>();
-	const [newsList, setNewsList] = useState<News[]>([]); // Utilisez le type News[] pour l'état
+	const [newsList, setNewsList] = useState<News[]>([]);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedImage, setSelectedImage] = useState("");
 

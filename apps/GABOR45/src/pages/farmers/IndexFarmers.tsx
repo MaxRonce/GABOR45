@@ -26,8 +26,8 @@ import FarmerSearchPage from "./FarmersSearch";
 import FarmersByCategory from "./FarmersByCategory";
 
 const IndexFarmers: React.FC = () => {
-	const [page, setPage] = useState<string>("producteurs"); // State for the initial page [producteurs, produits
-	const [searchQuery, setSearchQuery] = useState<string>(""); // State for the search query
+	const [page, setPage] = useState<string>("producteurs");
+	const [searchQuery, setSearchQuery] = useState<string>("");
 	const [isActive, setIsActive] = useState([true, false]);
 	const [selectedCategory, setSelectedCategory] = useState<string | null>(
 		null

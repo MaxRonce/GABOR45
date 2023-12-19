@@ -1,4 +1,4 @@
-import React from "react";
+// Custom Styling and Images
 import "./LoadingScreen.css";
 import logo from "../assets/logo_Gabor45_notxt.svg";
 

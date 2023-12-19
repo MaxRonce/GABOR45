@@ -13,10 +13,8 @@
     display: flex;
     align-items: center;
     background-color: #4CAF50;
-
     height: 19%;
     padding-left: 50%;
-
     justify-content: flex-end;
     padding-right: 5%;
 }
@@ -25,21 +23,17 @@ h1 {
     color: white;
     font-weight: 700 !important;
     font-size: xx-large !important;
-
     font-family: 'Poppins', sans-serif;
 }
 
 .farmer_img_round {
-
     width: 100%;
 }
 
 .image_mask {
-
     margin-left: 5%;
     margin-top: 5%;
     display: inline-block;
-
     border-radius: 50%;
     overflow: hidden;
     z-index: 9999;
@@ -50,7 +44,6 @@ h1 {
     .farmer_img_round {
         width: 100%;
     }
-
     .image_mask {
         width: 40vw;
         height: 40vw;
@@ -61,28 +54,20 @@ h1 {
     .farmer_img_round {
         width: 100%;
     }
-
     .image_mask {
         margin-left: 2%;
         margin-top: 2%;
         width: 25vh;
         height: 25vh;
     }
-
     .header-container {
         padding-left: 30%;
         justify-content: flex-start;
-
     }
-
     h1 {
         font-size: xxx-large !important;
     }
-
 }
-
-
-
 
 .IonCardTitle {
     margin-left: 20px;

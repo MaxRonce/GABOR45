@@ -72,9 +72,7 @@ const App: React.FC = () => (
 			<IonTabs>
 				<IonRouterOutlet animation={fadeTransition}>
 					<Route path="/home" component={Home} exact />
-
 					<Route path="/events" component={MyFeedPage} exact />
-
 					<Route
 						path="/farmers/:page/:farmerId"
 						component={FarmerDetailPage}
@@ -88,31 +86,25 @@ const App: React.FC = () => (
 						component={FarmerSearchPage}
 						exact
 					/>
-
 					<Route
 						path="/farmers/:page/:farmerId/news"
 						component={NewsFarmerPage}
 						exact
 					/>
-
 					<Route exact path="/position">
 						<MapPage />
 					</Route>
-
 					<Route exact path="/profile">
 						<Profile />
 					</Route>
-
 					<Route
 						exact
 						path="/profile_edit/:user_id"
 						component={ProfileEdit}
 					/>
-
 					<Route path="/tab3">
 						<Tab3 />
 					</Route>
-
 					<Route exact path="/">
 						<Redirect to="/home" />
 					</Route>
@@ -123,12 +115,10 @@ const App: React.FC = () => (
 						<RegisterUser />
 					</Route>
 				</IonRouterOutlet>
-
 				<IonTabBar slot="bottom">
 					<IonTabButton tab="home" href="/home">
 						<IonIcon src={home} />
 					</IonTabButton>
-
 					<IonTabButton tab="events" href="/events">
 						<IonIcon src={calendar} />
 					</IonTabButton>
