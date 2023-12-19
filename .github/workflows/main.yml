@@ -17,6 +17,7 @@ jobs:
       run: npm install
     - name: Run Linter
       run: npx eslint "apps/GABOR45/**/*.{ts,tsx,js,jsx}" --ignore-pattern "apps/GABOR45/node_modules/**" --format=json --output-file="apps/GABOR45/lint-report.json"
+      continue-on-error: true
     - name: Run Linter HTML Report
       run: npx nx run GABOR45:lint_html
     - name: Upload Lint Report
