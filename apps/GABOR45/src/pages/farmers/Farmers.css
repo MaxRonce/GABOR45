@@ -7,179 +7,71 @@
     font-family: 'Poppins', sans-serif;
 }
 
-ion-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #F6FCFB;
-}
-
-ion-list {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.categories-card {
-    padding: 10px;
-    flex-wrap: wrap;
-    flex-direction: row;
-    flex: 1;
-    height: 90% !important;
-
-}
-.category-container {
-    flex-basis: 50%;
-}
-
 .farmer-card {
     display: flex;
-    flex-direction: row;
     align-items: center;
     width: 90%;
-    height: 16vh;
-    margin-top : 3%;
-    margin-bottom: 3%;
-    margin-right: 5%;
-    margin-left: 5%;
-    background: #FFFFFF !important;
+    background: #FFFFFF;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
-}
-
-ion-card-content{
-    margin-left: 0 !important;
-    padding-left: 0 !important;
-    margin-top: -17px !important;
-}
-.category-content {
-    padding: 0 !important;
-    height: 80% !important;
-}
-.category-card {
-    height: 90% !important;
-}
-
-.category-title {
-    margin-top: 10px !important;
-    height: 100% !important;
-}
-
-@media (max-height: 825px) {
-    .farm_name{font-size: large !important;}
-    .nom_prenom_agri{font-size: small !important;}
-
-}
-
-@media (max-width: 430px) {
-    .category-title{
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        font-size: large !important;
-        flex-grow: 1 !important;} 
-    .category-card{max-width: 180px;}   
-    .farm_name{font-size: medium !important;} 
-    .nom_prenom_agri {
-        font-size: small !important;
-    }
-}
-
-@media (max-width: 375px) {
-    .category-card{max-width: 150px;}
-    .nom_prenom_agri{font-size: small !important;}
-    .farm_name{font-size: small !important;} 
-}
-
-@media (min-width: 400px) {
-    ion-card-content{
-        margin-top: 0 !important;
-    }
-}
-
-@media (min-width: 420px){
-    .produit_principal{font-size: medium !important;}
-}
-
-@media (min-width: 700px){
-    .farm_name{font-size: large !important;}
-    .nom_prenom_agri{font-size: large !important;}
-    .produit_principal{font-size: large !important;}
-    .distance{font-size: large !important;}
-    .farmer-card{height: 20vh;}
-}
-
-.farm_name{
-    font-weight: bolder;
-    color: #164550;
-}
-
-.nom_prenom_agri{
-    font-weight: normal!important;
-    color: #0d0d0d;
-}
-
-.farmer-image {
-    flex: 1;
-    height: 100%;
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.farmer_img{
-    width: auto;
-    height: 100%;
-    overflow: hidden;
-
-}
-
-.categorie_img {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-ion-img {
-    padding: 0;
-    margin : 0;
-}
-
-ion-img img {
-    width: 100%;
-    object-fit: cover;
-    padding: 0;
-    margin : 0;
-}
-
-/* Style pour l'info */
-.farmer-info {
-    flex: 2;
-    padding-left: 10px;
 }
 
 .distance{
     text-align: right;
 }
 
-.back_button {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    z-index: 100;
-    color: white; 
-    background: transparent;
-    border: none; 
-    box-shadow: none;
+.farm_name{
+    font-weight: bolder;    
+    font-size: 1.2rem;
+    color: #164550;
 }
 
-/* Style pour l'effet de pression sur le bouton de retour */
-.back_button:active {
-    background: rgba(255, 255, 255, 0.2);
-    transition: background-color 0.3s;
+.nom_prenom_agri{
+    color: #0d0d0d;
 }
 
-.back_button .button-inner {
-    color: white;
+.farmer_img{
+    width: auto;
+    background-color: white ;
+    border-radius: 10px;
+}
+
+.card_content{
+    padding-top: 0 !important;
+}
+
+/*CATEGORY PART*/
+ion-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.full-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.categories-card {
+    padding: 10px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 90% ;
+    flex: 1;
+}
+
+.category-container {
+    flex-basis: 50%;
+}
+
+.category-content {
+    padding: 0% !important;
+    height: 80% 
+}
+
+.category-title {
+    height: 100% !important;
+    font-size: 0.8rem !important;
 }

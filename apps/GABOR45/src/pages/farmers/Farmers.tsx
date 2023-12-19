@@ -68,115 +68,91 @@ function sleep(ms: number | undefined) {
 }
 
 const FarmerPage: React.FC = () => {
-	const [farmers, setFarmers] = useState<Farmer[]>([]);
-	const [userLocation, setUserLocation] = useState<{
-		latitude: number;
-		longitude: number;
-	} | null>(null);
-	const history = useHistory();
-	const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [farmers, setFarmers] = useState<Farmer[]>([]);
+    const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number } | null>(null);
+    const history = useHistory();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			setIsLoading(true);
-			try {
-				const data = await getUsersWithFarmers();
-				setFarmers(data);
-			} catch (error) {
-				console.error("Error fetching farmers", error);
-			}
-			setIsLoading(false);
-		};
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true);
+            try {
+                const data = await getUsersWithFarmers();
+                setFarmers(data);
+            } catch (error) {
+                console.error('Error fetching farmers', error);
+            }
+            setIsLoading(false);
+        };
 
-		requestLocationPermission().then((r) => console.log(r));
+        requestLocationPermission().then(r => console.log(r));
 
-		const getLocation = async () => {
-			setIsLoading(true);
-			try {
-				await requestLocationPermission();
-				const coordinates = await Geolocation.getCurrentPosition();
-				setUserLocation({
-					latitude: coordinates.coords.latitude,
-					longitude: coordinates.coords.longitude,
-				});
-			} catch (err) {
-				console.error("Could not get user location", err);
-			}
-			setIsLoading(false);
-		};
+        const getLocation = async () => {
+            setIsLoading(true);
+            try {
+                await requestLocationPermission();
+                const coordinates = await Geolocation.getCurrentPosition();
+                setUserLocation({
+                    latitude: coordinates.coords.latitude,
+                    longitude: coordinates.coords.longitude,
+                });
+            } catch (err) {
+                console.error('Could not get user location', err);
+            }
+            setIsLoading(false);
+        };
 
-		fetchData().then((r) => console.log(r));
-		getLocation().then((r) => console.log(r));
-	}, []);
+        fetchData().then(r => console.log(r));
+        getLocation().then(r => console.log(r));
+    }, []);
 
-	const handleCardClick = (farmerId: string) => {
-		history.push({
-			pathname: `/farmers/producteurs/${farmerId}`,
-			state: { farmerId: farmerId },
-		});
-	};
+    const handleCardClick = (farmerId: string) => {
+        history.push({
+            pathname: `/farmers/producteurs/${farmerId}`,
+            state: { farmerId: farmerId }
+        });
+    };
 
-	const destination = {
-		latitude: 48.85835473209913,
-		longitude: 2.2944613664788105,
-	};
+    const destination = { latitude: 48.85835473209913, longitude: 2.2944613664788105 };
 
-	const baseUrl =
-		"https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
 
-	// @ts-ignore
-	return (
-		<IonContent>
-			{isLoading ? (
-				<LoadingScreen />
-			) : (
-				<IonList>
-					{farmers.map((farmer) => (
-						<div
-							key={farmer.id_utilisateur}
-							onClick={() =>
-								handleCardClick(farmer.id_utilisateur)
-							}
-						>
-							<IonCard className="farmer-card">
-								<img
-									className="farmer_img"
-									src={`${baseUrl}${farmer.lien_image_user}`}
-									alt="Image de l'agriculteur"
-								/>
-								<div className="farmer-info">
-									<IonCardHeader>
-										<IonCardTitle className="farm_name">
-											{farmer.nom_ferme}
-										</IonCardTitle>
-									</IonCardHeader>
-									<IonCardContent>
-										<p className="produit_principal">
-											{farmer.type_produit_principal}
-										</p>
-										<p className="nom_prenom_agri">
-											{farmer.prenom} {farmer.nom}
-										</p>
-										{userLocation && (
-											<p className="distance">
-												{calculateDistance(
-													farmer.latitude,
-													farmer.longitude,
-													userLocation.latitude,
-													userLocation.longitude
-												)}{" "}
-												km
-											</p>
-										)}
-									</IonCardContent>
-								</div>
-							</IonCard>
-						</div>
-					))}
-				</IonList>
-			)}
-		</IonContent>
-	);
+    const baseUrl = "https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
+
+    // @ts-ignore
+    return (
+            <IonContent>
+                {isLoading ? (
+                    <LoadingScreen />
+                ) : (
+
+                <IonList className="farmer_list">
+                    {farmers.map(farmer => (
+                        <div key={farmer.id_utilisateur} onClick={() => handleCardClick(farmer.id_utilisateur)}>
+                            <IonCard className="farmer-card">
+                                <img className="farmer_img" src={`${baseUrl}${farmer.lien_image_user}`} alt="Image de l'agriculteur" />
+                                <div className="farmer-info">
+                                    <IonCardHeader>
+                                        <IonCardTitle className="farm_name">{farmer.nom_ferme}</IonCardTitle>
+                                    </IonCardHeader>
+                                    <IonCardContent className="card_content">
+                                        <p className="produit_principal">{farmer.type_produit_principal}</p>
+                                        <p className="nom_prenom_agri">
+                                            {farmer.prenom} {farmer.nom}</p>
+                                        {userLocation && (
+                                            <p className="distance">
+                                                {calculateDistance(farmer.latitude, farmer.longitude, userLocation.latitude, userLocation.longitude)} km
+                                            </p>
+                                        )}
+                                    </IonCardContent>
+                                </div>
+                            </IonCard>
+
+                        </div>
+                    ))}
+                </IonList>
+                )}
+            </IonContent>
+    );
 };
 
 export default FarmerPage;
