@@ -90,54 +90,95 @@ const IndexFarmers: React.FC = () => {
 		setPage("");
 	};
 
-  return (
-    <IonPage>
-        <div className='full-page'>
-      <IonHeader>
-            <IonToolbar>
-                <IonItem lines="none" className="ion-margin-top">
-                    <div className='nab-content'>
-                        <IonIcon src={arrowLeft} onClick={handleBack} className='nav-icon ion-icon' />
-                        <IonSearchbar placeholder="SEARCH"
-                            value={searchQuery}
-                            onKeyDown={(e) => handleSearch(e.currentTarget.value)}
-                            className="ion-justify-content-end searchBar">
-                            <IonIcon src={search} slot="end" className="search-icon"/>
-                        </IonSearchbar>
-                    </div>
-                    
-                </IonItem>
-                <IonGrid class="ion-margin-horizontal">
-                    <IonRow>
-                        <IonCol size="6" class="custom-center">
-                            <div className={navClass(0)} onClick={() => { handleClick(0)}}>
-                                <IonText className="nav-text ion-text-center">à proximité</IonText>
-                            </div>
-                        </IonCol>
-                        <IonCol size="6" class="custom-center">
-                            <div className={navClass(1)} onClick={() => {handleClick(1)}}>
-                                <IonText className="nav-text ion-text-center">Catégorie</IonText>
-                            </div>
-                        </IonCol>
-                    </IonRow>
+	const navClass = (index: any) =>
+		`nav-line ${isActive[index] ? "active" : ""}`;
 
-                </IonGrid> 
-            </IonToolbar>
-        </IonHeader>
-      <IonContent>
-        {searchQuery !== "" ? ( // if searchQuery is not empty, show the search page
-          <FarmerSearchPage searchQuery={searchQuery} page={page} />
-        ) : ( // else show the page selected
-          <>
-            {page === 'producteurs' ? <FarmerPage /> : null}
-            {page === 'categories' ? <FarmerCategories selectedCategory={selectedCategory}
-                onSelectCategory={(category) => showFarmersCategory(category)}/> : null}
-            {selectedCategory ? <FarmersByCategory categoryId={selectedCategory} /> : null}
-          </>
-        )}
-      </IonContent>
-      </div>
-    </IonPage>
-  );
-}
+	return (
+		<IonPage>
+			<div className="full-page">
+				<IonHeader>
+					<IonToolbar>
+						<IonItem lines="none" className="ion-margin-top">
+							<div className="nab-content">
+								<IonIcon
+									src={arrowLeft}
+									onClick={handleBack}
+									className="nav-icon ion-icon"
+								/>
+								<IonSearchbar
+									placeholder="SEARCH"
+									value={searchQuery}
+									onKeyDown={(e) =>
+										handleSearch(e.currentTarget.value)
+									}
+									className="ion-justify-content-end searchBar"
+								>
+									<IonIcon
+										src={search}
+										slot="end"
+										className="search-icon"
+									/>
+								</IonSearchbar>
+							</div>
+						</IonItem>
+						<IonGrid class="ion-margin-horizontal">
+							<IonRow>
+								<IonCol size="6" class="custom-center">
+									<div
+										className={navClass(0)}
+										onClick={() => {
+											handleClick(0);
+										}}
+									>
+										<IonText className="nav-text ion-text-center">
+											à proximité
+										</IonText>
+									</div>
+								</IonCol>
+								<IonCol size="6" class="custom-center">
+									<div
+										className={navClass(1)}
+										onClick={() => {
+											handleClick(1);
+										}}
+									>
+										<IonText className="nav-text ion-text-center">
+											Catégorie
+										</IonText>
+									</div>
+								</IonCol>
+							</IonRow>
+						</IonGrid>
+					</IonToolbar>
+				</IonHeader>
+				<IonContent>
+					{searchQuery !== "" ? ( // if searchQuery is not empty, show the search page
+						<FarmerSearchPage
+							searchQuery={searchQuery}
+							page={page}
+						/>
+					) : (
+						// else show the page selected
+						<>
+							{page === "producteurs" ? <FarmerPage /> : null}
+							{page === "categories" ? (
+								<FarmerCategories
+									selectedCategory={selectedCategory}
+									onSelectCategory={(category) =>
+										showFarmersCategory(category)
+									}
+								/>
+							) : null}
+							{selectedCategory ? (
+								<FarmersByCategory
+									categoryId={selectedCategory}
+								/>
+							) : null}
+						</>
+					)}
+				</IonContent>
+			</div>
+		</IonPage>
+	);
+};
 export default IndexFarmers;
