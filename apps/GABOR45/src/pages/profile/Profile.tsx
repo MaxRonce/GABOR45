@@ -44,12 +44,13 @@ const Profile: React.FC = () => {
 	};
 
 	const redirectToProfileEdit = () => {
-		if (currentUser) {
-			history.push(`/profile_edit/${currentUser.id}`);
-		} else {
-			redirectToLogin();
-		}
-	};
+    if (currentUser) {
+        history.push(`/profile_edit/${currentUser.id}`);
+    } else {
+        redirectToLogin();
+    }
+};
+
 
 	const signOut = async () => {
 		const { error } = await supabase.auth.signOut();

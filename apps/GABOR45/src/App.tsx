@@ -97,11 +97,8 @@ const App: React.FC = () => (
 					<Route exact path="/profile">
 						<Profile />
 					</Route>
-					<Route
-						exact
-						path="/profile_edit/:user_id"
-						component={ProfileEdit}
-					/>
+					<Route path="/profile_edit/:userId" component={ProfileEdit} />
+
 					<Route path="/tab3">
 						<Tab3 />
 					</Route>
