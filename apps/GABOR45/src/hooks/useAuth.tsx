@@ -10,8 +10,7 @@ export const useAuth = () => {
 		const { data: authListener } = supabase.auth.onAuthStateChange(
 			async (event, session) => {
 				const currentUser = session?.user; // Obtenez l'utilisateur de la session
-				// @ts-ignore
-				setUser(currentUser);
+				setUser(currentUser || null);
 			}
 		);
 

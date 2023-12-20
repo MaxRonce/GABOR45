@@ -8,7 +8,6 @@ import { IonPage, IonContent, IonButton } from "@ionic/react";
 // Supabase Components
 import { supabase } from "../../supabaseClient";
 import { User } from "@supabase/supabase-js";
-import { Database } from "../../types/supabase";
 
 // Models and Services
 import { Utilisateur } from "../../models/User";
@@ -16,11 +15,13 @@ import { getUserInfo } from "../../services/userService";
 
 // Custom Components
 import LoadingScreen from "../../components/LoadingScreen";
+import { useAuth } from "../../hooks/useAuth";
 
 // Custom Styling
 import "./Profile.css";
 
 const Profile: React.FC = () => {
+	const t = useAuth();
 	const baseUrl =
 		"https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
 	const [user, setUser] = useState<User | null>(null);
@@ -29,31 +30,28 @@ const Profile: React.FC = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		const { data: authListener } = supabase.auth.onAuthStateChange(
-			async (event, session) => {
-				const currentUser = session?.user;
-				// @ts-ignore
-				setUser(currentUser);
-			}
-		);
-
 		const fetchData = async () => {
 			try {
+				console.log("ici ca fetch user");
 				if (user != null) {
+					console.log(user);
+					console.log(user.id);
+					console.log("ici ca fetch user");
 					const userData = await getUserInfo(user.id);
-					setUtil(userData);
 					console.log(userData);
-				}
+					setUtil(userData);
+					setIsLoading(false);
+				} else
+					console.log("pas de user donc pas de fetch de user info");
 			} catch (error) {
 				console.error("Failed to fetch data:", error);
 			} finally {
-				setIsLoading(false);
+				//setIsLoading(false);
 			}
 		};
+		setUser(t);
 
-		return () => {
-			authListener?.subscription.unsubscribe();
-		};
+		fetchData();
 	}, []);
 
 	const redirectToLogin = () => {
@@ -80,25 +78,22 @@ const Profile: React.FC = () => {
 
 	return (
 		<IonPage>
-			<IonContent>
-				{user ? (
-					<div>
-						Bonjour {user.email}
-						<IonButton onClick={signOut}>Se déconnecter</IonButton>
-						<IonButton onClick={redirectToProfileEdit}>
-							{" "}
-							Edit{" "}
-						</IonButton>
-					</div>
-				) : (
-					<div>
-						Vous n'êtes pas connecté.
-						<IonButton onClick={redirectToLogin}>
-							Se connecter
-						</IonButton>
-					</div>
-				)}
-			</IonContent>
+			{isLoading ? (
+				<LoadingScreen />
+			) : user ? (
+				<div>
+					Bonjour {user.email}
+					<IonButton onClick={signOut}>Se déconnecter</IonButton>
+					<IonButton onClick={redirectToProfileEdit}>Edit</IonButton>
+				</div>
+			) : (
+				<div>
+					Vous n'êtes pas connecté.
+					<IonButton onClick={redirectToLogin}>
+						Se connecter
+					</IonButton>
+				</div>
+			)}
 		</IonPage>
 	);
 };
