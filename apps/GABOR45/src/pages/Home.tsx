@@ -1,6 +1,9 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 // Home.tsx
 // React
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 // Ionic Framework Components
 import {
@@ -29,6 +32,7 @@ const Home: React.FC = () => {
 	const [newsList, setNewsList] = useState<News[]>([]);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedImage, setSelectedImage] = useState("");
+    const history = useHistory();
 
 	const openImageModal = (imageUrl: string) => {
 		setSelectedImage(imageUrl);
@@ -50,6 +54,12 @@ const Home: React.FC = () => {
 		};
 		fetchNews();
 	}, []);
+
+	const handle_click_card = (newsItem: News) => {
+		if (newsItem.is_recette) {
+			history.push(`/recette/${newsItem.id_evenement}`);
+		} 
+	}
 
 	const baseUrl =
 		"https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/news/images/";
@@ -76,7 +86,9 @@ const Home: React.FC = () => {
 		<IonPage>
 			<IonContent>
 				{newsList.map((newsItem: News) => (
-					<IonCard key={newsItem.id_evenement}>
+					<IonCard key={newsItem.id_evenement} onClick={() =>
+						handle_click_card(newsItem)
+					}>
 						<IonCardHeader className="head">
 							<div className="title_containter">
 								<div className="avatar-container">
@@ -87,8 +99,9 @@ const Home: React.FC = () => {
 									/>
 								</div>
 								<IonCardTitle>
-									{newsItem.nom_evenement}
-								</IonCardTitle>
+  {newsItem.is_recette ? `Recette : ${newsItem.nom_evenement}` : newsItem.nom_evenement }
+</IonCardTitle> 
+
 							</div>
 						</IonCardHeader>
 						{newsItem.image && (

@@ -1,6 +1,6 @@
-const fs = require('fs');
+import { readFileSync } from 'fs';
 
-const report = JSON.parse(fs.readFileSync('apps/GABOR45/lint-report.json', 'utf8'));
+const report = JSON.parse(readFileSync('apps/GABOR45/lint-report.json', 'utf8'));
 let errorCount = 0;
 let warningCount = 0;
 

@@ -1,6 +1,6 @@
 import "./theme/variables.css";
 import "./theme/custom.css";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 /* Theme variables */
 import {
 	createAnimation,
@@ -25,6 +25,7 @@ import MyFeedPage from "./pages/events/MyFeedPage";
 import ProfileEdit from "./pages/profile/ProfileEdit";
 import Home from "./pages/Home";
 import MapPage from "./pages/map/Map";
+import RecipeDetailPage from "./pages/recipes/RecipeDetailPage";
 
 /* Icons imports */
 import home from "../src/icons/home.svg";
@@ -71,6 +72,7 @@ const App: React.FC = () => (
 		<IonReactRouter>
 			<IonTabs>
 				<IonRouterOutlet animation={fadeTransition}>
+				<Switch>
 					<Route path="/home" component={Home} exact />
 					<Route path="/events" component={MyFeedPage} exact />
 					<Route
@@ -78,6 +80,8 @@ const App: React.FC = () => (
 						component={FarmerDetailPage}
 						exact
 					/>
+					
+					<Route exact path="/recette/:recipeId" component={RecipeDetailPage} />
 					<Route exact path="/farmers/:page">
 						<IndexFarmers />
 					</Route>
@@ -114,6 +118,9 @@ const App: React.FC = () => (
 					<Route exact path="/registerUser">
 						<RegisterUser />
 					</Route>
+		
+
+					</Switch>
 				</IonRouterOutlet>
 				<IonTabBar slot="bottom">
 					<IonTabButton tab="home" href="/home">
@@ -133,6 +140,7 @@ const App: React.FC = () => (
 					</IonTabButton>
 				</IonTabBar>
 			</IonTabs>
+			
 		</IonReactRouter>
 	</IonApp>
 );
