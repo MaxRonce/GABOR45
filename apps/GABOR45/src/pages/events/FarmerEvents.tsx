@@ -14,11 +14,14 @@ import {
     IonAvatar,
     IonLabel,
     IonFab,
+    useIonToast,
     IonInput,
     IonTextarea,
     IonFabButton,
     IonList,
     IonText,
+    IonSelect,
+    IonSelectOption,
 } from "@ionic/react";
 import logo from "../../assets/logo_Gabor45_notxt.svg";
 import { getNewsByFarmer, getNewsForUser, saveNews } from "../../services/newsService";
@@ -31,6 +34,15 @@ import { useAuth } from "../../hooks/useAuth";
 import LoadingScreen from "../../components/LoadingScreen";
 import { openImageModalF, closeModalF, handleModalContentClickF, redirectToFarmerProfileF } from "./FunctionsEvents";
 
+interface Ingredient {
+    name: string;
+    quantity: string;
+    unit: string;
+}
+
+interface Step {
+    description: string;
+}
 
 const FarmerEvents: React.FC = () => {
     const user = useAuth();
@@ -43,7 +55,11 @@ const FarmerEvents: React.FC = () => {
     const [nomEvenement, setNomEvenement] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [imageFile, setImageFile] = useState(null);
+    const [isActive, setIsActive] = useState([true, false]);
     const [imageName, setImageName] = useState<string>("");
+    const [ingredients, setIngredients] = useState<Ingredient[]>([{ name: '', quantity: '', unit: '' }]);
+    const [steps, setSteps] = useState<Step[]>([{ description: '' }]);
+    const [showToast] = useIonToast();
 
 
     const openImageModal = (imageUrl: string) => {
@@ -59,10 +75,7 @@ const FarmerEvents: React.FC = () => {
     };
 
     useEffect(() => {
-        setImageName("");
-        setIsLoading(true);
-        fetchNews();
-        setIsLoading(false);
+        cleanAll();
     }, [user]);
 
     const doRefresh = (event: CustomEvent) => {
@@ -79,7 +92,7 @@ const FarmerEvents: React.FC = () => {
                 setNewsList(newsFromService);
             }
         } catch (error) {
-            
+
         }
     };
 
@@ -103,71 +116,226 @@ const FarmerEvents: React.FC = () => {
         redirectToFarmerProfileF(farmerId);
     };
 
-    const uploadImage = async (file:File) => {
+    const uploadImage = async (file: File, dossier:string) => {
         const fileName = file.name;
         try {
             let { error: uploadError } = await supabase.storage
-            .from('news')
-            .upload(`images/${fileName}`, file, {
-                cacheControl: '3600',
-                upsert: false
-            });
-      
+                .from('news')
+                .upload(`${dossier}/${fileName}`, file, {
+                    cacheControl: '3600',
+                    upsert: false
+                });
+
             if (uploadError) {
-                throw new Error('Error to upload file: ' + uploadError.message);
-          
+                await showToast({
+                    message: "Erreur lors de l'ajout l'image",
+                    duration: 2000,
+                    color: "danger",
+                });
+                console.error('Error to upload file: ' + uploadError.message);
+                return 'error';
             }
         } catch (error) {
             console.log(error);
-            return '';
+            return 'error';
         }
 
         return fileName;
-        
-      }
 
-      const handleFileChange = (event: any) => {
-        if (event.target.files.length > 0) {
-          const file = event.target.files[0];
-          setImageFile(file); // Guardamos el archivo seleccionado en el estado
-          setImageName(file.name);
+    }
+
+    const handleClick = (index: any) => {
+        const updateActive = [...isActive];
+        if (!isActive[index]) {
+            updateActive[index] = !updateActive[index];
+            for (let i = 0; i < updateActive.length; i++) {
+                if (i !== index) {
+                    updateActive[i] = false;
+                }
+            }
         }
-      };
-      
-    
+        setIsActive(updateActive);
+    };
+
+    const handleFileChange = (event: any) => {
+        if (event.target.files.length > 0) {
+            const file = event.target.files[0];
+            setImageFile(file); // Guardamos el archivo seleccionado en el estado
+            setImageName(file.name);
+        }
+    };
+
+    const navClass = (index: any) =>
+        `nav-line ${isActive[index] ? "active" : ""}`;
+
+
+
     const handleClose = () => {
         setShowFormModal(false);
         setImageFile(null);
         setImageName('');
+        setNomEvenement('');
+        setDescription('');
+        setIngredients([{ name: '', quantity: '', unit: '' }]);
+        setSteps([{ description: '' }]);
+        setIsActive([true, false]);
     }
-      
 
+    const handleIngredientChange = (index: number, field: keyof Ingredient, value: string) => {
+        const newIngredients = [...ingredients];
+        const currentIngredient = newIngredients[index];
+        if (currentIngredient !== undefined) {
+            currentIngredient[field] = value;
+            setIngredients(newIngredients);
+        }
+    };
+
+    const handleStepChange = (index: number, field: keyof Step, value:string) => {
+        const newSteps = [...steps];
+        const currentStep = newSteps[index];
+        if (currentStep !== undefined) {
+            currentStep[field] = value;
+            setSteps(newSteps);
+        }
+    };
+
+    // Functions to add and remove ingredients / steps
+    const addIngredient = () => {
+        setIngredients([...ingredients, { name: '', quantity: '', unit: '' }]);
+    };
+    const removeIngredient = (index: number) => {
+        const newIngredients = ingredients.filter((_, i) => i !== index);
+        setIngredients(newIngredients);
+    };
+
+    const removeStep = (index: number) => {
+        const newSteps = steps.filter((_, i) => i !== index);
+        setSteps(newSteps);
+    };
+    
+
+    const addStep = () => {
+        setSteps([...steps, { description: '' }]);
+    };
+
+    const saveIngredients = async (id_recette:string) => {
+        try {
+            for (const ingredient of ingredients) {
+                await supabase
+                    .from('ingredient')
+                    .insert({
+                        nom_ingredient: ingredient.name,
+                        quantite_ingredient: ingredient.quantity,
+                        unite_de_mesure: ingredient.unit,
+                        id_recette: id_recette
+                    });
+            }
+        } catch (error) {
+            console.error("Erreur lors de l'ajout", error);
+            await showToast({
+                message: `Erreur lors de l'ajout d'un ingrédient`,
+                duration: 2000,
+                color: "danger",
+            });
+            
+        }
+        
+    };
+
+    const cleanAll = () => {
+        setImageFile(null);
+        setImageName('');
+        setNomEvenement('');
+        setDescription('');
+        setIngredients([{ name: '', quantity: '', unit: '' }]);
+        setSteps([{ description: '' }]);
+        setIsActive([true, false]);
+    }
+
+    const saveSteps = async (id_recette:string) => {
+        try {
+            let i = 1;
+            for (const step of steps) {
+                await supabase
+                    .from('etape')
+                    .insert({
+                        id_etape: i++,
+                        description: step.description,
+                        id_recette: id_recette
+                    });
+            }
+        } catch (error) {
+            console.error("Erreur lors de l'ajout de l'étape", error);
+            await showToast({
+                message: "Erreur lors de l'ajout de l'étape",
+                duration: 2000,
+                color: "danger",
+            });
+            
+        }
+        
+    };
+    
     //function to add an event
-    const handleSubmitEvent = async () => {
+    const handleSubmit = async (msg:string) => {
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().replace('T', ' ').substring(0, 19);
         try {
             let fileName = '';
             if (imageFile) {
-                fileName = await uploadImage(imageFile);
+                let news = {};
+                if (msg === "recette") {
+                    fileName = await uploadImage(imageFile, "recettes");
+                    news = {
+                        nom_evenement: nomEvenement,
+                        description: description,
+                        date_creation: formattedDate,
+                        id_agriculteur: user.id,
+                        image: fileName
+                    }
+                    const data = await saveNews(news);
+                    if (data) {
+                        await saveIngredients(data);
+                        await saveSteps(data);
+                        setShowFormModal(false);
+                        setImageFile(null);
+                        setImageName('');
+                        await showToast({
+                            message: `${msg} a été ajouté avec succès`,
+                            duration: 2000,
+                            color: "success",
+                        });
+                    }
+                }else{
+                    fileName = await uploadImage(imageFile, "images");
+                    news = {
+                        nom_evenement: nomEvenement,
+                        description: description,
+                        date_creation: formattedDate,
+                        id_agriculteur: user.id,
+                        image: fileName
+                    }
+                    const data = await saveNews(news);
+                    setShowFormModal(false);
+                    setImageFile(null);
+                    setImageName('');
+                    await showToast({
+                        message: `${msg} a été ajouté avec succès`,
+                        duration: 2000,
+                        color: "success",
+                    });
+                    await fetchNews();
+                }
                 console.log("filename", fileName);
             }
-            if (fileName != '') {
-                const news = {
-                    nom_evenement: nomEvenement,
-                    description: description,
-                    date_creation: formattedDate,
-                    id_agriculteur: user.id,
-                    image: fileName
-                }
-                const data = await saveNews(news);
-                console.log(data);
-                setShowFormModal(false);
-                await fetchNews();
-            }
-            
+
         } catch (error) {
             console.error(error);
+            await showToast({
+                message: `Erreur lors de l'ajout d'un ${msg}`,
+                duration: 2000,
+                color: "danger",
+            });
         }
     }
 
@@ -216,7 +384,7 @@ const FarmerEvents: React.FC = () => {
                                 </IonCardTitle>
                             </IonCardHeader>
 
-                            <IonCardContent>
+                            <IonCardContent className="preserve-whitespace">
                                 {newsItem.image && (
                                     <img
                                         src={`${baseUrl}${newsItem.image}`}
@@ -264,38 +432,152 @@ const FarmerEvents: React.FC = () => {
                     <IonModal isOpen={showFormModal} onDidDismiss={() => setShowFormModal(false)} className="my-custom-class">
                         <div className="modal-content" onClick={closeModal}>
                             <div className="modal-form">
-                                <IonText>Ajouter évènement</IonText>
-                                <IonList className="modal-list">
-                                    <IonItem>
-                                        <IonInput placeholder="Nom de l'évènement" onIonChange={(e:any) => setNomEvenement(e.detail.value)}/>
-                                    </IonItem>
-                                    <IonItem>
-                                        <IonTextarea placeholder="Description de l'évènement" onIonChange={(e:any) => setDescription(e.detail.value)} />
-                                    </IonItem>
-                                    <IonItem>
-                                    <IonLabel position="stacked" className="modal-label">Image</IonLabel>
-                                    <label htmlFor="file-upload" className="file-upload-label">
-                                    Choisir une image
-                                    </label>
-                                    <input
-                                        id="file-upload"
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={handleFileChange}
-                                        style={{ display: 'none' }}
-                                    />
-                                    </IonItem>
-                                    {imageName !='' && (
-                                        <IonItem>
-                                            <IonLabel position="stacked" className="modal-label">Image sélectionnée</IonLabel>
-                                            <IonText>{imageName}</IonText>
-                                        </IonItem>
-                                    )}
-                                </IonList>
-                                <div className="modal-buttons">
-                                    <IonButton expand="block" color="medium" onClick={() => handleClose()}>Annuler</IonButton>
-                                    <IonButton expand="block" type="submit" onClick={()=> handleSubmitEvent()}>Ajouter</IonButton>
+                                <IonText>Ajouter</IonText>
+                                <div className="modal-header">
+                                    <div className={navClass(0)} onClick={() => { handleClick(0) }}>
+                                        <IonText className="nav-text ion-text-center">évènement</IonText>
+                                    </div>
+                                    <div className={navClass(1)} onClick={() => { handleClick(1) }}>
+                                        <IonText className="nav-text ion-text-center">recette</IonText>
+                                    </div>
                                 </div>
+                                {isActive[0] ? (
+                                    <>
+                                        <IonList className="modal-list">
+                                            <IonItem>
+                                                <IonInput placeholder="Nom de l'évènement" onIonChange={(e: any) => setNomEvenement(e.detail.value)} />
+                                            </IonItem>
+                                            <IonItem>
+                                                <IonTextarea placeholder="Description de l'évènement" onIonChange={(e: any) => setDescription(e.detail.value)} />
+                                            </IonItem>
+                                            <IonItem>
+                                                <IonLabel position="stacked" className="modal-label">Image</IonLabel>
+                                                <label htmlFor="file-upload" className="file-upload-label">
+                                                    Choisir une image
+                                                </label>
+                                                <input
+                                                    id="file-upload"
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={handleFileChange}
+                                                    style={{ display: 'none' }}
+                                                />
+                                            </IonItem>
+                                            {imageName != '' && (
+                                                <IonItem>
+                                                    <IonLabel position="stacked" className="modal-label">Image sélectionnée</IonLabel>
+                                                    <IonText>{imageName}</IonText>
+                                                </IonItem>
+                                            )}
+                                        </IonList>
+                                        <div className="modal-buttons">
+                                            <IonButton expand="block" color="danger" onClick={() => handleClose()}>Annuler</IonButton>
+                                            <IonButton expand="block" type="submit" onClick={() => handleSubmit("évènement")}>Ajouter</IonButton>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <IonList className="modal-list">
+                                            <IonItem>
+                                                <IonInput placeholder="Nom de la recette" onIonChange={(e: any) => setNomEvenement(e.detail.value)} />
+                                            </IonItem>
+                                            <IonItem>
+                                                <IonTextarea placeholder="Description de la recette" onIonChange={(e: any) => setDescription(e.detail.value)} />
+                                            </IonItem>
+                                            <IonItem>
+                                                <IonLabel position="stacked" className="modal-label">Ingredients</IonLabel>
+                                                <div className="items-content">
+                                                    {ingredients.map((ingredient, index) => (
+                                                        <div key={index} className="item-input">
+                                                            <IonItem>
+                                                                <IonInput
+                                                                    placeholder="Nom"
+                                                                    className="name-input"
+                                                                    value={ingredient.name}
+                                                                    onIonChange={(e) => handleIngredientChange(index, 'name', e.detail.value ?? '')}
+                                                                />
+                                                            </IonItem>
+                                                            <IonItem>
+                                                                <IonInput
+                                                                    placeholder="Quantité"
+                                                                    type="number"
+                                                                    className="number-input"
+                                                                    value={ingredient.quantity}
+                                                                    onIonChange={(e) => handleIngredientChange(index, 'quantity', e.detail.value ?? '')}
+                                                                />
+                                                            </IonItem>
+                                                            <IonItem>
+                                                                <IonSelect
+                                                                    placeholder="Unité"
+                                                                    value={ingredient.unit}
+                                                                    onIonChange={(e) => handleIngredientChange(index, 'unit', e.detail.value ?? '')}
+                                                                >
+                                                                    <IonSelectOption value="g">g</IonSelectOption>
+                                                                    <IonSelectOption value="kg">kg</IonSelectOption>
+                                                                    <IonSelectOption value="l">l</IonSelectOption>
+                                                                    <IonSelectOption value="cl">cl</IonSelectOption>
+                                                                    <IonSelectOption value="ml">ml</IonSelectOption>
+                                                                    <IonSelectOption value="cuillère à café">cuillère à café</IonSelectOption>
+                                                                    <IonSelectOption value="cuillère à soupe">cuillère à soupe</IonSelectOption>
+                                                                    <IonSelectOption value="pièce">pièce</IonSelectOption>
+                                                                </IonSelect>
+                                                            </IonItem>
+                                                            <IonItem>
+                                                                <IonButton color="danger" onClick={() => removeIngredient(index)}>Supprimer</IonButton>
+                                                            </IonItem>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                <IonButton className="btn-ajouter" onClick={addIngredient}>Ajouter un ingrédient</IonButton>
+                                            </IonItem>
+                                            <IonItem>
+                                                <IonLabel position="stacked" className="modal-label">Etapes</IonLabel>
+                                                <div className="items-content">
+                                                    {steps.map((step, index) => (
+                                                        <div  key={index} className="item-input step">
+                                                            <IonItem>
+                                                            <IonTextarea
+                                                                placeholder={`Étape ${index + 1}`}
+                                                                value={step.description}
+                                                                onIonChange={(e) => handleStepChange(index, 'description', e.detail.value ?? '')}
+                                                            />
+                                                            </IonItem>
+                                                            <IonItem>
+                                                                <IonButton color="danger" onClick={() => removeStep(index)}>Supprimer</IonButton>
+                                                            </IonItem>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            <IonButton className="btn-ajouter" onClick={addStep}>Ajouter une étape</IonButton>
+                                            </IonItem>
+                                            
+                                            <IonItem>
+                                                <IonLabel position="stacked" className="modal-label">Image</IonLabel>
+                                                <label htmlFor="file-upload" className="file-upload-label">
+                                                    Choisir une image
+                                                </label>
+                                                <input
+                                                    id="file-upload"
+                                                    type="file"
+                                                    accept="image/*"
+                                                    onChange={handleFileChange}
+                                                    style={{ display: 'none' }}
+                                                />
+                                            </IonItem>
+                                            {imageName != '' && (
+                                                <IonItem>
+                                                    <IonLabel position="stacked" className="modal-label">Image sélectionnée</IonLabel>
+                                                    <IonText>{imageName}</IonText>
+                                                </IonItem>
+                                            )}
+                                        </IonList>
+                                        <div className="modal-buttons">
+                                            <IonButton expand="block" color="danger" onClick={() => handleClose()}>Annuler</IonButton>
+                                            <IonButton expand="block" type="submit" onClick={() => handleSubmit("recette")}>Ajouter</IonButton>
+                                        </div>
+                                    </>
+                                )}
+
                             </div>
                         </div>
                     </IonModal>

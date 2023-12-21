@@ -77,19 +77,21 @@ export const getNewsForUser = async (userId: string): Promise<News[]> => {
 };
 
 export const saveNews = async (news: any) => {
-	const { data, error } = await supabase.from("news").insert(
-		{
-			nom_evenement: news.nom_evenement,
-			description: news.description,
-			date_creation: news.date_creation,
-			id_agriculteur: news.id_agriculteur,
-			image: news.image,
-		}
-	);
+	const { data, error } = await supabase.rpc('create_new_evenement',
+	{
+		p_nom_evenement: news.nom_evenement,
+		p_description: news.description,
+		p_date_creation: news.date_creation,
+		p_id_agriculteur: news.id_agriculteur,
+		p_image: news.image,
+	});
+		
+	
 	if (error) {
 		console.error("Error saving news", error);
 		return error;
 	}else {
+		console.log(data);
 		return data;
 	}
 
