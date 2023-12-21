@@ -21,7 +21,7 @@ import IndexFarmers from "./pages/farmers/IndexFarmers";
 import FarmerSearchPage from "./pages/farmers/FarmersSearch";
 import FarmerDetailPage from "./pages/farmers/FarmerDetailPage";
 import NewsFarmerPage from "./pages/farmers/NewsFarmerPage";
-import MyFeedPage from "./pages/events/MyFeedPage";
+import IndexEvents from "./pages/events/IndexEvents";
 import ProfileEdit from "./pages/profile/ProfileEdit";
 import Home from "./pages/Home";
 import MapPage from "./pages/map/Map";
@@ -72,7 +72,7 @@ const App: React.FC = () => (
 			<IonTabs>
 				<IonRouterOutlet animation={fadeTransition}>
 					<Route path="/home" component={Home} exact />
-					<Route path="/events" component={MyFeedPage} exact />
+					<Route path="/events" component={IndexEvents} exact />
 					<Route
 						path="/farmers/:page/:farmerId"
 						component={FarmerDetailPage}

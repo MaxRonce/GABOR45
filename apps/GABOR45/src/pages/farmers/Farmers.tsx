@@ -74,28 +74,9 @@ const FarmerPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        const fetchData = async () => {
+        async function fetchAndSortFarmers() {
             setIsLoading(true);
-            try {
-                const data = await getUsersWithFarmers();
-                const sortedFarmers =  await data.slice().sort((a:any, b:any) => {
-                    const distanceA = calculateDistance(a.latitude ?? null, a.longitude ?? null, userLocation?.latitude ?? null, userLocation?.longitude ?? null);
-                    const distanceB = calculateDistance(b.latitude ?? null, b.longitude ?? null, userLocation?.latitude ?? null, userLocation?.longitude ?? null);
-
-                    // Sort by distance
-                    return distanceA && distanceB ? distanceA - distanceB : 0;
-                });
-                setFarmers(sortedFarmers);
-            } catch (error) {
-                console.error('Error fetching farmers', error);
-            }
-            setIsLoading(false);
-        };
-
-        requestLocationPermission().then(r => console.log(r));
-
-        const getLocation = async () => {
-            setIsLoading(true);
+    
             try {
                 await requestLocationPermission();
                 const coordinates = await Geolocation.getCurrentPosition();
@@ -103,15 +84,27 @@ const FarmerPage: React.FC = () => {
                     latitude: coordinates.coords.latitude,
                     longitude: coordinates.coords.longitude,
                 });
-            } catch (err) {
-                console.error('Could not get user location', err);
+    
+                const data = await getUsersWithFarmers();
+                if (data) {
+                    const sortedFarmers = data.slice().sort((a:any, b:any) => {
+                        const distanceA = calculateDistance(a.latitude, a.longitude, coordinates.coords.latitude, coordinates.coords.longitude);
+                        const distanceB = calculateDistance(b.latitude, b.longitude, coordinates.coords.latitude, coordinates.coords.longitude);
+    
+                        return (distanceA ?? Infinity) - (distanceB ?? Infinity);
+                    });
+                    setFarmers(sortedFarmers);
+                }
+            } catch (error) {
+                console.error('Error fetching and sorting farmers', error);
             }
+    
             setIsLoading(false);
-        };
-
-        fetchData().then(r => console.log(r));
-        getLocation().then(r => console.log(r));
+        }
+    
+        fetchAndSortFarmers();
     }, []);
+    
 
     const handleCardClick = (farmerId: string) => {
         history.push({

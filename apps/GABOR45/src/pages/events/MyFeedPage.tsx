@@ -23,6 +23,8 @@ import "../farmers/NewsFarmerPage.css";
 import "../../components/LoadingScreen.css";
 import "./MyFeedPage.css";
 import { useHistory } from "react-router-dom";
+import LoadingScreen from "../../components/LoadingScreen";
+import { openImageModalF, closeModalF, handleModalContentClickF, redirectToFarmerProfileF } from "./FunctionsEvents";
 
 const MyFeedPage: React.FC = () => {
 	const user = useAuth();
@@ -31,25 +33,27 @@ const MyFeedPage: React.FC = () => {
 	const [selectedImage, setSelectedImage] = useState("");
 	const [isRefreshing, setIsRefreshing] = useState(false);
 	const history = useHistory();
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	const openImageModal = (imageUrl: string) => {
-		setSelectedImage(imageUrl);
-		setShowModal(true);
+		openImageModalF(imageUrl, setSelectedImage, setShowModal);
 	};
 
 	const closeModal = () => {
-		setShowModal(false);
+		closeModalF(setShowModal);
 	};
 
 	const handleModalContentClick = (e: React.MouseEvent) => {
-		e.stopPropagation();
+		handleModalContentClickF(e);
 	};
 
 	useEffect(() => {
 		const fetchNews = async () => {
+			setIsLoading(true);
 			if (user) {
 				const newsFromService = await getNewsForUser(user.id);
 				setNewsList(newsFromService);
+				setIsLoading(false);
 			}
 		};
 
@@ -64,12 +68,10 @@ const MyFeedPage: React.FC = () => {
 
 	if (!user) {
 		return (
-			<IonPage>
-				<IonContent className="ion-padding">
-					<h2>Connectez-vous pour voir votre fil d'actualité</h2>
-					<IonButton routerLink="/login">Se connecter</IonButton>
-				</IonContent>
-			</IonPage>
+			<IonContent className="ion-padding">
+				<h2>Connectez-vous pour voir votre fil d'actualité</h2>
+				<IonButton routerLink="/login">Se connecter</IonButton>
+			</IonContent>
 		);
 	}
 
@@ -91,97 +93,97 @@ const MyFeedPage: React.FC = () => {
 
 	//function to handle click on farmer card and redirect to farmer page
 	const redirectToFarmerProfile = (farmerId: string) => {
-		console.log("id: ", farmerId);
-		history.push({
-			pathname: `/farmers/producteurs/${farmerId}`,
-			state: { farmerId: farmerId },
-		});
+		redirectToFarmerProfileF(farmerId);
 	};
 
 	return (
-		<IonPage>
-			<IonContent>
-				<IonRefresher slot="fixed" onIonRefresh={doRefresh}>
-					<IonRefresherContent pullingText="Tirez pour rafraîchir" />
-				</IonRefresher>
+		<IonContent>
+			{isLoading ? (
+				<LoadingScreen />
+			) : (
+				<>
+					<IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+						<IonRefresherContent pullingText="Tirez pour rafraîchir" />
+					</IonRefresher>
 
-				{isRefreshing && (
-					<div className="loading-container">
-						<img
-							src={logo}
-							alt="Loading..."
-							className="loading-logo-fast"
-						/>
-					</div>
-				)}
-
-				{newsList.map((newsItem: News) => (
-					<IonCard key={newsItem.id_evenement}>
-						<IonCardHeader>
-							<IonCardTitle>
-								<div className="title_containter">
-									<div className="avatar-container">
-										<IonAvatar>
-											<img
-												src={`${user_baseUrl}${newsItem.lien_image_user}`}
-												alt="Profile"
-												onClick={() =>
-													redirectToFarmerProfile(
-														newsItem.id_agriculteur
-													)
-												}
-											/>
-										</IonAvatar>
-									</div>
-									<IonLabel>
-										{newsItem.nom_evenement}
-									</IonLabel>
-								</div>
-							</IonCardTitle>
-						</IonCardHeader>
-
-						<IonCardContent>
-							{newsItem.image && (
-								<img
-									src={`${baseUrl}${newsItem.image}`}
-									alt={newsItem.nom_evenement}
-									onClick={() =>
-										openImageModal(
-											`${baseUrl}${newsItem.image}`
-										)
-									}
-								/>
-							)}
-							{newsItem.description}
-						</IonCardContent>
-					</IonCard>
-				))}
-
-				<IonModal
-					isOpen={showModal}
-					onDidDismiss={closeModal}
-					className="my-custom-class"
-				>
-					<div className="modal-content" onClick={closeModal}>
-						<div
-							className="modal-image-container"
-							onClick={handleModalContentClick}
-						>
-							<IonIcon
-								icon={closeCircle}
-								className="close-icon"
-								onClick={closeModal}
-							/>
+					{isRefreshing && (
+						<div className="loading-container">
 							<img
-								src={selectedImage}
-								alt="Zoomed in"
-								className="zoomed-in-image"
+								src={logo}
+								alt="Loading..."
+								className="loading-logo-fast"
 							/>
 						</div>
-					</div>
-				</IonModal>
-			</IonContent>
-		</IonPage>
+					)}
+
+					{newsList.map((newsItem: News) => (
+						<IonCard key={newsItem.id_evenement}>
+							<IonCardHeader>
+								<IonCardTitle>
+									<div className="title_containter">
+										<div className="avatar-container">
+											<IonAvatar>
+												<img
+													src={`${user_baseUrl}${newsItem.lien_image_user}`}
+													alt="Profile"
+													onClick={() =>
+														redirectToFarmerProfile(
+															newsItem.id_agriculteur
+														)
+													}
+												/>
+											</IonAvatar>
+										</div>
+										<IonLabel>
+											{newsItem.nom_evenement}
+										</IonLabel>
+									</div>
+								</IonCardTitle>
+							</IonCardHeader>
+
+							<IonCardContent>
+								{newsItem.image && (
+									<img
+										src={`${baseUrl}${newsItem.image}`}
+										alt={newsItem.nom_evenement}
+										onClick={() =>
+											openImageModal(
+												`${baseUrl}${newsItem.image}`
+											)
+										}
+									/>
+								)}
+								{newsItem.description}
+							</IonCardContent>
+						</IonCard>
+					))}
+
+					<IonModal
+						isOpen={showModal}
+						onDidDismiss={closeModal}
+						className="my-custom-class"
+					>
+						<div className="modal-content" onClick={closeModal}>
+							<div
+								className="modal-image-container"
+								onClick={handleModalContentClick}
+							>
+								<IonIcon
+									icon={closeCircle}
+									className="close-icon"
+									onClick={closeModal}
+								/>
+								<img
+									src={selectedImage}
+									alt="Zoomed in"
+									className="zoomed-in-image"
+								/>
+							</div>
+						</div>
+					</IonModal>
+				</>
+			)}
+		</IonContent>
 	);
 };
 
