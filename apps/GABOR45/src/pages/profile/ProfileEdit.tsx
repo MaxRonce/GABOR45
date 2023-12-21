@@ -12,6 +12,7 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import { supabase } from '../../supabaseClient';
 import { Utilisateur } from '../../models/User';
+import { updateUserInfo } from '../../services/userService';
 
 const ProfileEdit: React.FC = () => {
 	const [util, setUtil] = useState<Utilisateur | null>(null);
@@ -43,15 +44,13 @@ const ProfileEdit: React.FC = () => {
 	};
 
 	const handleSave = async () => {
-		const { error } = await supabase
-			.from('users')
-			.update({ ...util })
-			.eq('id', userId);
-
-		if (error) {
-			console.error('Error updating user:', error);
-		} else {
-			history.push(`/profile/${userId}`);
+		if (util) {
+			try {
+				await updateUserInfo(userId, util);
+				history.push(`/profile/${userId}`);
+			} catch (error) {
+				console.error('Error updating user:', error);
+			}
 		}
 	};
 
@@ -67,7 +66,25 @@ const ProfileEdit: React.FC = () => {
 						}
 					/>
 				</IonItem>
-				{/* Répétez pour d'autres champs comme prénom, email, etc. */}
+				<IonItem>
+					<IonLabel position="floating">Email</IonLabel>
+					<IonInput
+						value={util?.email}
+						onIonChange={e =>
+							handleInputChange('email', e.detail.value!)
+						}
+					/>
+				</IonItem>
+				<IonItem>
+					<IonLabel position="floating">Prénom</IonLabel>
+					<IonInput
+						value={util?.prenom}
+						onIonChange={e =>
+							handleInputChange('prenom', e.detail.value!)
+						}
+					/>
+				</IonItem>
+				{/* Ajoutez d'autres champs ici */}
 				<IonButton onClick={handleSave}>
 					Enregistrer les modifications
 				</IonButton>

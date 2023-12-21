@@ -14,3 +14,14 @@ export const getUserInfo = async (id: string): Promise<Utilisateur> => {
 	else console.log(data);
 	return data as Utilisateur;
 };
+
+
+
+export const updateUserInfo = async (userId: string, updatedUser: Utilisateur): Promise<void> => {
+    const { error } = await supabase
+        .from('utilisateur')
+        .update(updatedUser)
+        .eq('id_utilisateur', userId);
+
+    if (error) throw error;
+};
