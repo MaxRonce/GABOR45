@@ -12,30 +12,33 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import { supabase } from '../../supabaseClient';
 import { Utilisateur } from '../../models/User';
-import { updateUserInfo } from '../../services/userService';
+import { getUserInfo, updateUserInfo } from '../../services/userService';
+import { useAuth } from '../../hooks/useAuth';
 
 const ProfileEdit: React.FC = () => {
+	const currentUser = useAuth();
 	const [util, setUtil] = useState<Utilisateur | null>(null);
-	const { userId } = useParams<{ userId: string }>();
 	const history = useHistory();
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		const fetchUserData = async () => {
-			const { data, error } = await supabase
-				.from('users')
-				.select('*')
-				.eq('id', userId)
-				.single();
-
-			if (error) {
-				console.error('Error fetching user data:', error);
+		const fetchData = async () => {
+			if (currentUser) {
+				setIsLoading(true);
+				try {
+					const userData = await getUserInfo(currentUser.id);
+					setUtil(userData);
+				} catch (error) {
+					console.error('Failed to fetch user data:', error);
+				} finally {
+					setIsLoading(false);
+				}
 			} else {
-				setUtil(data);
+				setIsLoading(false);
 			}
 		};
-
-		fetchUserData();
-	}, [userId]);
+		fetchData();
+	}, [currentUser]);
 
 	const handleInputChange = (name: string, value: string) => {
 		// @ts-expect-error
@@ -46,8 +49,8 @@ const ProfileEdit: React.FC = () => {
 	const handleSave = async () => {
 		if (util) {
 			try {
-				await updateUserInfo(userId, util);
-				history.push(`/profile/${userId}`);
+				await updateUserInfo(currentUser?.id || '', util);
+				history.push(`/profile`);
 			} catch (error) {
 				console.error('Error updating user:', error);
 			}

@@ -32,11 +32,9 @@ const Profile: React.FC = () => {
 					setIsLoading(false);
 				}
 			} else {
-				redirectToLogin();
 				setIsLoading(false);
 			}
 		};
-
 		fetchData();
 	}, [currentUser]);
 
@@ -44,14 +42,31 @@ const Profile: React.FC = () => {
 		history.push('/login');
 	};
 
-	const redirectToProfileEdit = () => {
-    if (currentUser) {
-        history.push(`/profile_edit/${currentUser.id}`);
-    } else {
-        redirectToLogin();
-    }
-};
+	const verifyUser = async (userId: string): Promise<boolean> => {
+		const { data, error } = await supabase
+			.from('agriculteur')
+			.select('*')
+			.eq('id_agriculteur', userId);
+		if (data && data.length > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	};
 
+	const redirectToProfileEdit = async () => {
+		if (currentUser) {
+			const valtest = await verifyUser(currentUser.id);
+			console.log(valtest);
+			if (valtest) {
+				history.push(`/profile_edit_agri/${currentUser.id}`);
+			} else {
+				history.push(`/profile_edit/${currentUser.id}`);
+			}
+		} else {
+			redirectToLogin();
+		}
+	};
 
 	const signOut = async () => {
 		const { error } = await supabase.auth.signOut();
