@@ -66,7 +66,7 @@ const MyFeedPage: React.FC = () => {
 		return (
 			<IonPage>
 				<IonContent className="ion-padding">
-					<h2>Connectez-vous pour voir votre fil d'actualité</h2>
+					<h2>Connectez-vous pour voir votre fil d&apos;actualité</h2>
 					<IonButton routerLink="/login">Se connecter</IonButton>
 				</IonContent>
 			</IonPage>
