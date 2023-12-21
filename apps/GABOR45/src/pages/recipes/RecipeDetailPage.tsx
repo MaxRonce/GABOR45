@@ -9,6 +9,8 @@ import {
 	IonPage,
 	IonList,
 	IonItem,
+	IonImg,
+	IonContent,
 } from '@ionic/react';
 
 // Services and models
@@ -17,6 +19,9 @@ import { Ingredient, Recipe, Etape } from '../../models/RecipeModels';
 
 // Components
 import LoadingScreen from '../../components/LoadingScreen';
+
+//css
+import './RecipeDetailPage.css';
 
 interface Params {
 	recipeId: string;
@@ -28,6 +33,17 @@ const RecipeDetailPage: React.FC = () => {
 	const [recipe, setRecipe] = useState<Recipe>();
 	const [ingredients, setIngredients] = useState<Ingredient[]>();
 	const [etapes, setEtapes] = useState<Etape[]>();
+
+	const headerBannerClass = recipe?.image
+		? 'header-banner'
+		: 'header-banner-small';
+
+	const pageContentClass = recipe?.image
+		? 'page_content'
+		: 'page_content_small';
+
+	const baseUrl =
+		'https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/news/images/';
 
 	useEffect(() => {
 		const fetchRecipeDetails = async () => {
@@ -53,47 +69,55 @@ const RecipeDetailPage: React.FC = () => {
 				<LoadingScreen />
 			) : (
 				<>
-					<IonButtons slot="start" className="back_button">
-						<IonBackButton defaultHref="/home" />
-					</IonButtons>
-					<div>
-						{recipe?.image && (
-							<img
-								className="recipe_image"
-								src={recipe.image}
-								alt={recipe.nom_evenement}
-							/>
-						)}
-					</div>
-					<div className="page_content">
-						<div>{recipe && <h2>{recipe.nom_evenement}</h2>}</div>
-						<div>{recipe && <p>{recipe.description}</p>}</div>
-					</div>
-					<div>
-						<div className="production">
-							<b>ingrédients : </b>
-							{ingredients &&
-								ingredients.map(ingredient => (
-									<p key={ingredient.id_ingredient}>
-										{ingredient.nom_ingredient} :{' '}
-										{ingredient.quantite_ingredient}{' '}
-										{ingredient.unite_de_mesure}
-									</p>
-								))}
+					<IonContent>
+						<div className={headerBannerClass}>
+							<IonButtons slot="start" className="back_button">
+								<IonBackButton defaultHref="/home" />
+							</IonButtons>
+							{recipe?.image && (
+								<img
+									className="recipe_image"
+									src={baseUrl + recipe.image}
+									alt={recipe.nom_evenement}
+								/>
+							)}
 						</div>
-					</div>
-					<div>
-						<b>étapes : </b>
-						{etapes && (
-							<IonList>
-								{etapes.map(etape => (
-									<IonItem key={etape.id_etape}>
-										{etape.description}
-									</IonItem>
-								))}
-							</IonList>
-						)}
-					</div>
+
+						<div className={pageContentClass}>
+							<div>
+								{recipe && <h2>{recipe.nom_evenement}</h2>}
+							</div>
+							<div>{recipe && <p>{recipe.description}</p>}</div>
+						</div>
+						<div>
+							<div className="production">
+								<h2>Ingrédients : </h2>
+								{ingredients && (
+									<ul className="ingredients-list">
+										{ingredients.map(ingredient => (
+											<li key={ingredient.id_ingredient}>
+												{ingredient.nom_ingredient} :{' '}
+												{ingredient.quantite_ingredient}{' '}
+												{ingredient.unite_de_mesure}
+											</li>
+										))}
+									</ul>
+								)}
+							</div>
+						</div>
+						<div className="steps">
+							<h2>Étapes :</h2>
+							{etapes && (
+								<ul className="etapes-list">
+									{etapes.map(etape => (
+										<li key={etape.id_etape}>
+											{etape.description}
+										</li>
+									))}
+								</ul>
+							)}
+						</div>
+					</IonContent>
 				</>
 			)}
 		</IonPage>
