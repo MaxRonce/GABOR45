@@ -1,0 +1,146 @@
+.my-custom-class .modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.my-custom-class .modal-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.my-custom-class .zoomed-in-image {
+    max-width: 90%;
+    max-height: 80%;
+    object-fit: contain;
+    margin: auto;
+}
+
+.my-custom-class .close-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+.my-custom-class .modal-content {
+    cursor: default;
+}
+
+.my-custom-class .modal-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.my-custom-class .modal-form {
+    background-color: white;
+    border-radius: 10px ;
+    border: 2px solid #03a852;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-height: 80vh; 
+    overflow:scroll;
+    overflow-x:hidden;
+}
+
+.my-custom-class .items-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y:auto;
+    max-height: 150px;
+    padding: 10px;
+}
+
+.my-custom-class .item-input {
+    display: flex;
+    white-space: nowrap;
+    min-width: 460px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.step {
+    min-width: 330px !important;
+}
+
+
+.btn-ajouter {
+    margin: 10px 0;
+    width: 100%;
+}
+
+.item-input ion-item {
+--border-color: transparent !important; /* Esto elimina la línea de los IonItem */
+    --background: transparent !important; /* Opcional: para asegurarse de que no haya fondo */
+}
+
+.number-input {
+    width: 80px;
+}
+.name-input {
+    width: 100px;
+}
+
+.my-custom-class .modal-label {
+    font-size: 23px;
+    color: #898c8c;
+    margin-bottom: 20px;
+
+}
+
+.my-custom-class .modal-list{
+    width: 90%;
+}
+
+.avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.title_containter{
+    display: flex;
+    align-items: center;
+}
+
+.my-custom-class input[type="file"] {
+    display: none;
+}
+
+.my-custom-class .file-upload-label {
+    display: inline-    block;
+    padding: 10px 0;
+    color: #fff;
+    background-color: #03a852;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+}
+.my-custom-class .file-upload-label:hover {
+    background-color: #029a47;
+}
+.file-name-display {
+    margin-top: 10px; /* Ajusta según sea necesario */
+    color: #555; /* Ajusta según sea necesario */
+}
+
+.preserve-whitespace {
+    white-space: pre-wrap; /* Preserva los espacios en blanco y los saltos de línea */
+}
