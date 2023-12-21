@@ -33,6 +33,25 @@ const RegisterUser: React.FC = () => {
 	const history = useHistory();
 
 	const handleLogin = async () => {
+		// TODO : ecrire des tests pour ces fonctions
+		const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+		if (!expression.test(email)) {
+			await showToast({
+				message: "Email invalide",
+				duration: 2000,
+				color: "danger",
+			});
+			return;
+		}
+		if (password.length < 6) {
+			await showToast({
+				message: "mdp doit contenir au moins 6 caracteres",
+				duration: 2000,
+				color: "danger",
+			});
+			setPassword("");
+			return;
+		}
 		try {
 			const { data, error } = await supabase.auth.signUp({
 				email: email,
@@ -50,7 +69,7 @@ const RegisterUser: React.FC = () => {
 				setPassword("");
 				setEmail("");
 				await showToast({
-					message: "success. Verifie votre email",
+					message: "success. Verifiez votre email",
 					duration: 2000,
 					color: "success",
 				});
@@ -58,7 +77,7 @@ const RegisterUser: React.FC = () => {
 			}
 		} catch (error) {
 			await showToast({
-				message: "Error to sigUp",
+				message: "Error to signUp",
 				duration: 2000,
 				color: "danger",
 			});
