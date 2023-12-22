@@ -99,9 +99,6 @@ const FarmerEvents: React.FC = () => {
 				setIsLoading(false);
 			});
 		}
-		return () => {
-			cleanAll();
-		};
 	}, [user]);
 
 	const doRefresh = (event: CustomEvent) => {
@@ -117,7 +114,7 @@ const FarmerEvents: React.FC = () => {
 				const newsFromService = await getNewsForUser(user.id);
 				setNewsList(newsFromService);
 			}
-		} catch (error) {}
+		} catch (error) { }
 	};
 
 	// Define the base URL for the images
@@ -296,51 +293,32 @@ const FarmerEvents: React.FC = () => {
 		try {
 			let fileName = '';
 			if (imageFile) {
-				let news = {};
-				if (msg === 'recette') {
-					fileName = await uploadImage(imageFile, 'recettes');
-					news = {
-						nom_evenement: nomEvenement,
-						description: description,
-						date_creation: formattedDate,
-						id_agriculteur: user.id,
-						image: fileName,
-					};
-					const data = await saveNews(news);
-					if (data) {
-						await saveIngredients(data);
-						await saveSteps(data);
-						setShowFormModal(false);
-						setImageFile(null);
-						setImageName('');
-						await showToast({
-							message: `${msg} a été ajouté avec succès`,
-							duration: 2000,
-							color: 'success',
-						});
-					}
-				} else {
-					fileName = await uploadImage(imageFile, 'images');
-					news = {
-						nom_evenement: nomEvenement,
-						description: description,
-						date_creation: formattedDate,
-						id_agriculteur: user.id,
-						image: fileName,
-					};
-					const data = await saveNews(news);
-					setShowFormModal(false);
-					setImageFile(null);
-					setImageName('');
-					await showToast({
-						message: `${msg} a été ajouté avec succès`,
-						duration: 2000,
-						color: 'success',
-					});
-					await fetchNews();
-				}
-				console.log('filename', fileName);
+				fileName = await uploadImage(imageFile, msg === 'recette' ? 'recettes' : 'evenements');
 			}
+			console.log(description);
+			let news = {
+				nom_evenement: nomEvenement,
+				description: description,
+				date_creation: formattedDate,
+				id_agriculteur: user.id,
+				image: fileName,
+			};
+			console.log("news", news);
+			const data = await saveNews(news);
+			if (data) {
+				if (msg === 'recette') {
+					await saveIngredients(data);
+					await saveSteps(data);
+				}
+				setShowFormModal(false);
+				cleanAll();
+				await showToast({
+					message: `${msg} a été ajouté avec succès`,
+					duration: 2000,
+					color: 'success',
+				});
+			}
+			await fetchNews();
 		} catch (error) {
 			console.error(error);
 			await showToast({
@@ -610,7 +588,7 @@ const FarmerEvents: React.FC = () => {
 																				e
 																					.detail
 																					.value ??
-																					'',
+																				'',
 																			)
 																		}
 																	/>
@@ -630,7 +608,7 @@ const FarmerEvents: React.FC = () => {
 																				e
 																					.detail
 																					.value ??
-																					'',
+																				'',
 																			)
 																		}
 																	/>
@@ -648,7 +626,7 @@ const FarmerEvents: React.FC = () => {
 																				e
 																					.detail
 																					.value ??
-																					'',
+																				'',
 																			)
 																		}
 																	>
@@ -721,10 +699,9 @@ const FarmerEvents: React.FC = () => {
 															>
 																<IonItem>
 																	<IonTextarea
-																		placeholder={`Étape ${
-																			index +
+																		placeholder={`Étape ${index +
 																			1
-																		}`}
+																			}`}
 																		value={
 																			step.description
 																		}
@@ -735,7 +712,7 @@ const FarmerEvents: React.FC = () => {
 																				e
 																					.detail
 																					.value ??
-																					'',
+																				'',
 																			)
 																		}
 																	/>
