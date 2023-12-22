@@ -1,0 +1,58 @@
+{
+    "name" : "GABOR45",
+    "root": "apps/GABOR45/",
+    "sourceRoot": "apps/GABOR45/src",
+    "projectType": "application",
+
+    "targets": {
+      "test": {
+        "executor": "@nx/jest:jest",
+        "options": {
+        }
+      },
+      "lint_json": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "npx eslint \"apps/GABOR45/**/*.{ts,tsx,js,jsx}\" --ignore-pattern \"apps/GABOR45/node_modules/**\" --format=json --output-file=\"apps/GABOR45/lint-report.json\""
+        }
+      },
+      "lint_html": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "npx eslint \"apps/GABOR45/**/*.{ts,tsx,js,jsx}\" --ignore-pattern \"apps/GABOR45/node_modules/**\" --format=html --output-file=\"apps/GABOR45/lint-report.html\""
+        }
+      
+      },
+      "generate_types": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "npx supabase gen types typescript --project-id sktoqgbcjidoohzeobcz > ./src/types/supabase.ts"
+        }
+      },
+      
+      "serve": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "cd apps/GABOR45 && ionic serve"
+        }
+      },
+      "build" :{
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "cd apps/GABOR45 && tsc && vite build"
+        }
+      },
+      "android": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "cd apps/GABOR45 && ionic cap open android"
+        }
+      },
+      "sync": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "cd apps/GABOR45 && ionic cap sync"
+        }
+      }
+    }
+}

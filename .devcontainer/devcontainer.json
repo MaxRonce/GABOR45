@@ -1,0 +1,9 @@
+{
+    "name": "GABOR45",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "remoteUser": "root",
+"customizations": {
+    "vscode": {"extensions": ["nrwl.angular-console"]}
+}}

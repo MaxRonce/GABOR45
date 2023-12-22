@@ -1,0 +1,55 @@
+/* Profile.css */
+h1{
+    color: #164550 !important;
+  }
+.content {
+    margin: 5%;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-image-container {
+    width: 150px; /* or any other size */
+    height: 150px;
+    border-radius: 50%; /* creates round shape */
+    overflow: hidden;
+    margin-bottom: 20px; /* adjust as needed */
+  }
+  
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ensures the image covers the area without stretching */
+  }
+  
+  .information {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  
+  .information h1 {
+    margin-bottom: 10px;
+  }
+  
+  .information p {
+    margin: 5px 0;
+  }
+  
+  .edit-profile {
+    margin-top: 20px; /* adjust as needed */
+  }
+  
+  .deconnexion {
+    padding: 5%;
+    margin-top: 20px; /* space above the logout button */
+    border-top: #164550 solid 1px;
+    width: 100%; /* makes the button full width */
+  }
+
+ 
+  
