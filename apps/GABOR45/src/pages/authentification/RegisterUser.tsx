@@ -1,32 +1,32 @@
 // React and React Router
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Ionic Components
-import { useIonToast, IonText, IonPage, IonContent } from "@ionic/react";
+import { useIonToast, IonText, IonPage, IonContent } from '@ionic/react';
 
 // Supabase Components
-import { supabase } from "../../supabaseClient";
+import { supabase } from '../../supabaseClient';
 
 // Custom Components
-import ButtonComponent from "../../components/ButtonComponent";
-import InputComponent from "../../components/InputComponent";
-import LogoGaborComponent from "../../components/LogoGaborComponent";
+import ButtonComponent from '../../components/ButtonComponent';
+import InputComponent from '../../components/InputComponent';
+import LogoGaborComponent from '../../components/LogoGaborComponent';
 
 // Images
-import mail from "../../icons/mail.svg";
-import bloquer from "../../icons/bloquer.svg";
-import showP from "../../icons/showP.svg";
-import hideP from "../../icons/hideP.svg";
+import mail from '../../icons/mail.svg';
+import bloquer from '../../icons/bloquer.svg';
+import showP from '../../icons/showP.svg';
+import hideP from '../../icons/hideP.svg';
 
 // Custom Styling
-import "../../theme/custom.css";
-import "../../theme/variables.css";
-import "./RegisterUser.css";
+import '../../theme/custom.css';
+import '../../theme/variables.css';
+import './RegisterUser.css';
 
 const RegisterUser: React.FC = () => {
-	const [email, setEmail] = useState<string>("");
-	const [password, setPassword] = useState<string>("");
+	const [email, setEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
 	const [showToast] = useIonToast();
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -37,19 +37,19 @@ const RegisterUser: React.FC = () => {
 		const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 		if (!expression.test(email)) {
 			await showToast({
-				message: "Email invalide",
+				message: 'Email invalide',
 				duration: 2000,
-				color: "danger",
+				color: 'danger',
 			});
 			return;
 		}
 		if (password.length < 6) {
 			await showToast({
-				message: "mdp doit contenir au moins 6 caracteres",
+				message: 'mdp doit contenir au moins 6 caracteres',
 				duration: 2000,
-				color: "danger",
+				color: 'danger',
 			});
-			setPassword("");
+			setPassword('');
 			return;
 		}
 		try {
@@ -60,26 +60,26 @@ const RegisterUser: React.FC = () => {
 			console.log(data);
 			if (error) {
 				await showToast({
-					message: "Error to signUp",
+					message: 'Error to signUp',
 					duration: 2000,
-					color: "danger",
+					color: 'danger',
 				});
 				console.log(error);
 			} else {
-				setPassword("");
-				setEmail("");
+				setPassword('');
+				setEmail('');
 				await showToast({
-					message: "success. Verifiez votre email",
+					message: 'success. Verifiez votre email',
 					duration: 2000,
-					color: "success",
+					color: 'success',
 				});
-				history.push("/profile");
+				history.push('/profile');
 			}
 		} catch (error) {
 			await showToast({
-				message: "Error to signUp",
+				message: 'Error to signUp',
 				duration: 2000,
-				color: "danger",
+				color: 'danger',
 			});
 		}
 	};
@@ -102,7 +102,7 @@ const RegisterUser: React.FC = () => {
 					iconName={mail}
 					placeholderP="email@domain.com"
 					valueP={email}
-					onChange={(e: any) => setEmail(e.detail.value || "")}
+					onChange={(e: any) => setEmail(e.detail.value || '')}
 					classI="custom-input"
 					classIcon="login-icon ion-icon"
 				/>
@@ -110,16 +110,22 @@ const RegisterUser: React.FC = () => {
 				<InputComponent
 					classP="login-input input-pass"
 					labelP="Mot de passe"
-					typeP={showPassword ? "text" : "password"}
+					typeP={showPassword ? 'text' : 'password'}
 					placeholderP="********"
 					valueP={password}
-					onChange={(e: any) => setPassword(e.detail.value || "")}
+					onChange={(e: any) => setPassword(e.detail.value || '')}
 					classI="custom-input"
 					iconName={bloquer}
 					classIcon="login-icon ion-icon"
 					onIconClick={showPasswordHandler}
 					iconP={showPassword ? showP : hideP}
 				/>
+				<IonText className="ion-text-center">
+					<p className="text-small">
+						En cliquant sur S'inscrire, vous acceptez{' '}
+						<a href="">nos Conditions générales</a>.
+					</p>
+				</IonText>
 				<ButtonComponent
 					classP="ion-margin-horizontal ion-padding-horizontal"
 					text="S'inscrire"
