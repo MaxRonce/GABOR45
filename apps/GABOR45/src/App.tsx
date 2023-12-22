@@ -1,6 +1,7 @@
 import "./theme/variables.css";
 import "./theme/custom.css";
 import { Redirect, Route, Switch } from "react-router-dom";
+
 /* Theme variables */
 import {
 	createAnimation,
@@ -26,39 +27,41 @@ import ProfileEdit from "./pages/profile/ProfileEdit";
 import Home from "./pages/Home";
 import MapPage from "./pages/map/Map";
 import RecipeDetailPage from "./pages/recipes/RecipeDetailPage";
+import MyFeedPage from './pages/events/MyFeedPage';
+import ProfileEditAgri from './pages/profile/ProfileEditAgri';
 
 /* Icons imports */
-import home from "../src/icons/home.svg";
-import calendar from "../src/icons/calendar.svg";
-import farmer from "../src/icons/farmer.svg";
-import position from "../src/icons/position.svg";
-import user from "../src/icons/user.svg";
+import home from '../src/icons/home.svg';
+import calendar from '../src/icons/calendar.svg';
+import farmer from '../src/icons/farmer.svg';
+import position from '../src/icons/position.svg';
+import user from '../src/icons/user.svg';
 
-import "@ionic/react/css/core.css";
-import "@ionic/react/css/normalize.css";
-import "@ionic/react/css/structure.css";
-import "@ionic/react/css/typography.css";
+import '@ionic/react/css/core.css';
+import '@ionic/react/css/normalize.css';
+import '@ionic/react/css/structure.css';
+import '@ionic/react/css/typography.css';
 
 /* Optional CSS utils that can be commented out */
-import "@ionic/react/css/padding.css";
-import "@ionic/react/css/float-elements.css";
-import "@ionic/react/css/text-alignment.css";
-import "@ionic/react/css/text-transformation.css";
-import "@ionic/react/css/flex-utils.css";
-import "@ionic/react/css/display.css";
-import React from "react";
+import '@ionic/react/css/padding.css';
+import '@ionic/react/css/float-elements.css';
+import '@ionic/react/css/text-alignment.css';
+import '@ionic/react/css/text-transformation.css';
+import '@ionic/react/css/flex-utils.css';
+import '@ionic/react/css/display.css';
+import React from 'react';
 
 export const fadeTransition = () => {
 	// Fade transition between pages
 	const enteringAnimation = createAnimation()
-		.addElement(document.createElement("div"))
+		.addElement(document.createElement('div'))
 		.duration(100)
-		.fromTo("opacity", "0", "1");
+		.fromTo('opacity', '0', '1');
 
 	const leavingAnimation = createAnimation()
-		.addElement(document.createElement("div"))
+		.addElement(document.createElement('div'))
 		.duration(100)
-		.fromTo("opacity", "1", "0");
+		.fromTo('opacity', '1', '0');
 
 	return createAnimation()
 		.duration(100)
@@ -102,9 +105,12 @@ const App: React.FC = () => (
 						<Profile />
 					</Route>
 					<Route
-						exact
-						path="/profile_edit/:user_id"
+						path="/profile_edit/:userId"
 						component={ProfileEdit}
+					/>
+					<Route
+						path="/profile_edit_agri/:userId"
+						component={ProfileEditAgri}
 					/>
 					<Route path="/tab3">
 						<Tab3 />

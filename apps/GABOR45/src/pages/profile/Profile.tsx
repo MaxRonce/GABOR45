@@ -1,99 +1,154 @@
-// React and React Router
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { IonPage, IonContent, IonButton } from '@ionic/react';
 
-// Ionic Components
-import { IonPage, IonContent, IonButton } from "@ionic/react";
+import { supabase } from '../../supabaseClient';
+import { User } from '@supabase/supabase-js';
 
-// Supabase Components
-import { supabase } from "../../supabaseClient";
-import { User } from "@supabase/supabase-js";
-import { Database } from "../../types/supabase";
+import { Utilisateur } from '../../models/User';
+import { getAgriInfo, getUserInfo } from '../../services/userService';
 
-// Models and Services
-import { Utilisateur } from "../../models/User";
-import { getUserInfo } from "../../services/userService";
+import LoadingScreen from '../../components/LoadingScreen';
+import { useAuth } from '../../hooks/useAuth';
 
-// Custom Components
-import LoadingScreen from "../../components/LoadingScreen";
-
-// Custom Styling
-import "./Profile.css";
+import './Profile.css';
 
 const Profile: React.FC = () => {
-	const baseUrl =
-		"https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/";
-	const [user, setUser] = useState<User | null>(null);
+	const currentUser = useAuth();
 	const [util, setUtil] = useState<Utilisateur | null>(null);
 	const history = useHistory();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [farmer_data, setFarmer_data] = useState<any>();
 
 	useEffect(() => {
-		const { data: authListener } = supabase.auth.onAuthStateChange(
-			async (event, session) => {
-				const currentUser = session?.user;
-				// @ts-ignore
-				setUser(currentUser);
-			}
-		);
-
 		const fetchData = async () => {
-			try {
-				if (user != null) {
-					const userData = await getUserInfo(user.id);
+			if (currentUser) {
+				setIsLoading(true);
+				try {
+					const userData = await getUserInfo(currentUser.id);
 					setUtil(userData);
-					console.log(userData);
+				} catch (error) {
+					console.error('Failed to fetch user data:', error);
+				} finally {
+					setIsLoading(false);
 				}
-			} catch (error) {
-				console.error("Failed to fetch data:", error);
-			} finally {
+			} else {
 				setIsLoading(false);
 			}
+			if (currentUser) {
+				setFarmer_data(await getAgriInfo(currentUser?.id || ''));
+			}
 		};
-
-		return () => {
-			authListener?.subscription.unsubscribe();
-		};
-	}, []);
+		fetchData();
+	}, [currentUser]);
 
 	const redirectToLogin = () => {
-		history.push("/login");
+		history.push('/login');
 	};
 
-	const redirectToProfileEdit = () => {
-		if (user) {
-			history.push(`/profile_edit/${user.id}`);
+	const verifyUser = async (userId: string): Promise<boolean> => {
+		const { data, error } = await supabase
+			.from('agriculteur')
+			.select('*')
+			.eq('id_agriculteur', userId);
+		if (data && data.length > 0) {
+			return true;
 		} else {
-			history.push("/login");
+			return false;
+		}
+	};
+
+	const redirectToProfileEdit = async () => {
+		if (currentUser) {
+			const valtest = await verifyUser(currentUser.id);
+			console.log(valtest);
+			if (valtest) {
+				history.push(`/profile_edit_agri/${currentUser.id}`);
+			} else {
+				history.push(`/profile_edit/${currentUser.id}`);
+			}
+		} else {
+			redirectToLogin();
 		}
 	};
 
 	const signOut = async () => {
 		const { error } = await supabase.auth.signOut();
 		if (error) {
-			console.error(error);
+			console.error('Failed to sign out:', error);
 		} else {
-			console.log("Déconnexion réussie");
-			history.push("/profile");
+			console.log('Sign out successful');
+			history.replace('/login');
 		}
 	};
+
+	const baseUrl =
+		'https://sktoqgbcjidoohzeobcz.supabase.co/storage/v1/object/public/avatars/agri/';
+
+	const profileImageUrl = util?.lien_image
+		? `${baseUrl}${util.lien_image}`
+		: '';
+
+	function infoAgri(): React.ReactNode {
+		return farmer_data ? (
+			<div className="information">
+				<h1>Informations Agriculteur</h1>
+				<p>
+					Type de produit principal:{' '}
+					{farmer_data?.type_produit_principal}
+				</p>
+				<p>Description: {farmer_data?.description}</p>
+				<p>Site web: {farmer_data.website}</p>
+				<p>Facebook: {farmer_data.facebook}</p>
+				<p>Instagram: {farmer_data.instagram}</p>
+				<p>Twitter: {farmer_data.twitter}</p>
+				<p>num tel: {farmer_data.tel_portable}</p>
+			</div>
+		) : (
+			<> </>
+		);
+	}
 
 	return (
 		<IonPage>
 			<IonContent>
-				{user ? (
-					<div>
-						Bonjour {user.email}
-						<IonButton onClick={signOut}>Se déconnecter</IonButton>
-						<IonButton onClick={redirectToProfileEdit}>
-							{" "}
-							Edit{" "}
+				{isLoading ? (
+					<LoadingScreen />
+				) : util ? (
+					<div className="content">
+						<div className="profile-image-container">
+							<img
+								src={profileImageUrl}
+								alt="Profil"
+								className="profile-image"
+							/>
+						</div>
+						<div className="information">
+							<h1>Profil</h1>
+							<p>Nom: {util.nom}</p>
+							<p>Prénom: {util.prenom}</p>
+							<p>Email: {util.email}</p>
+							<p>Numéro de téléphone: {util.num_tel}</p>
+							{/* ... Autres informations de profil ... */}
+						</div>
+						{infoAgri()}
+						<IonButton
+							onClick={redirectToProfileEdit}
+							className="edit-profile"
+						>
+							Modifier le Profil
 						</IonButton>
+						<div className="deconnexion">
+							<IonButton onClick={signOut} expand="block">
+								Se déconnecter
+							</IonButton>
+						</div>
 					</div>
 				) : (
-					<div>
-						Vous n'êtes pas connecté.
-						<IonButton onClick={redirectToLogin}>
+					<div className="content">
+						<h1>Profil</h1>
+						<p>Vous n'êtes pas connecté.</p>
+						<IonButton onClick={redirectToLogin} expand="block">
 							Se connecter
 						</IonButton>
 					</div>
@@ -102,4 +157,5 @@ const Profile: React.FC = () => {
 		</IonPage>
 	);
 };
+
 export default Profile;

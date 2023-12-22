@@ -1,89 +1,98 @@
-// React and React Router
-import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+// ProfileEdit.tsx
+import React, { useState, useEffect } from 'react';
+import {
+	IonPage,
+	IonContent,
+	IonButton,
+	IonInput,
+	IonItem,
+	IonLabel,
+} from '@ionic/react';
+import { useParams, useHistory } from 'react-router-dom';
 
-// Ionic Components
-import { IonButton } from "@ionic/react";
-
-// Custom Styling
-import "./ProfileEdit.css";
+import { supabase } from '../../supabaseClient';
+import { Utilisateur } from '../../models/User';
+import { getUserInfo, updateUserInfo } from '../../services/userService';
+import { useAuth } from '../../hooks/useAuth';
 
 const ProfileEdit: React.FC = () => {
-	const { user_id } = useParams<{ user_id: string }>();
+	const currentUser = useAuth();
+	const [util, setUtil] = useState<Utilisateur | null>(null);
 	const history = useHistory();
-
-	const [formData, setFormData] = useState({
-		nom: "",
-		prenom: "",
-		email: "",
-		num_tel: "",
-	});
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		if (!user_id) {
-			history.push("/login");
-		} else {
-		}
-	}, [user_id, history]);
-	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = event.target;
-		setFormData((prevFormData) => ({
-			...prevFormData,
-			[name]: value,
-		}));
+		const fetchData = async () => {
+			if (currentUser) {
+				setIsLoading(true);
+				try {
+					const userData = await getUserInfo(currentUser.id);
+					setUtil(userData);
+				} catch (error) {
+					console.error('Failed to fetch user data:', error);
+				} finally {
+					setIsLoading(false);
+				}
+			} else {
+				setIsLoading(false);
+			}
+		};
+		fetchData();
+	}, [currentUser]);
+
+	const handleInputChange = (name: string, value: string) => {
+		// @ts-expect-error
+
+		setUtil({ ...util, [name]: value });
 	};
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
-		try {
-			// Envoyer une requête au serveur pour mettre à jour les éléments de l'utilisateur avec les nouvelles valeurs
-			// Utiliser formData pour récupérer les nouvelles valeurs des champs de formulaire
-			// Rediriger l'utilisateur vers la page de profil mise à jour après la soumission réussie du formulaire
-		} catch (error) {
-			// Gérer les erreurs de requête et afficher un message d'erreur si nécessaire
+	const handleSave = async () => {
+		if (util) {
+			try {
+				await updateUserInfo(currentUser?.id || '', util);
+				history.push(`/profile`);
+			} catch (error) {
+				console.error('Error updating user:', error);
+			}
 		}
 	};
 
 	return (
-		<form className="editForm" onSubmit={handleSubmit}>
-			<label>
-				Nom :
-				<input
-					type="text"
-					name="nom"
-					value={formData.nom}
-					onChange={handleInputChange}
-				/>
-			</label>
-			<label>
-				Prénom :
-				<input
-					type="text"
-					name="prenom"
-					value={formData.prenom}
-					onChange={handleInputChange}
-				/>
-			</label>
-			<label>
-				Adresse e-mail :
-				<input
-					type="email"
-					name="email"
-					value={formData.email}
-					onChange={handleInputChange}
-				/>
-			</label>
-			<label>
-				Numéro de téléphone :
-				<input
-					type="tel"
-					name="num_tel"
-					value={formData.num_tel}
-					onChange={handleInputChange}
-				/>
-			</label>
-			<IonButton type="submit">Enregistrer</IonButton>
-		</form>
+		<IonPage>
+			<IonContent>
+				<IonItem>
+					<IonLabel position="floating">Nom</IonLabel>
+					<IonInput
+						value={util?.nom}
+						onIonChange={e =>
+							handleInputChange('nom', e.detail.value!)
+						}
+					/>
+				</IonItem>
+				<IonItem>
+					<IonLabel position="floating">Email</IonLabel>
+					<IonInput
+						value={util?.email}
+						onIonChange={e =>
+							handleInputChange('email', e.detail.value!)
+						}
+					/>
+				</IonItem>
+				<IonItem>
+					<IonLabel position="floating">Prénom</IonLabel>
+					<IonInput
+						value={util?.prenom}
+						onIonChange={e =>
+							handleInputChange('prenom', e.detail.value!)
+						}
+					/>
+				</IonItem>
+				{/* Ajoutez d'autres champs ici */}
+				<IonButton onClick={handleSave}>
+					Enregistrer les modifications
+				</IonButton>
+			</IonContent>
+		</IonPage>
 	);
 };
 
