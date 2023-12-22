@@ -137,7 +137,7 @@ const FarmerEvents: React.FC = () => {
         try {
             let { error: uploadError } = await supabase.storage
                 .from('news')
-                .upload(`${fileName}`, file, {
+                .upload(`images/${fileName}`, file, {
                     cacheControl: '3600',
                     upsert: false
                 });
