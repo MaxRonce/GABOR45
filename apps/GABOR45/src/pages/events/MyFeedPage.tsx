@@ -48,16 +48,12 @@ const MyFeedPage: React.FC = () => {
 	};
 
 	useEffect(() => {
-		const fetchNews = async () => {
-			setIsLoading(true);
-			if (user) {
-				const newsFromService = await getNewsForUser(user.id);
-				setNewsList(newsFromService);
-				setIsLoading(false);
-			}
-		};
-
-		fetchNews();
+		if (user) {
+            fetchNews().then(() => {
+                setIsLoading(false);
+            });
+        }
+		
 	}, [user]);
 
 	// Define the base URL for the images

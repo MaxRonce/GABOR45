@@ -15,4 +15,5 @@ export interface Farmer {
 	website: string | null;
 	latitude: number | null;
 	longitude: number | null;
+	adresse: string | null;
 }
