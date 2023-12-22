@@ -25,7 +25,7 @@ export const verifyUser = async (userId: string): Promise<boolean> => {
 		.from("agriculteur")
 		.select("*")
 		.eq("id_agriculteur", userId);
-	if (error) {
+	if (error || data.length === 0) {
 		return false;
 	}
 	return true;
