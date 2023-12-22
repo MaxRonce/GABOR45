@@ -1,0 +1,125 @@
+/* Bandeau en haut de la page */
+.header-banner {
+    background-color: #164550; /* Couleur du bandeau */
+    height: 15%;
+    text-align: center;
+    position: relative; /* Pour positionner l'image */
+    
+}
+
+.header-banner-small {
+    background-color: #164550; /* Couleur du bandeau */
+    height: 5%;
+    text-align: center;
+    position: relative; /* Pour positionner l'image */
+    
+}
+
+/* Image de recette */
+.recipe_image {
+    height: 100%;
+    margin: 0 auto; /* Centrer l'image */
+    position: absolute; /* Positionnement absolu */
+    bottom: -40%; 
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* X-offset Y-offset Blur Spread Color */
+}
+
+/* Contenu de la page après le bandeau */
+.page_content {
+    margin-top: 15%;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Contenu de la page après le bandeau */
+.page_content_small {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Titre de la recette */
+.page_content h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Description de la recette */
+.page_content p {
+    color: #666;
+    font-size: 1rem;
+}
+/* Section des ingrédients */
+.production {
+    padding: 20px;
+    margin: 20px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    border: 0px solid #164550;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* X-offset Y-offset Blur Spread Color */
+}
+
+/* Style pour la liste des ingrédients */
+.ingredients-list {
+    list-style: none; /* Supprimer les puces */
+    padding: 0;
+}
+
+.ingredients-list li {
+    background-color: #fff; /* Arrière-plan blanc pour chaque élément */
+    margin-bottom: 10px; /* Espacement entre les éléments */
+    padding: 10px; /* Espace intérieur pour chaque élément */
+    border-radius: 5px; /* Coins arrondis */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre subtile */
+    font-size: 1rem; /* Taille de la police */
+}
+/* Section des étapes de la recette */
+.steps {
+    padding: 5%;
+    margin-bottom: 5%;
+}
+
+.steps h2 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+/* Liste des étapes */
+.etapes-list {
+    list-style: none;
+    padding: 0;
+}
+
+.etapes-list li {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-left: 40px; 
+}
+
+.etapes-list li:before {
+    content: counter(step-counter);
+    counter-increment: step-counter;
+    position: absolute;
+    left: 10px; 
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #164550;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+}
+
+.steps {
+    counter-reset: step-counter;
+}

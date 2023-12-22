@@ -1,6 +1,7 @@
-import './theme/variables.css';
-import './theme/custom.css';
-import { Redirect, Route } from 'react-router-dom';
+import "./theme/variables.css";
+import "./theme/custom.css";
+import { Redirect, Route, Switch } from "react-router-dom";
+
 /* Theme variables */
 import {
 	createAnimation,
@@ -11,21 +12,23 @@ import {
 	IonTabButton,
 	IonTabs,
 	setupIonicReact,
-} from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import Tab3 from './pages/test_tabs_todelete/Tab3';
-import Profile from './pages/profile/Profile';
-import Login from './pages/authentification/Login';
-import RegisterUser from './pages/authentification/RegisterUser';
-import IndexFarmers from './pages/farmers/IndexFarmers';
-import FarmerSearchPage from './pages/farmers/FarmersSearch';
-import FarmerDetailPage from './pages/farmers/FarmerDetailPage';
-import NewsFarmerPage from './pages/farmers/NewsFarmerPage';
+} from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import Tab3 from "./pages/test_tabs_todelete/Tab3";
+import Profile from "./pages/profile/Profile";
+import Login from "./pages/authentification/Login";
+import RegisterUser from "./pages/authentification/RegisterUser";
+import IndexFarmers from "./pages/farmers/IndexFarmers";
+import FarmerSearchPage from "./pages/farmers/FarmersSearch";
+import FarmerDetailPage from "./pages/farmers/FarmerDetailPage";
+import NewsFarmerPage from "./pages/farmers/NewsFarmerPage";
+import IndexEvents from "./pages/events/IndexEvents";
+import ProfileEdit from "./pages/profile/ProfileEdit";
+import Home from "./pages/Home";
+import MapPage from "./pages/map/Map";
+import RecipeDetailPage from "./pages/recipes/RecipeDetailPage";
 import MyFeedPage from './pages/events/MyFeedPage';
-import ProfileEdit from './pages/profile/ProfileEdit';
 import ProfileEditAgri from './pages/profile/ProfileEditAgri';
-import Home from './pages/Home';
-import MapPage from './pages/map/Map';
 
 /* Icons imports */
 import home from '../src/icons/home.svg';
@@ -72,13 +75,16 @@ const App: React.FC = () => (
 		<IonReactRouter>
 			<IonTabs>
 				<IonRouterOutlet animation={fadeTransition}>
+				<Switch>
 					<Route path="/home" component={Home} exact />
-					<Route path="/events" component={MyFeedPage} exact />
+					<Route path="/events" component={IndexEvents} exact />
 					<Route
 						path="/farmers/:page/:farmerId"
 						component={FarmerDetailPage}
 						exact
 					/>
+					
+					<Route exact path="/recette/:recipeId" component={RecipeDetailPage} />
 					<Route exact path="/farmers/:page">
 						<IndexFarmers />
 					</Route>
@@ -118,6 +124,9 @@ const App: React.FC = () => (
 					<Route exact path="/registerUser">
 						<RegisterUser />
 					</Route>
+		
+
+					</Switch>
 				</IonRouterOutlet>
 				<IonTabBar slot="bottom">
 					<IonTabButton tab="home" href="/home">
@@ -137,6 +146,7 @@ const App: React.FC = () => (
 					</IonTabButton>
 				</IonTabBar>
 			</IonTabs>
+			
 		</IonReactRouter>
 	</IonApp>
 );

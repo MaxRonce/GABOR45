@@ -5,18 +5,31 @@ import { supabase } from "../supabaseClient";
 import { News } from "../models/News";
 
 export const getNewsByFarmer = async (farmerId: string): Promise<News[]> => {
-	console.log("farmerid", farmerId);
-	let { data, error } = await supabase
-		.from("news")
-		.select("*")
-		.eq("id_agriculteur", farmerId);
+	let { data, error } = await supabase.rpc(
+		"get_all_news_by_farmer",
+		{
+			id_farmer: farmerId
+		}
+	)
 	console.log("datanews", data);
 	if (error) {
 		console.error("Error fetching news", error);
 		return [];
 	}
+	
 	return data as News[];
 };
+
+export const verifyUser = async (userId: string): Promise<boolean> => {
+	const { data, error } = await supabase
+		.from("agriculteur")
+		.select("*")
+		.eq("id_agriculteur", userId);
+	if (error || data.length === 0) {
+		return false;
+	}
+	return true;
+}
 
 export const getNewsForUser = async (userId: string): Promise<News[]> => {
 	const { data: followedFarmers, error: followError } = await supabase
@@ -61,4 +74,25 @@ export const getNewsForUser = async (userId: string): Promise<News[]> => {
 
 	console.log(news);
 	return news as News[];
+};
+
+export const saveNews = async (news: any) => {
+	const { data, error } = await supabase.rpc('create_new_evenement',
+	{
+		p_nom_evenement: news.nom_evenement,
+		p_description: news.description,
+		p_date_creation: news.date_creation,
+		p_id_agriculteur: news.id_agriculteur,
+		p_image: news.image,
+	});
+		
+	
+	if (error) {
+		console.error("Error saving news", error);
+		return error;
+	}else {
+		console.log(data);
+		return data;
+	}
+
 };
