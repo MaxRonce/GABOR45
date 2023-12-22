@@ -29,9 +29,7 @@ const NewsFarmerPage: React.FC = () => {
 	const { farmerId } = useParams<{ farmerId: string }>();
 	const [newsList, setNewsList] = useState<News[]>([]);
 	const [showModal, setShowModal] = useState(false);
-	const [selectedImage, setSelectedImage] = u
-	z
-	aseState("");
+	const [selectedImage, setSelectedImage] = useState("");
 
 	const openImageModal = (imageUrl: string) => {
 		setSelectedImage(imageUrl);
