@@ -1,23 +1,18 @@
 // ProfileEdit.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import {
 	IonPage,
 	IonContent,
 	IonButton,
 	IonInput,
 	IonItem,
-	IonLabel,
 	IonSelect,
 	IonSelectOption,
+	IonLabel,
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 
-import {
-	getAgriInfo,
-	getUserInfo,
-	updateAgriInfo,
-	updateUserInfo,
-} from '../../services/userService';
+import { getAgriInfo, updateAgriInfo } from '../../services/userService';
 import { useAuth } from '../../hooks/useAuth';
 import { Farmer } from '../../models/Farmer';
 import { supabase } from '../../supabaseClient';
@@ -28,6 +23,8 @@ const ProfileEdit: React.FC = () => {
 	const history = useHistory();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [produits, setProduits] = useState<any[]>([]);
+	const [image_profile, setImage_profile] = useState<any>();
+	const [image_name, setImage_name] = useState<any>();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -46,13 +43,11 @@ const ProfileEdit: React.FC = () => {
 			}
 		};
 		fetchData();
-
 		arttest();
 	}, [currentUser]);
 
 	const handleInputChange = (name: string, value: string) => {
 		// @ts-expect-error
-
 		setFarmer({ ...farmer, [name]: value });
 	};
 
@@ -69,9 +64,27 @@ const ProfileEdit: React.FC = () => {
 		return types_produits;
 	};
 
+	const uploadImage = async (image: any) => {
+		//const new_image = resize_image(image);
+		const { data, error } = await supabase.storage
+			.from('avatars')
+			.upload(`agri/${image_name}`, image, {
+				cacheControl: '3600',
+				upsert: false,
+			});
+		if (error) {
+			console.error('Error uploading image', error);
+			return;
+		}
+		return data;
+	};
+
 	const handleSave = async () => {
 		if (farmer) {
 			try {
+				if (image_profile && image_name) {
+					await uploadImage(image_profile);
+				}
 				await updateAgriInfo(currentUser?.id || '', farmer);
 				history.push(`/profile`);
 			} catch (error) {
@@ -80,9 +93,29 @@ const ProfileEdit: React.FC = () => {
 		}
 	};
 
+	function handleImageChange(event: ChangeEvent<HTMLInputElement>): void {
+		if (event.target.files && event.target.files[0]) {
+			const file = event.target.files[0];
+			setImage_profile(file);
+			setImage_name(file.name);
+			setFarmer(prevFarmer => ({
+				...prevFarmer!,
+				lien_image_user: file.name,
+			}));
+		}
+	}
+
 	return (
 		<IonPage>
 			<IonContent>
+				<IonItem>
+					<IonLabel position="stacked">Image</IonLabel>
+					<input
+						type="file"
+						accept="image/*"
+						onChange={handleImageChange}
+					/>
+				</IonItem>
 				<IonItem>
 					<IonInput
 						label="Nom"
@@ -195,26 +228,6 @@ const ProfileEdit: React.FC = () => {
 				</IonItem>
 				<IonItem>
 					<IonInput
-						label="Latitude"
-						labelPlacement="floating"
-						value={farmer?.latitude}
-						onIonChange={e =>
-							handleInputChange('latitude', e.detail.value!)
-						}
-					/>
-				</IonItem>
-				<IonItem>
-					<IonInput
-						label="Longitude"
-						labelPlacement="floating"
-						value={farmer?.longitude}
-						onIonChange={e =>
-							handleInputChange('longitude', e.detail.value!)
-						}
-					/>
-				</IonItem>
-				<IonItem>
-					<IonInput
 						label="Nom de la ferme"
 						labelPlacement="floating"
 						value={farmer?.nom_ferme}
@@ -238,7 +251,7 @@ const ProfileEdit: React.FC = () => {
 						{produits.map(produit => (
 							<IonSelectOption
 								key={produit.id_categorie}
-								value={produit.name}
+								value={produit.id_categorie}
 							>
 								{produit.name}
 							</IonSelectOption>

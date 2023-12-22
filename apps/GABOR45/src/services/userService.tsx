@@ -39,7 +39,7 @@ export const updateAgriInfo = async (
 	userId: string,
 	updatedUser: Farmer,
 ): Promise<void> => {
-	let { data, error } = await supabase.rpc('update_agriculteur_info', {
+	let { error } = await supabase.rpc('update_agriculteur_info', {
 		agriculteur_id: userId,
 		new_description: updatedUser.description,
 		new_email: updatedUser.email,
@@ -55,5 +55,4 @@ export const updateAgriInfo = async (
 		new_website: updatedUser.website,
 	});
 	if (error) console.error(error);
-	else console.log(data);
 };
