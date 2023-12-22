@@ -33,6 +33,7 @@ const MyFeedPage: React.FC = () => {
 	const [selectedImage, setSelectedImage] = useState("");
 	const [isRefreshing, setIsRefreshing] = useState(false);
 	const history = useHistory();
+	const [isVide, setIsVide] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	const openImageModal = (imageUrl: string) => {
@@ -49,11 +50,11 @@ const MyFeedPage: React.FC = () => {
 
 	useEffect(() => {
 		if (user) {
-            fetchNews().then(() => {
-                setIsLoading(false);
-            });
-        }
-		
+			fetchNews().then(() => {
+				setIsLoading(false);
+			});
+		}
+
 	}, [user]);
 
 	// Define the base URL for the images
@@ -83,7 +84,11 @@ const MyFeedPage: React.FC = () => {
 		// Fonction to get the news for the user
 		if (user) {
 			const newsFromService = await getNewsForUser(user.id);
-			setNewsList(newsFromService);
+			if (newsFromService.length === 0) {
+				setIsVide(true);
+			}else {
+				setNewsList(newsFromService);
+			}
 		}
 	};
 
@@ -98,9 +103,18 @@ const MyFeedPage: React.FC = () => {
 				<LoadingScreen />
 			) : (
 				<>
-					<IonRefresher slot="fixed" onIonRefresh={doRefresh}>
-						<IonRefresherContent pullingText="Tirez pour rafraîchir" />
-					</IonRefresher>
+					{isVide ? (
+						<div className="vide-container">
+							<h2>Vous ne suivez pas encore de producteurs</h2>
+							<IonButton routerLink="/farmers/producteurs">
+								Parcourir les producteurs
+							</IonButton>
+						</div>
+					) : (
+						<>
+						<IonRefresher slot="fixed" onIonRefresh={doRefresh}>
+							<IonRefresherContent pullingText="Tirez pour rafraîchir" />
+						</IonRefresher>
 
 					{isRefreshing && (
 						<div className="loading-container">
@@ -177,6 +191,8 @@ const MyFeedPage: React.FC = () => {
 							</div>
 						</div>
 					</IonModal>
+					</>
+					)}
 				</>
 			)}
 		</IonContent>
