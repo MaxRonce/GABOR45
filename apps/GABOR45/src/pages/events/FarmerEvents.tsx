@@ -73,9 +73,25 @@ const FarmerEvents: React.FC = () => {
     const handleModalContentClick = (e: React.MouseEvent) => {
         handleModalContentClickF(e);
     };
+    const cleanAll = () => {
+        setImageFile(null);
+        setImageName('');
+        setNomEvenement('');
+        setDescription('');
+        setIngredients([{ name: '', quantity: '', unit: '' }]);
+        setSteps([{ description: '' }]);
+        setIsActive([true, false]);
+    }
 
     useEffect(() => {
-        cleanAll();
+        if (user) {
+            fetchNews().then(() => {
+                setIsLoading(false);
+            });
+        }
+        return () => {
+            cleanAll();
+        }   
     }, [user]);
 
     const doRefresh = (event: CustomEvent) => {
@@ -117,11 +133,11 @@ const FarmerEvents: React.FC = () => {
     };
 
     const uploadImage = async (file: File, dossier:string) => {
-        const fileName = file.name;
+        const fileName = `${dossier}-${user.id}-${Date.now()}-${file.name}`;
         try {
             let { error: uploadError } = await supabase.storage
                 .from('news')
-                .upload(`${dossier}/${fileName}`, file, {
+                .upload(`${fileName}`, file, {
                     cacheControl: '3600',
                     upsert: false
                 });
@@ -242,15 +258,7 @@ const FarmerEvents: React.FC = () => {
         
     };
 
-    const cleanAll = () => {
-        setImageFile(null);
-        setImageName('');
-        setNomEvenement('');
-        setDescription('');
-        setIngredients([{ name: '', quantity: '', unit: '' }]);
-        setSteps([{ description: '' }]);
-        setIsActive([true, false]);
-    }
+    
 
     const saveSteps = async (id_recette:string) => {
         try {
