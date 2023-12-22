@@ -285,6 +285,26 @@ const FarmerEvents: React.FC = () => {
 
 	//function to add an event
 	const handleSubmit = async (msg: string) => {
+		//Validation of the form
+		if (!nomEvenement.trim() || !description.trim()) {
+			await showToast({
+				message: "Veuillez remplir tous les champs obligatoires",
+				duration: 2000,
+				color: "danger",
+			});
+			return;
+		}
+
+		// Validation of the ingredients
+		const invalidQuantity = ingredients.some(ingredient => parseFloat(ingredient.quantity) < 0);
+		if (invalidQuantity) {
+			await showToast({
+				message: "Les quantités ne peuvent pas être négatives",
+				duration: 2000,
+				color: "danger",
+			});
+			return; // Detiene la ejecución si hay cantidades negativas
+		}
 		const currentDate = new Date();
 		const formattedDate = currentDate
 			.toISOString()
@@ -596,8 +616,12 @@ const FarmerEvents: React.FC = () => {
 																<IonItem>
 																	<IonInput
 																		placeholder="Quantité"
-																		type="number"
+																		type="text"
+																		inputmode="numeric"
+																		pattern="\d*"
 																		className="number-input"
+																		min={0}
+																		maxlength={3}
 																		value={
 																			ingredient.quantity
 																		}
