@@ -217,26 +217,6 @@ const ProfileEdit: React.FC = () => {
 					/>
 				</IonItem>
 				<IonItem>
-					<IonInput
-						label="Adresse"
-						labelPlacement="floating"
-						value={farmer?.adresse}
-						onIonChange={e =>
-							handleInputChange('adresse', e.detail.value!)
-						}
-					/>
-				</IonItem>
-				<IonItem>
-					<IonInput
-						label="Nom de la ferme"
-						labelPlacement="floating"
-						value={farmer?.nom_ferme}
-						onIonChange={e =>
-							handleInputChange('nom_ferme', e.detail.value!)
-						}
-					/>
-				</IonItem>
-				<IonItem>
 					<IonSelect
 						label="Type de produit principal"
 						labelPlacement="floating"
