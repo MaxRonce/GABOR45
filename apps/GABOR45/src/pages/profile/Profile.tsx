@@ -6,7 +6,7 @@ import { supabase } from '../../supabaseClient';
 import { User } from '@supabase/supabase-js';
 
 import { Utilisateur } from '../../models/User';
-import { getUserInfo } from '../../services/userService';
+import { getAgriInfo, getUserInfo } from '../../services/userService';
 
 import LoadingScreen from '../../components/LoadingScreen';
 import { useAuth } from '../../hooks/useAuth';
@@ -18,6 +18,7 @@ const Profile: React.FC = () => {
 	const [util, setUtil] = useState<Utilisateur | null>(null);
 	const history = useHistory();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [farmer_data, setFarmer_data] = useState<any>();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -33,6 +34,9 @@ const Profile: React.FC = () => {
 				}
 			} else {
 				setIsLoading(false);
+			}
+			if (currentUser) {
+				setFarmer_data(await getAgriInfo(currentUser?.id || ''));
 			}
 		};
 		fetchData();
@@ -85,6 +89,26 @@ const Profile: React.FC = () => {
 		? `${baseUrl}${util.lien_image}`
 		: '';
 
+	function infoAgri(): React.ReactNode {
+		return farmer_data ? (
+			<div className="information">
+				<h1>Informations Agriculteur</h1>
+				<p>
+					Type de produit principal:{' '}
+					{farmer_data?.type_produit_principal}
+				</p>
+				<p>Description: {farmer_data?.description}</p>
+				<p>Site web: {farmer_data.website}</p>
+				<p>Facebook: {farmer_data.facebook}</p>
+				<p>Instagram: {farmer_data.instagram}</p>
+				<p>Twitter: {farmer_data.twitter}</p>
+				<p>num tel: {farmer_data.tel_portable}</p>
+			</div>
+		) : (
+			<> </>
+		);
+	}
+
 	return (
 		<IonPage>
 			<IonContent>
@@ -107,6 +131,7 @@ const Profile: React.FC = () => {
 							<p>Numéro de téléphone: {util.num_tel}</p>
 							{/* ... Autres informations de profil ... */}
 						</div>
+						{infoAgri()}
 						<IonButton
 							onClick={redirectToProfileEdit}
 							className="edit-profile"
