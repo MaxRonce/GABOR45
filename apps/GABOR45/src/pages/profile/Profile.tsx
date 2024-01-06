@@ -148,7 +148,7 @@ const Profile: React.FC = () => {
 					<div className="content">
 						<h1>Profil</h1>
 						<p>Vous n'êtes pas connecté.</p>
-						<IonButton onClick={redirectToLogin} expand="block">
+						<IonButton id='toLogin' onClick={redirectToLogin} expand="block">
 							Se connecter
 						</IonButton>
 					</div>
