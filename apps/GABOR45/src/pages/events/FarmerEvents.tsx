@@ -468,7 +468,7 @@ const FarmerEvents: React.FC = () => {
 						horizontal="end"
 						onClick={() => setShowFormModal(true)}
 					>
-						<IonFabButton>
+						<IonFabButton id='my-fab-button'>
 							<IonIcon src={add_outline} />
 						</IonFabButton>
 					</IonFab>
@@ -831,6 +831,7 @@ const FarmerEvents: React.FC = () => {
 												Annuler
 											</IonButton>
 											<IonButton
+												id="submit-recipe"
 												expand="block"
 												type="submit"
 												onClick={() =>
