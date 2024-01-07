@@ -96,7 +96,7 @@ const RegisterUser: React.FC = () => {
 					<h1 className="text-title">Inscription</h1>
 				</IonText>
 				<InputComponent
-					classP="login-input"
+					classP="login-input input-email"
 					labelP="Email"
 					typeP="email"
 					iconName={mail}
@@ -127,7 +127,7 @@ const RegisterUser: React.FC = () => {
 					</p>
 				</IonText>
 				<ButtonComponent
-					classP="ion-margin-horizontal ion-padding-horizontal"
+					classP="ion-margin-horizontal ion-padding-horizontal btn-register"
 					text="S'inscrire"
 					onClick={handleLogin}
 				/>

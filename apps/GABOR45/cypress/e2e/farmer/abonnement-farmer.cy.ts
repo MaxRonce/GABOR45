@@ -4,7 +4,7 @@ describe('Abonnement Farmer', () => {
         cy.login('mexproai@gmail.com', '123123');
         cy.url().should('include', '/profile');
         cy.get('[tab="farmers"]', { timeout: 30000 }).click();
-        cy.get('.farmer-card').first().click();
-        cy.get('.follow_button').click();
+        cy.get('.farmer-card', { timeout: 30000 }).first().click();
+        cy.get('.follow_button').contains('Suivre').click();
     });
 });
