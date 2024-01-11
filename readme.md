@@ -63,25 +63,14 @@ This monorepo is configured with tools to run various types of tests:
 - Functional Tests: (specific instructions)
 - **E2E Tests:**  ```npx nx e2e gabor45-e2e```
 
-## Documentation
-
-TODO maybe delete this part
-
-Documentation for the code, architecture, and user manuals can be generated using:
-
-Copy code
-nx run gabor45:document
-Generated documents will be available in the /docs folder.
-
 ## Continuous Integration (CI)
-We use (CI Service Name) for our CI/CD pipeline, which handles:
+We use Github Actions for our CI/CD pipeline, which handles:
 
 - Dependency installation.
 - Running tests.
 - Lint ```nx run GABOR45:lint```
-- Generating documentation.
 - Creating and storing artifacts.
-To view the results of the latest builds, visit (link to the CI dashboard).
+To view the results of the latest builds, visit the CI dashboard.
 
 ## Contributing
 To contribute to this project, please follow our detailed contribution guide in CONTRIBUTING.md.
