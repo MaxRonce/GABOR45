@@ -1,3 +1,4 @@
+let email = 'emailtest' + Math.random() * 51 + '@gmail.com';
 describe('user registration test', () => {
     beforeEach(() => {
         cy.visit('http://localhost:8100/home');
@@ -9,7 +10,7 @@ describe('user registration test', () => {
 
      it('should allow the user to create an account', () => {
         cy.contains("h3", "S'inscrire").click();
-        cy.get('.input-email').type('aenrique1123@gmail.com');
+        cy.get('.input-email').type(email);
         cy.get('.input-pass').type('123123');
         cy.get('.btn-register').click();
         cy.get('ion-toast')
