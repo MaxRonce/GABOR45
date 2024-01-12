@@ -94,7 +94,7 @@ git push origin branch-name
 
 Each branch should be ascociated with an issue, a feature or any enhancement. Please respect the following convention for your branch name : 
 
-```TAG-(flag)/branch_name```
+```-(flag)-TAG-branch_name```
 - tag = FEAT / REFACTOR / BUG / DOC ...
 - flag = #issue_number if it exist
 - branch_name = should be precise and describe what is the goal of the branch
