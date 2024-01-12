@@ -99,6 +99,8 @@ Each branch should be ascociated with an issue, a feature or any enhancement. Pl
 - flag = #issue_number if it exist
 - branch_name = should be precise and describe what is the goal of the branch
 
+Example : ```35-feat-implement-a-test-and-linting-pipeline```
+
 # Commit messages
 
 All the commits messages must follow this template : 
