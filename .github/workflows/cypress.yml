@@ -17,18 +17,17 @@ jobs:
       run: npm install
     - name: Install Ionic CLI and vite
       run: |
-        npm install vite
+        npm i -D -E vite
         npm install -g @ionic/cli
     - name: Start Server
       run: |
         cd apps/GABOR45
-        ionic serve --no-open &
-        sleep 10
+        npx vite --host=localhost --port=8100
     - name: Run Cypress tests
       run: |
         cd apps/GABOR45/
         npx cypress run
-        
+
   lint:
     runs-on: ubuntu-latest
     steps:
