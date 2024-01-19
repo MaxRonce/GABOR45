@@ -17,8 +17,7 @@ jobs:
     - name: Start Server in Background
       run: |
         cd apps/GABOR45
-        npx vite --host=localhost --port=8100 &
-        npx wait-on http://localhost:8100
+        ionic serve
     - name: Run Cypress tests
       run: |
         cd apps/GABOR45/
