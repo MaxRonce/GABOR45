@@ -2,7 +2,9 @@
   "name": "@org/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+	   "cypress:run": "cypress run"
+  },
   "private": true,
   "dependencies": {
     "@capacitor/android": "5.5.0",
