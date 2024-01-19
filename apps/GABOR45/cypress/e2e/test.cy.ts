@@ -1,7 +1,6 @@
 describe('My First Test', () => {
 	it('Visits the app root url', () => {
-		cy.visit('/')
-		cy.get('ion-content').should('contain', 'Tab 1 page').timeout(10000);
-
+		cy.visit('http://localhost:8100/home')
+		cy.contains('ion-content', 'Tab 1 page')
 	})
 })

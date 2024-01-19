@@ -1,6 +1,6 @@
 describe('Test for Login page', () => {
     beforeEach(() => {
-        cy.visit('127.0.0.1:8100/home');
+        cy.visit('http://localhost:8100/home');
         cy.get('[tab="profile"]').click();
         cy.url().should('include', '/profile');
         cy.get('#toLogin').click();
