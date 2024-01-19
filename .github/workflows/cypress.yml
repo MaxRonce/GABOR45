@@ -43,7 +43,7 @@ jobs:
       run: npx eslint "apps/GABOR45/**/*.{ts,tsx,js,jsx}" --ignore-pattern "apps/GABOR45/node_modules/**" --format=html --output-file="apps/GABOR45/lint-report.html"
       continue-on-error: true
     - name: Analyze Lint Report
-      run: node analyze-lint-report.js
+      run: node analyze-lint-report.mjs
     - name: Upload Lint Report
       uses: actions/upload-artifact@v2
       with:
