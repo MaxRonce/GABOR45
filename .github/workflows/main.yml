@@ -15,8 +15,10 @@ jobs:
       run: npm cache clean --force
     - name: Install Dependencies
       run: npm install
-    - name: Install Ionic CLI
-      run: npm install -g @ionic/cli
+    - name: Install Ionic CLI and vite
+      run: |
+        npm install vite
+        npm install -g @ionic/cli
     - name: Start Server
       run: |
         cd apps/GABOR45
