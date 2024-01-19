@@ -18,7 +18,7 @@ jobs:
     - name: Run Cypress tests
       run: |
         cd apps/GABOR45/
-        npm run cypress:run
+        npx cypress run
     - name: Run Linter
       run: npx eslint "apps/GABOR45/**/*.{ts,tsx,js,jsx}" --ignore-pattern "apps/GABOR45/node_modules/**" --format=json --output-file="apps/GABOR45/lint-report.json"
       continue-on-error: true
