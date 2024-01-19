@@ -1,6 +1,9 @@
 describe('Test for Login page', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8100/profile', { timeout: 10000 });
+        cy.visit('http://localhost:8100/home', { timeout: 10000 });
+		cy.get('#root', { timeout: 10000 }).click();
+        cy.get('[tab="profile"]', { timeout: 10000 }).click();
+        cy.url().should('include', '/profile', { timeout: 10000 });
         cy.get('#toLogin', { timeout: 10000 }).click();
         cy.url().should('include', '/login', { timeout: 10000 });
     });
