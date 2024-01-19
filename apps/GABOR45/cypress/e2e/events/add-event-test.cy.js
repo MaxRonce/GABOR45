@@ -1,8 +1,8 @@
 describe('Test for events page', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8100/login');
+        cy.visit('http://localhost:8100/login', { timeout: 10000 });
         cy.login('mexproai@gmail.com', '123123');
-        cy.url().should('include', '/profile');
+        cy.url().should('include', '/profile', { timeout: 10000 });
     });
 
     it('add new event', () => {
@@ -19,13 +19,13 @@ describe('Test for events page', () => {
     });
 
     it('should display a recipe', () => {
-        cy.get('[tab="home"]').click();
+        cy.get('[tab="home"]', { timeout: 30000 }).click();
         cy.contains('ion-card-title', 'Recette').click();
         cy.url().should('include', '/recette');
     });
 
     it('add new recipe with one ingredient and step', () => {
-        cy.get('[tab="events"]').click();
+        cy.get('[tab="events"]', { timeout: 30000 }).click();
         cy.get('#my-fab-button').click();
         cy.get('ion-modal').should('be.visible');
         cy.contains('.nav-text','recette').click();

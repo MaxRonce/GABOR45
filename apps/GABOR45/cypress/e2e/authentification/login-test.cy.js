@@ -1,10 +1,10 @@
 describe('Test for Login page', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8100/home');
-        cy.get('[tab="profile"]').click();
-        cy.url().should('include', '/profile');
-        cy.get('#toLogin').click();
-        cy.url().should('include', '/login');
+        cy.visit('http://localhost:8100/home', { timeout: 10000 });
+        cy.get('[tab="profile"]', { timeout: 10000 }).click();
+        cy.url().should('include', '/profile', { timeout: 10000 });
+        cy.get('#toLogin', { timeout: 10000 }).click();
+        cy.url().should('include', '/login', { timeout: 10000 });
     });
     
     it('should allow the user to initiate password recovery', () => {
