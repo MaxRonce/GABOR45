@@ -2,8 +2,8 @@ describe('Test for Login page', () => {
     before(() => {
         cy.visit('http://localhost:8100/home');
 		cy.wait(5000);
-        cy.get('[tab="profile"]').then(() => {
-			.click();
+        cy.get('[tab="profile"]').then(($profile) => {
+			$profile.click();
 		});
         cy.url().should('include', '/profile');
         cy.get('#toLogin').click();
