@@ -15,6 +15,12 @@ jobs:
       run: npm cache clean --force
     - name: Install Dependencies
       run: npm install
+    - name: Start Server
+      run: |
+        cd apps/GABOR45
+        ionic serve --no-open & 
+    - name: Wait for Ionic Server to start
+      run: npx wait-on http://localhost:8100
     - name: Run Cypress tests
       run: |
         cd apps/GABOR45/
