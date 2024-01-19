@@ -2,6 +2,7 @@ describe('Test for Login page', () => {
     before(() => {
         cy.visit('http://localhost:8100/home');
 		cy.wait(5000);
+		cy.get('#root');
         cy.get('[tab="profile"]').then(($profile) => {
 			$profile.click();
 		});
