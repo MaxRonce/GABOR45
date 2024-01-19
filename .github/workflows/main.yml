@@ -20,9 +20,8 @@ jobs:
     - name: Start Server
       run: |
         cd apps/GABOR45
-        ionic serve --no-open & 
-    - name: Wait for Ionic Server to start
-      run: npx wait-on http://localhost:8100
+        ionic serve --no-open &
+        sleep 10
     - name: Run Cypress tests
       run: |
         cd apps/GABOR45/
