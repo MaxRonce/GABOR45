@@ -1,9 +1,10 @@
 describe('Test for Login page', () => {
     before(() => {
-        cy.intercept('GET', '/home', { fixture: 'data.json' }).as('loadPageData');
         cy.visit('http://localhost:8100/home');
-        cy.wait('@loadPageData'); // Espera a que la carga de datos iniciales se complete.
-        cy.get('[tab="profile"]', { timeout: 10000 }).click();
+		cy.wait(5000);
+        cy.get('[tab="profile"]').then(() => {
+			.click();
+		});
         cy.url().should('include', '/profile');
         cy.get('#toLogin').click();
         cy.url().should('include', '/login');
