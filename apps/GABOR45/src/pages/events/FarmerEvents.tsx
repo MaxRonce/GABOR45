@@ -63,7 +63,7 @@ const FarmerEvents: React.FC = () => {
 	const [isRefreshing, setIsRefreshing] = useState(false);
 	const [nomEvenement, setNomEvenement] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
-	const [imageFile, setImageFile] = useState(null);
+	const [imageFile, setImageFile] = useState<File | string>('');
 	const [isActive, setIsActive] = useState([true, false]);
 	const [imageName, setImageName] = useState<string>('');
 	const [ingredients, setIngredients] = useState<Ingredient[]>([
@@ -84,7 +84,7 @@ const FarmerEvents: React.FC = () => {
 		handleModalContentClickF(e);
 	};
 	const cleanAll = () => {
-		setImageFile(null);
+		setImageFile('');
 		setImageName('');
 		setNomEvenement('');
 		setDescription('');
@@ -190,7 +190,7 @@ const FarmerEvents: React.FC = () => {
 
 	const handleClose = () => {
 		setShowFormModal(false);
-		setImageFile(null);
+		setImageFile('');
 		setImageName('');
 		setNomEvenement('');
 		setDescription('');
@@ -287,6 +287,7 @@ const FarmerEvents: React.FC = () => {
 	const handleSubmit = async (msg: string) => {
 		//Validation of the form
 		if (!nomEvenement.trim() || !description.trim()) {
+			console.log(nomEvenement, " desc: ", description, "img ", imageFile);
 			await showToast({
 				message: "Veuillez remplir tous les champs obligatoires",
 				duration: 2000,
@@ -312,7 +313,7 @@ const FarmerEvents: React.FC = () => {
 			.substring(0, 19);
 		try {
 			let fileName = '';
-			if (imageFile) {
+			if (imageFile && typeof imageFile !== 'string') {
 				fileName = await uploadImage(imageFile, msg === 'recette' ? 'recettes' : 'evenements');
 			}
 			console.log(description);
