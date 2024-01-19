@@ -51,6 +51,7 @@ describe('Test for Login page', () => {
         .find('.toast-message')
         .should('contain.text', 'Email invalide');
     });
+    
 
     it('should display error message when trying to log in without password', () => {
         cy.get('.input-email').type('mexproai@gmail.com');
