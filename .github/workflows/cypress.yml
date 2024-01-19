@@ -11,18 +11,14 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '20.9'
-    - name: Clear NPM cache
-      run: npm cache clean --force
+        cache: 'npm'
     - name: Install Dependencies
       run: npm install
-    - name: Install Ionic CLI and vite
-      run: |
-        npm i -D -E vite
-        npm install -g @ionic/cli
-    - name: Start Server
+    - name: Start Server in Background
       run: |
         cd apps/GABOR45
-        npx vite --host=localhost --port=8100
+        npx vite --host=localhost --port=8100 &
+        npx wait-on http://localhost:8100
     - name: Run Cypress tests
       run: |
         cd apps/GABOR45/
