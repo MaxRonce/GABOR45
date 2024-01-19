@@ -24,7 +24,7 @@ jobs:
     - name: Run Cypress tests
       run: |
         cd apps/GABOR45/
-        npx cypress run
+        npx cypress run --browser chrome
 
   lint:
     runs-on: ubuntu-latest
