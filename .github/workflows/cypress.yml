@@ -19,7 +19,6 @@ jobs:
         cd apps/GABOR45
         npx vite --host=localhost --port=8100 &
         sleep 10
-        wait-on: 'http://localhost:8100'
     - name : Check if server is running
       run: curl -s http://localhost:8100
     - name: Run Cypress tests
