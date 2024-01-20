@@ -6,17 +6,12 @@ jobs:
   cypress:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Cypress run
-      uses: cypress-io/github-action@v6
+    - uses: actions/checkout@v2
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        build: npm run build
-        start: npm start
-        browser: chrome
-        wait-on: 'http://localhost:8100'
+        node-version: '20.9'
+        cache: 'npm'
     - name: Install Dependencies
       run: npm install
     - name: Start Server in Background
@@ -24,6 +19,7 @@ jobs:
         cd apps/GABOR45
         npx vite --host=localhost --port=8100 &
         sleep 10
+        wait-on: 'http://localhost:8100'
     - name : Check if server is running
       run: curl -s http://localhost:8100
     - name: Run Cypress tests
