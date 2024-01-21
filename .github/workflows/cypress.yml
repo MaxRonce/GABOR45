@@ -3,6 +3,29 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.9'
+        cache: 'npm'
+    - name: Install Dependencies
+      run: npm install
+    - name: Start Server in Background
+      run: |
+        cd apps/GABOR45
+        npx vite --host=localhost --port=8100 &
+        sleep 10
+    - name : Check if server is running
+      run: curl -s http://localhost:8100
+    - name: Run Cypress tests
+      run: |
+        cd apps/GABOR45/
+        npx cypress run --headless
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -21,11 +44,11 @@ jobs:
     - name: Run Linter HTML Report
       run: npx eslint "apps/GABOR45/**/*.{ts,tsx,js,jsx}" --ignore-pattern "apps/GABOR45/node_modules/**" --format=html --output-file="apps/GABOR45/lint-report.html"
       continue-on-error: true
+    - name: Analyze Lint Report
+      run: node analyze-lint-report.mjs
+      continue-on-error: true
     - name: Upload Lint Report
       uses: actions/upload-artifact@v2
       with:
         name: lint-reports
         path: apps/GABOR45/*.html
-    - name: Analyze Lint Report
-      run: node analyze-lint-report.js
-

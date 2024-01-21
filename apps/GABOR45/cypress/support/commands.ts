@@ -1,3 +1,4 @@
+import 'cypress-file-upload';
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -35,3 +36,15 @@
 //     }
 //   }
 // }
+
+declare namespace Cypress {
+    interface Chainable {
+        login(email: string, password: string): void;
+    }
+}
+
+Cypress.Commands.add('login', (email, password) => {
+    cy.get('.input-email').type(email);
+    cy.get('.input-pass').type(password);
+    cy.get('.btn-connect').click();
+});

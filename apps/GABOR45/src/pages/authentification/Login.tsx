@@ -165,7 +165,7 @@ const Login: React.FC = () => {
 				</IonText>
 
 				<InputComponent
-					classP="login-input"
+					classP="login-input input-email"
 					labelP="Email"
 					typeP="email"
 					iconName={mail}
@@ -228,7 +228,7 @@ const Login: React.FC = () => {
 					]}
 				/>
 				<ButtonComponent
-					classP="btns-login ion-margin-horizontal ion-padding-horizontal"
+					classP="btns-login ion-margin-horizontal ion-padding-horizontal btn-connect"
 					text="Se connecter"
 					onClick={handleLogin}
 				/>
