@@ -141,7 +141,7 @@ ion-col.input-col {
     cursor: pointer;
     transition: background-color 0.3s;
     text-align: center;
-    margin: 1vh 0.5vh;
+    margin: 1vh 0.5vh;  
 }
 
 .custom-center {
