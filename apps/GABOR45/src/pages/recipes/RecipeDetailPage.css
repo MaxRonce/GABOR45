@@ -42,20 +42,20 @@
 
 /* Titre de la recette */
 .page_content h2 {
-    color: #333;
+    color: var(--ion-color-secondary-contrast);
     margin-bottom: 10px;
 }
 
 /* Description de la recette */
 .page_content p {
-    color: #666;
+    color: #666666;
     font-size: 1rem;
 }
 /* Section des ingrédients */
 .production {
     padding: 20px;
     margin: 20px;
-    background-color: #f0f0f0;
+    background-color: var(--ion-color-tertiary);
     border-radius: 5px;
     border: 0px solid #164550;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* X-offset Y-offset Blur Spread Color */
@@ -68,7 +68,7 @@
 }
 
 .ingredients-list li {
-    background-color: #fff; /* Arrière-plan blanc pour chaque élément */
+    background-color: var(--ion-color-tertiary-card); /* Arrière-plan blanc pour chaque élément */
     margin-bottom: 10px; /* Espacement entre les éléments */
     padding: 10px; /* Espace intérieur pour chaque élément */
     border-radius: 5px; /* Coins arrondis */
@@ -82,7 +82,7 @@
 }
 
 .steps h2 {
-    color: #333;
+    color: var(--ion-color-secondary-contrast);
     font-size: 1.2rem;
     margin-bottom: 15px;
 }
@@ -94,11 +94,11 @@
 }
 
 .etapes-list li {
-    background-color: #fff;
+    background-color: var(--ion-color-tertiary-card);
     margin-bottom: 10px;
     padding: 15px;
     border-radius: 5px;
-    border: 1px solid #eaeaea;
+    border: 1px solid var(--ion-color-tertiary-card);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
     padding-left: 40px; 
