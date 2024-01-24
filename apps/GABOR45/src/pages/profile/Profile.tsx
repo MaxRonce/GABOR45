@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { IonPage, IonContent, IonButton } from '@ionic/react';
+import { IonPage, IonContent, IonButton, IonIcon } from '@ionic/react';
 
 import { supabase } from '../../supabaseClient';
 import { User } from '@supabase/supabase-js';
 
 import { Utilisateur } from '../../models/User';
 import { getAgriInfo, getUserInfo } from '../../services/userService';
-
+import { newspaperOutline } from "ionicons/icons";
 import LoadingScreen from '../../components/LoadingScreen';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -19,12 +19,14 @@ const Profile: React.FC = () => {
 	const history = useHistory();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [farmer_data, setFarmer_data] = useState<any>();
+	const [isAgri, setIsAgri] = useState<boolean>(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
 			if (currentUser) {
 				setIsLoading(true);
 				try {
+					setIsAgri(await verifyUser(currentUser?.id));
 					const userData = await getUserInfo(currentUser.id);
 					setUtil(userData);
 				} catch (error) {
@@ -123,6 +125,21 @@ const Profile: React.FC = () => {
 								className="profile-image"
 							/>
 						</div>
+						{isAgri &&
+							<button
+								color="secondary"
+								onClick={() =>
+									history.push({
+										pathname:  `/events/myfeed/${farmer_data?.id_utilisateur}`,
+										state: { farmerId: farmer_data?.id_utilisateur },
+									}
+									)
+								}
+							>
+								<IonIcon slot="start" icon={newspaperOutline} />
+								 Mes News
+							</button>
+						}
 						<div className="information">
 							<h1>Profil</h1>
 							<p>Nom: {util.nom}</p>
@@ -131,6 +148,7 @@ const Profile: React.FC = () => {
 							<p>Numéro de téléphone: {util.num_tel}</p>
 							{/* ... Autres informations de profil ... */}
 						</div>
+						
 						{infoAgri()}
 						<IonButton
 							onClick={redirectToProfileEdit}
