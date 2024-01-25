@@ -26,7 +26,6 @@ const Profile: React.FC = () => {
 			if (currentUser) {
 				setIsLoading(true);
 				try {
-					setIsAgri(await verifyUser(currentUser?.id));
 					const userData = await getUserInfo(currentUser.id);
 					setUtil(userData);
 				} catch (error) {
@@ -38,7 +37,9 @@ const Profile: React.FC = () => {
 				setIsLoading(false);
 			}
 			if (currentUser) {
+				setIsAgri(await verifyUser(currentUser?.id));
 				setFarmer_data(await getAgriInfo(currentUser?.id || ''));
+				
 			}
 		};
 		fetchData();
