@@ -128,6 +128,7 @@ const Profile: React.FC = () => {
 						</div>
 						{isAgri &&
 							<button
+								disabled={!farmer_data?.id_utilisateur}
 								color="secondary"
 								onClick={() =>
 									history.push({

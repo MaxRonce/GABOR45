@@ -63,6 +63,7 @@ const FarmerEvents: React.FC = () => {
 	const [isRefreshing, setIsRefreshing] = useState(false);
 	const [nomEvenement, setNomEvenement] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
+	const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 	const [imageFile, setImageFile] = useState<File | string>('');
 	const [isActive, setIsActive] = useState([true, false]);
 	const [imageName, setImageName] = useState<string>('');
@@ -79,6 +80,38 @@ const FarmerEvents: React.FC = () => {
 	const closeModal = () => {
 		closeModalF(setShowModal);
 	};
+
+	const validateForm = () => {
+		// Validar campos para eventos
+		if (isActive[0]) {
+			if (!nomEvenement.trim() || !description.trim()) {
+				showToast({
+					message: "Vous devez remplir tous les champs obligatoires",
+					duration: 2000,
+					color: "danger",
+				});
+				return false;
+			}
+		}
+
+		// Validar campos para recetas
+		if (isActive[1]) {
+			if (!nomEvenement.trim() || !description.trim() ||
+				ingredients.some(ing => !ing.name.trim() || !ing.quantity.trim() || !ing.unit.trim()) ||
+				steps.some(step => !step.description.trim())) {
+				showToast({
+					message: "Vous devez remplir tous les champs obligatoires",
+					duration: 2000,
+					color: "danger",
+				});
+				return false;
+			}
+		}
+
+		return true;
+	};
+
+
 
 	const handleModalContentClick = (e: React.MouseEvent) => {
 		handleModalContentClickF(e);
@@ -288,13 +321,7 @@ const FarmerEvents: React.FC = () => {
 	//function to add an event
 	const handleSubmit = async (msg: string) => {
 		//Validation of the form
-		if (!nomEvenement.trim() || !description.trim()) {
-			console.log(nomEvenement, " desc: ", description, "img ", imageFile);
-			await showToast({
-				message: "Veuillez remplir tous les champs obligatoires",
-				duration: 2000,
-				color: "danger",
-			});
+		if (!validateForm()) {
 			return;
 		}
 
@@ -306,7 +333,7 @@ const FarmerEvents: React.FC = () => {
 				duration: 2000,
 				color: "danger",
 			});
-			return; // Detiene la ejecución si hay cantidades negativas
+			return;
 		}
 		const currentDate = new Date();
 		const formattedDate = currentDate
@@ -314,17 +341,25 @@ const FarmerEvents: React.FC = () => {
 			.replace('T', ' ')
 			.substring(0, 19);
 		try {
+			setIsButtonDisabled(true);
 			let fileName = '';
 			if (imageFile && typeof imageFile !== 'string') {
 				fileName = await uploadImage(imageFile, msg === 'recette' ? 'recettes' : 'evenements');
 			}
 			console.log(description);
+			let is_recette = false;
+			if (msg === 'recette') {
+				is_recette = true;
+			}
+			console.log(is_recette, "recete?");
 			let news = {
 				nom_evenement: nomEvenement,
 				description: description,
 				date_creation: formattedDate,
 				id_agriculteur: user.id,
 				image: fileName,
+				is_recette: is_recette,
+				is_main: is_recette,
 			};
 			console.log("news", news);
 			const data = await saveNews(news);
@@ -341,6 +376,7 @@ const FarmerEvents: React.FC = () => {
 					color: 'success',
 				});
 			}
+			setIsButtonDisabled(false);
 			setIsLoading(true);
 			await fetchNews();
 		} catch (error) {
@@ -566,6 +602,7 @@ const FarmerEvents: React.FC = () => {
 												expand="block"
 												color="danger"
 												onClick={() => handleClose()}
+												disabled={isButtonDisabled}
 											>
 												Annuler
 											</IonButton>
@@ -575,6 +612,7 @@ const FarmerEvents: React.FC = () => {
 												onClick={() =>
 													handleSubmit('évènement')
 												}
+												disabled={isButtonDisabled}
 											>
 												Ajouter
 											</IonButton>
@@ -828,6 +866,7 @@ const FarmerEvents: React.FC = () => {
 												expand="block"
 												color="danger"
 												onClick={() => handleClose()}
+												disabled={isButtonDisabled}
 											>
 												Annuler
 											</IonButton>
@@ -838,11 +877,13 @@ const FarmerEvents: React.FC = () => {
 												onClick={() =>
 													handleSubmit('recette')
 												}
+												disabled={isButtonDisabled}
 											>
 												Ajouter
 											</IonButton>
 										</div>
 									</>
+
 								)}
 							</div>
 						</div>

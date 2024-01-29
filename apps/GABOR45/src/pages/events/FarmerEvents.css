@@ -44,6 +44,13 @@
     margin-top: 20px;
 }
 
+.saving-div {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .my-custom-class .modal-form {
     background-color: white;
     border-radius: 10px ;
