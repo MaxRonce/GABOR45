@@ -23,7 +23,7 @@ import { closeCircle } from "ionicons/icons";
 import logo from "../../assets/logo_Gabor45_notxt.svg";
 import "../farmers/NewsFarmerPage.css";
 import "./EditEvents.css";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import LoadingScreen from "../../components/LoadingScreen";
 import { openImageModalF, closeModalF, handleModalContentClickF, redirectToFarmerProfileF } from "./FunctionsEvents";
 
@@ -38,8 +38,9 @@ const MyFeedPage: React.FC = () => {
     const [showToast] = useIonToast();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [selectedNewsId, setSelectedNewsId] = useState<string | null>(null);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const [selectedNewsImage, setSelectedNewsImage] = useState<string>("");
-
+    const history = useHistory();
     const openImageModal = (imageUrl: string) => {
         openImageModalF(imageUrl, setSelectedImage, setShowModal);
     };
@@ -93,6 +94,7 @@ const MyFeedPage: React.FC = () => {
     const handleDelete = async () => {
         let deleteSuccess = false;
         try {
+            setIsButtonDisabled(true);
             if (selectedNewsId != null) {
                 if (selectedNewsImage != '') {
                     console.log("image", selectedNewsImage);
@@ -116,6 +118,7 @@ const MyFeedPage: React.FC = () => {
                     color: 'danger',
                 });
             }
+            setIsButtonDisabled(false);
             fetchNews();
             closeModal();
         } catch (error) {
@@ -146,6 +149,13 @@ const MyFeedPage: React.FC = () => {
             return Math.round(diff_jours) + ' jours';
         }
     }
+
+    const handle_click_card = (newsItem: News) => {
+		if (newsItem.is_recette) {
+			history.push(`/recette/${newsItem.id_evenement}`);
+		} 
+	}
+
 
 
     // Define the base URL for the images
@@ -181,7 +191,9 @@ const MyFeedPage: React.FC = () => {
                             </div>
                         ) : (
                             newsList.map((newsItem: News) => (
-                                <IonCard key={newsItem.id_evenement}>
+                                <IonCard key={newsItem.id_evenement} onClick={() =>
+                                    handle_click_card(newsItem)
+                                }>
                                     <IonCardHeader>
                                         <IonCardTitle>
                                             <div className="title_containter">
@@ -218,6 +230,7 @@ const MyFeedPage: React.FC = () => {
                                                         className="annuler-btn"
                                                         expand="block"
                                                         onClick={() => closeModal()}
+                                                        disabled={isButtonDisabled}
                                                     >
                                                         Annuler
                                                     </IonButton>
@@ -225,6 +238,7 @@ const MyFeedPage: React.FC = () => {
                                                         expand="block"
                                                         color="danger"
                                                         onClick={() => handleDelete()}
+                                                        disabled={isButtonDisabled}
                                                     >
                                                         Supprimer
                                                     </IonButton>

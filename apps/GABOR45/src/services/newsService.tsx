@@ -85,7 +85,6 @@ export const getNewsForUser = async (userId: string): Promise<News[]> => {
 			'id_agriculteur',
 			followedFarmers.map(ff => ff.id_agriculteur),
 		)
-		.eq('is_recette', false)
 		.order('date_creation', { ascending: false });
 
 	const { data: images, error: imagesError } = await supabase

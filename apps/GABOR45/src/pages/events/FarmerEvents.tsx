@@ -42,6 +42,7 @@ import {
 	handleModalContentClickF,
 	redirectToFarmerProfileF,
 } from './FunctionsEvents';
+import { useHistory } from 'react-router-dom';
 
 interface Ingredient {
 	name: string;
@@ -70,6 +71,7 @@ const FarmerEvents: React.FC = () => {
 	const [ingredients, setIngredients] = useState<Ingredient[]>([
 		{ name: '', quantity: '', unit: '' },
 	]);
+	const history = useHistory();
 	const [steps, setSteps] = useState<Step[]>([{ description: '' }]);
 	const [showToast] = useIonToast();
 
@@ -318,6 +320,12 @@ const FarmerEvents: React.FC = () => {
 		}
 	};
 
+	const handle_click_card = (newsItem: News) => {
+		if (newsItem.is_recette) {
+			history.push(`/recette/${newsItem.id_evenement}`);
+		}
+	}
+
 	//function to add an event
 	const handleSubmit = async (msg: string) => {
 		//Validation of the form
@@ -359,7 +367,7 @@ const FarmerEvents: React.FC = () => {
 				id_agriculteur: user.id,
 				image: fileName,
 				is_recette: is_recette,
-				is_main: is_recette,
+				is_main: false,
 			};
 			console.log("news", news);
 			const data = await saveNews(news);
@@ -434,7 +442,9 @@ const FarmerEvents: React.FC = () => {
 						</div>
 					) : (
 						newsList.map((newsItem: News) => (
-							<IonCard key={newsItem.id_evenement}>
+							<IonCard key={newsItem.id_evenement} onClick={() =>
+								handle_click_card(newsItem)
+							}>
 								<IonCardHeader>
 									<IonCardTitle>
 										<div className="title_containter">
