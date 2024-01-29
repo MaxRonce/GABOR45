@@ -9,9 +9,11 @@ import {
 	IonSelect,
 	IonSelectOption,
 	IonLabel,
+	useIonToast,
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 
+import regexTest from '../../fonctions/regex';
 import { getAgriInfo, updateAgriInfo } from '../../services/userService';
 import { useAuth } from '../../hooks/useAuth';
 import { Farmer } from '../../models/Farmer';
@@ -25,6 +27,7 @@ const ProfileEdit: React.FC = () => {
 	const [produits, setProduits] = useState<any[]>([]);
 	const [image_profile, setImage_profile] = useState<any>();
 	const [image_name, setImage_name] = useState<any>();
+	const [showToast] = useIonToast();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -82,9 +85,25 @@ const ProfileEdit: React.FC = () => {
 	const handleSave = async () => {
 		if (farmer) {
 			try {
+				if (
+					regexTest(farmer?.nom || '', 'name') &&
+					regexTest(farmer?.prenom || '', 'name') &&
+					regexTest(farmer?.email || '', 'email') &&
+					regexTest(farmer?.num_tel || '', 'phone') &&
+					regexTest(farmer?.tel_portable || '', 'phone')
+				) {
+					await showToast({
+						message: 'Veuillez remplir les champs correctement',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+
 				if (image_profile && image_name) {
 					await uploadImage(image_profile);
 				}
+
 				await updateAgriInfo(currentUser?.id || '', farmer);
 				history.push(`/profile`);
 			} catch (error) {

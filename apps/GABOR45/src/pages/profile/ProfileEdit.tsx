@@ -7,9 +7,10 @@ import {
 	IonInput,
 	IonItem,
 	IonLabel,
+	useIonToast,
 } from '@ionic/react';
 import { useParams, useHistory } from 'react-router-dom';
-
+import regexTest from '../../fonctions/regex';
 import { supabase } from '../../supabaseClient';
 import { Utilisateur } from '../../models/User';
 import { getUserInfo, updateUserInfo } from '../../services/userService';
@@ -19,6 +20,7 @@ const ProfileEdit: React.FC = () => {
 	const currentUser = useAuth();
 	const [util, setUtil] = useState<Utilisateur | null>(null);
 	const history = useHistory();
+	const [showToast] = useIonToast();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
@@ -48,6 +50,18 @@ const ProfileEdit: React.FC = () => {
 
 	const handleSave = async () => {
 		if (util) {
+			if (
+				regexTest(util?.nom || '', 'name') &&
+				regexTest(util?.prenom || '', 'name') &&
+				regexTest(util?.email || '', 'email')
+			) {
+				await showToast({
+					message: 'Veuillez remplir les champs correctement',
+					duration: 2000,
+					color: 'danger',
+				});
+				return;
+			}
 			try {
 				await updateUserInfo(currentUser?.id || '', util);
 				history.push(`/profile`);
