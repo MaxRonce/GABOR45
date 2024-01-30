@@ -212,7 +212,7 @@ const MyFeedPage: React.FC = () => {
                                     >
                                         <div className="modal-content">
                                             <div className="modal-form">
-                                                <IonText>Supprimer cet événement ?</IonText>
+                                                <IonText className="delete_modal">Supprimer cet événement ?</IonText>
                                                 <div className="modal-buttons">
                                                     <IonButton
                                                         className="annuler-btn"
