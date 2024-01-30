@@ -17,6 +17,44 @@ export const getNewsByFarmer = async (farmerId: string): Promise<News[]> => {
 	return data as News[];
 };
 
+export const deleteNews = async (newsId: string) => {
+	const { error } = await supabase
+	.from('news')
+	.delete()
+	.eq('id_evenement', newsId);
+
+	if (error) {
+		console.error('Error deleting news', error);
+		return false;
+	}else {
+		return true;
+	}
+};
+export const deleteNewsWithImage = async (newsId: string, image:string) => {
+	console.log(image, newsId);
+	const { data, error } = await supabase
+		.storage
+		.from('news')
+		.remove(['images/' + image]);
+	if (error) {
+		console.error('Error deleting image', error);
+		return false;
+	}
+	console.log(data);
+	const { data: data2, error: error2 } = await supabase
+		.from('news')
+		.delete()
+		.eq('id_evenement', newsId);
+	if (error2) {
+		console.error('Error deleting news', error2);
+		return false;
+	} else {
+		console.log(data2);
+		return true;
+	}
+	
+};
+
 export const verifyUser = async (userId: string): Promise<boolean> => {
 	const { data, error } = await supabase
 		.from('agriculteur')

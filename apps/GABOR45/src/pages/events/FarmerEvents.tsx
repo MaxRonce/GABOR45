@@ -109,10 +109,12 @@ const FarmerEvents: React.FC = () => {
 		});
 	};
 	const fetchNews = async () => {
+		setNewsList([]);
 		try {
 			if (user) {
 				const newsFromService = await getNewsForUser(user.id);
 				setNewsList(newsFromService);
+				setIsLoading(false);
 			}
 		} catch (error) { }
 	};
@@ -339,6 +341,7 @@ const FarmerEvents: React.FC = () => {
 					color: 'success',
 				});
 			}
+			setIsLoading(true);
 			await fetchNews();
 		} catch (error) {
 			console.error(error);
@@ -519,11 +522,8 @@ const FarmerEvents: React.FC = () => {
 											<IonItem>
 												<IonTextarea
 													placeholder="Description de l'évènement"
-													onIonChange={(e: any) =>
-														setDescription(
-															e.detail.value,
-														)
-													}
+													onIonChange={(e: any) => setDescription(e.detail.value)}
+													onBlur={(e: any) => setDescription(e.target.value)}
 												/>
 											</IonItem>
 											<IonItem>
@@ -854,3 +854,4 @@ const FarmerEvents: React.FC = () => {
 };
 
 export default FarmerEvents;
+
