@@ -79,7 +79,6 @@ const App: React.FC = () => (
 				<Switch>
 					<Route path="/home" component={Home} exact />
 					<Route path="/events" component={IndexEvents} exact />
-					<Route path="/events/myfeed/:farmerId" component={EditEvents} exact />
 					<Route
 						path="/farmers/:page/:farmerId"
 						component={FarmerDetailPage}
@@ -106,6 +105,7 @@ const App: React.FC = () => (
 					<Route exact path="/profile">
 						<Profile />
 					</Route>
+					<Route path="/profile_events/myfeed/:farmerId" component={EditEvents} exact />
 					<Route
 						path="/profile_edit/:userId"
 						component={ProfileEdit}

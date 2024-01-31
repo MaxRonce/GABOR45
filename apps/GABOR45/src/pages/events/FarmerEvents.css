@@ -44,12 +44,7 @@
     margin-top: 20px;
 }
 
-.saving-div {
-    min-height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .my-custom-class .modal-form {
     background-color: white;
@@ -66,42 +61,44 @@
     overflow-x:hidden;
 }
 
-.my-custom-class .items-content {
+.row-content {
+    width: 100%;
+}
+
+
+.div-inputs {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    overflow-x: auto;
-    overflow-y:auto;
-    max-height: 150px;
-    padding: 10px;
+}
+.inputs-container {
+    border-bottom: var(--ion-color-primary) 2px solid;
+    margin-bottom: 10px;
 }
 
-.my-custom-class .item-input {
+.row-inputs {
     display: flex;
-    white-space: nowrap;
-    min-width: 460px;
-    border-bottom: 1px solid #e0e0e0;
-}
-.step {
-    min-width: 330px !important;
-}
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
 
-
+}
+.input-step {
+    --padding-top : 0 !important;
+    --padding-bottom: 0 !important;
+    --margin: 0 !important;
+    --padding-start: 0 !important;
+    --padding-end: 0 !important;
+    flex-grow: 1;
+    width: 75%;
+}
 .btn-ajouter {
     margin: 10px 0;
     width: 100%;
 }
 
-.item-input ion-item {
---border-color: transparent !important; /* Esto elimina la línea de los IonItem */
-    --background: transparent !important; /* Opcional: para asegurarse de que no haya fondo */
-}
-
-.number-input {
-    width: 80px;
-}
-.name-input {
-    width: 100px;
+.btn-delete-step {
+    margin-bottom: 10%;
 }
 
 .my-custom-class .modal-label {

@@ -658,115 +658,117 @@ const FarmerEvents: React.FC = () => {
 												>
 													Ingredients
 												</IonLabel>
-												<div className="items-content">
+												<div className='div-inputs'>
 													{ingredients.map(
 														(ingredient, index) => (
-															<div
-																key={index}
-																className="item-input"
-															>
-																<IonItem>
-																	<IonInput
-																		placeholder="Nom"
-																		className="name-input"
-																		value={
-																			ingredient.name
-																		}
-																		onIonChange={e =>
-																			handleIngredientChange(
-																				index,
-																				'name',
-																				e
-																					.detail
-																					.value ??
-																				'',
-																			)
-																		}
-																	/>
-																</IonItem>
-																<IonItem>
-																	<IonInput
-																		placeholder="Quantité"
-																		type="text"
-																		inputmode="numeric"
-																		pattern="\d*"
-																		className="number-input"
-																		min={0}
-																		maxlength={3}
-																		value={
-																			ingredient.quantity
-																		}
-																		onIonChange={e =>
-																			handleIngredientChange(
-																				index,
-																				'quantity',
-																				e
-																					.detail
-																					.value ??
-																				'',
-																			)
-																		}
-																	/>
-																</IonItem>
-																<IonItem>
-																	<IonSelect
-																		placeholder="Unité"
-																		value={
-																			ingredient.unit
-																		}
-																		onIonChange={e =>
-																			handleIngredientChange(
-																				index,
-																				'unit',
-																				e
-																					.detail
-																					.value ??
-																				'',
-																			)
-																		}
-																	>
-																		<IonSelectOption value="g">
-																			g
-																		</IonSelectOption>
-																		<IonSelectOption value="kg">
-																			kg
-																		</IonSelectOption>
-																		<IonSelectOption value="l">
-																			l
-																		</IonSelectOption>
-																		<IonSelectOption value="cl">
-																			cl
-																		</IonSelectOption>
-																		<IonSelectOption value="ml">
-																			ml
-																		</IonSelectOption>
-																		<IonSelectOption value="cuillère à café">
-																			cuillère
-																			à
-																			café
-																		</IonSelectOption>
-																		<IonSelectOption value="cuillère à soupe">
-																			cuillère
-																			à
-																			soupe
-																		</IonSelectOption>
-																		<IonSelectOption value="pièce">
-																			pièce
-																		</IonSelectOption>
-																	</IonSelect>
-																</IonItem>
-																<IonItem>
-																	<IonButton
-																		color="danger"
-																		onClick={() =>
-																			removeIngredient(
-																				index,
-																			)
-																		}
-																	>
-																		Supprimer
-																	</IonButton>
-																</IonItem>
+															<div className='inputs-container'
+																key={index}>
+																<div className='row-inputs'>
+																	<IonItem>
+																		<IonInput
+																			placeholder="Nom"
+																			className="name-input"
+																			value={
+																				ingredient.name
+																			}
+																			onIonChange={e =>
+																				handleIngredientChange(
+																					index,
+																					'name',
+																					e
+																						.detail
+																						.value ??
+																					'',
+																				)
+																			}
+																		/>
+																	</IonItem>
+																	<IonItem>
+																		<IonInput
+																			placeholder="Quantité"
+																			type="text"
+																			inputmode="numeric"
+																			pattern="\d*"
+																			className="number-input"
+																			min={0}
+																			maxlength={3}
+																			value={
+																				ingredient.quantity
+																			}
+																			onIonChange={e =>
+																				handleIngredientChange(
+																					index,
+																					'quantity',
+																					e
+																						.detail
+																						.value ??
+																					'',
+																				)
+																			}
+																		/>
+																	</IonItem>
+																</div>
+																<div className='row-inputs'>
+																	<IonItem className='row-content'>
+																		<IonSelect
+																			placeholder="Unité"
+																			value={
+																				ingredient.unit
+																			}
+																			onIonChange={e =>
+																				handleIngredientChange(
+																					index,
+																					'unit',
+																					e
+																						.detail
+																						.value ??
+																					'',
+																				)
+																			}
+																		>
+																			<IonSelectOption value="g">
+																				g
+																			</IonSelectOption>
+																			<IonSelectOption value="kg">
+																				kg
+																			</IonSelectOption>
+																			<IonSelectOption value="l">
+																				l
+																			</IonSelectOption>
+																			<IonSelectOption value="cl">
+																				cl
+																			</IonSelectOption>
+																			<IonSelectOption value="ml">
+																				ml
+																			</IonSelectOption>
+																			<IonSelectOption value="cuillère à café">
+																				cuillère
+																				à
+																				café
+																			</IonSelectOption>
+																			<IonSelectOption value="cuillère à soupe">
+																				cuillère
+																				à
+																				soupe
+																			</IonSelectOption>
+																			<IonSelectOption value="pièce">
+																				pièce
+																			</IonSelectOption>
+																		</IonSelect>
+																		<IonButton
+																			color="danger"
+																			onClick={() =>
+																				removeIngredient(
+																					index,
+																				)
+																			}
+																		>
+																			X
+																		</IonButton>
+																	</IonItem>
+
+																</div>
+
 															</div>
 														),
 													)}
@@ -785,45 +787,48 @@ const FarmerEvents: React.FC = () => {
 												>
 													Etapes
 												</IonLabel>
-												<div className="items-content">
+												<div className='div-inputs'>
 													{steps.map(
 														(step, index) => (
 															<div
 																key={index}
-																className="item-input step"
+																className="inputs-container"
 															>
-																<IonItem>
-																	<IonTextarea
-																		placeholder={`Étape ${index +
-																			1
-																			}`}
-																		value={
-																			step.description
-																		}
-																		onIonChange={e =>
-																			handleStepChange(
-																				index,
-																				'description',
-																				e
-																					.detail
-																					.value ??
-																				'',
-																			)
-																		}
-																	/>
-																</IonItem>
-																<IonItem>
-																	<IonButton
-																		color="danger"
-																		onClick={() =>
-																			removeStep(
-																				index,
-																			)
-																		}
-																	>
-																		Supprimer
-																	</IonButton>
-																</IonItem>
+																<div className='row-inputs'>
+																	<IonItem className='row-content'>
+																		<IonTextarea
+																			class="input-step"
+																			placeholder={`Étape ${index +
+																				1
+																				}`}
+																			value={
+																				step.description
+																			}
+																			onIonChange={e =>
+																				handleStepChange(
+																					index,
+																					'description',
+																					e
+																						.detail
+																						.value ??
+																					'',
+																				)
+																			}
+																		/>
+																		<IonButton
+																			className='btn-delete-step'
+																			color="danger"
+																			onClick={() =>
+																				removeStep(
+																					index,
+																				)
+																			}
+																		>
+																			X
+																		</IonButton>
+																	</IonItem>
+																</div>
+
 															</div>
 														),
 													)}
