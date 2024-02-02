@@ -75,28 +75,31 @@ const ProfileEdit: React.FC = () => {
 		<IonPage>
 			<IonContent>
 				<IonItem>
-					<IonLabel position="floating">Nom</IonLabel>
 					<IonInput
+						label="Nom"
+						labelPlacement="floating"
 						value={util?.nom}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('nom', e.detail.value!)
 						}
 					/>
 				</IonItem>
 				<IonItem>
-					<IonLabel position="floating">Email</IonLabel>
 					<IonInput
+						label="Email"
+						labelPlacement="floating"
 						value={util?.email}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('email', e.detail.value!)
 						}
 					/>
 				</IonItem>
 				<IonItem>
-					<IonLabel position="floating">Prénom</IonLabel>
 					<IonInput
+						label="Prénom"
+						labelPlacement="floating"
 						value={util?.prenom}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('prenom', e.detail.value!)
 						}
 					/>
