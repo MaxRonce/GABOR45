@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { IonPage, IonContent, IonButton } from '@ionic/react';
+import { IonPage, IonContent, IonButton, IonIcon } from '@ionic/react';
 
 import { supabase } from '../../supabaseClient';
 import { User } from '@supabase/supabase-js';
@@ -8,7 +8,7 @@ import { User } from '@supabase/supabase-js';
 import { Utilisateur } from '../../models/User';
 import { getAgriInfo, getUserInfo } from '../../services/userService';
 import { getCategorieFromId } from '../../services/CategorieService';
-
+import { newspaperOutline } from "ionicons/icons";
 import LoadingScreen from '../../components/LoadingScreen';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -21,6 +21,7 @@ const Profile: React.FC = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [farmer_data, setFarmer_data] = useState<any>();
 	const [type_produit, setType_produit] = useState<any>();
+	const [isAgri, setIsAgri] = useState<boolean>(false);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -38,6 +39,7 @@ const Profile: React.FC = () => {
 				setIsLoading(false);
 			}
 			if (currentUser) {
+				setIsAgri(await verifyUser(currentUser?.id));
 				// Get farmer data and wait for it to be set before calling getCategorieFromId
 				await getAgriInfo(currentUser?.id || '')
 					.then(data => {
@@ -50,7 +52,7 @@ const Profile: React.FC = () => {
 						);
 						setType_produit(categorie && categorie[0]?.name);
 					});
-			}
+      }
 		};
 		fetchData();
 	}, [currentUser]);
@@ -137,6 +139,21 @@ const Profile: React.FC = () => {
 								className="profile-image"
 							/>
 						</div>
+						{isAgri &&
+							<button
+								color="secondary"
+								onClick={() =>
+									history.push({
+										pathname:  `/events/myfeed/${farmer_data?.id_utilisateur}`,
+										state: { farmerId: farmer_data?.id_utilisateur },
+									}
+									)
+								}
+							>
+								<IonIcon slot="start" icon={newspaperOutline} />
+								 Mes News
+							</button>
+						}
 						<div className="information">
 							<h1>Profil</h1>
 							<p>Nom: {util.nom}</p>
@@ -145,6 +162,7 @@ const Profile: React.FC = () => {
 							<p>Numéro de téléphone: {util.num_tel}</p>
 							{/* ... Autres informations de profil ... */}
 						</div>
+						
 						{infoAgri()}
 						<IonButton
 							onClick={redirectToProfileEdit}

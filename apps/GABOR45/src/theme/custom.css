@@ -104,7 +104,7 @@ ion-col.input-col {
 
 #line-login ion-text {
     position: relative; 
-    background-color: #fff;
+    background-color: var(--icon-background-color);
     padding: 0 10px; 
     top: -11px; 
 }

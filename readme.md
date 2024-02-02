@@ -68,7 +68,7 @@ Our actual documentation (ERD or Use Case Diagram) is available in the /docs fol
 An user manual and a deployment manual (both in French) are also available in the same folder.
 
 ## Continuous Integration (CI)
-We use (CI Service Name) for our CI/CD pipeline, which handles:
+We use Github Actions for our CI/CD pipeline, which handles:
 
 - Dependency installation.
 - Running tests.

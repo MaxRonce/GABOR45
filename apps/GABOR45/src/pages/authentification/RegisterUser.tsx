@@ -94,7 +94,7 @@ const RegisterUser: React.FC = () => {
 			<IonContent>
 				<LogoGaborComponent />
 				<IonText className="ion-text-center">
-					<h1 className="text-title">Inscription</h1>
+					<h1 className="insciption-title">Inscription</h1>
 				</IonText>
 				<InputComponent
 					classP="login-input input-email"
