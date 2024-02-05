@@ -131,7 +131,7 @@ const FarmerPage: React.FC = () => {
                             <IonCard className="farmer-card">
                                 <img className="farmer_img" src={`${baseUrl}${farmer.lien_image_user}`} alt="Image de l'agriculteur" />
                                 <div className="farmer-info">
-                                    <IonCardHeader>
+                                    <IonCardHeader className="farm_name">
                                         <IonCardTitle className="farm_name">{farmer.nom_ferme}</IonCardTitle>
                                     </IonCardHeader>
                                     <IonCardContent className="card_content">

@@ -13,6 +13,8 @@ import ButtonComponent from '../../components/ButtonComponent';
 import InputComponent from '../../components/InputComponent';
 import LogoGaborComponent from '../../components/LogoGaborComponent';
 
+import regexTest from '../../fonctions/regex';
+
 // Images
 import mail from '../../icons/mail.svg';
 import bloquer from '../../icons/bloquer.svg';
@@ -34,8 +36,7 @@ const RegisterUser: React.FC = () => {
 
 	const handleLogin = async () => {
 		// TODO : ecrire des tests pour ces fonctions
-		const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-		if (!expression.test(email)) {
+		if (!regexTest(email, 'email')) {
 			await showToast({
 				message: 'Email invalide',
 				duration: 2000,
@@ -43,7 +44,7 @@ const RegisterUser: React.FC = () => {
 			});
 			return;
 		}
-		if (password.length < 6) {
+		if (!regexTest(password, 'password')) {
 			await showToast({
 				message: 'mdp doit contenir au moins 6 caracteres',
 				duration: 2000,
@@ -93,7 +94,7 @@ const RegisterUser: React.FC = () => {
 			<IonContent>
 				<LogoGaborComponent />
 				<IonText className="ion-text-center">
-					<h1 className="text-title">Inscription</h1>
+					<h1 className="insciption-title">Inscription</h1>
 				</IonText>
 				<InputComponent
 					classP="login-input input-email"

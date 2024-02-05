@@ -9,9 +9,11 @@ import {
 	IonSelect,
 	IonSelectOption,
 	IonLabel,
+	useIonToast,
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 
+import regexTest from '../../fonctions/regex';
 import { getAgriInfo, updateAgriInfo } from '../../services/userService';
 import { useAuth } from '../../hooks/useAuth';
 import { Farmer } from '../../models/Farmer';
@@ -25,6 +27,7 @@ const ProfileEdit: React.FC = () => {
 	const [produits, setProduits] = useState<any[]>([]);
 	const [image_profile, setImage_profile] = useState<any>();
 	const [image_name, setImage_name] = useState<any>();
+	const [showToast] = useIonToast();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -82,9 +85,113 @@ const ProfileEdit: React.FC = () => {
 	const handleSave = async () => {
 		if (farmer) {
 			try {
+				if (
+					(farmer?.nom || '') != '' &&
+					!regexTest(farmer?.nom || '', 'name')
+				) {
+					await showToast({
+						message: 'Veuillez remplir le nom correctement',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+				if (
+					(farmer?.prenom || '') != '' &&
+					!regexTest(farmer?.prenom || '', 'name')
+				) {
+					await showToast({
+						message: 'Veuillez remplir le prénom correctement',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+				if (
+					(farmer?.email || '') != '' &&
+					!regexTest(farmer?.email || '', 'email')
+				) {
+					await showToast({
+						message: "Veuillez remplir l'email correctement",
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+				if (
+					(farmer?.num_tel || '') != '' &&
+					!regexTest(farmer?.num_tel || '', 'phone')
+				) {
+					await showToast({
+						message:
+							'Veuillez remplir le numéro de téléphone correctement',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+				if (
+					(farmer?.tel_portable || '') != '' &&
+					!regexTest(farmer?.tel_portable || '', 'phone')
+				) {
+					await showToast({
+						message:
+							'Veuillez remplir le numéro de téléphone portable correctement',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+				if (
+					(farmer?.website || '') != '' &&
+					!regexTest(farmer?.website || '', 'url')
+				) {
+					await showToast({
+						message:
+							'Veuillez remplir le site internet correctement',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+				if (
+					(farmer?.facebook || '') != '' &&
+					!regexTest(farmer?.facebook || '', 'facebook')
+				) {
+					await showToast({
+						message: 'Veuillez remplir le facebook correctement',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+				if (
+					(farmer?.instagram || '') != '' &&
+					!regexTest(farmer?.instagram || '', 'instagram')
+				) {
+					await showToast({
+						message: 'Veuillez remplir le instagram correctement',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+				if (
+					(farmer?.twitter || '') != '' &&
+					!regexTest(farmer?.twitter || '', 'twitter')
+				) {
+					await showToast({
+						message: 'Veuillez remplir le twitter correctement',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+
 				if (image_profile && image_name) {
 					await uploadImage(image_profile);
 				}
+
 				await updateAgriInfo(currentUser?.id || '', farmer);
 				history.push(`/profile`);
 			} catch (error) {
@@ -121,7 +228,7 @@ const ProfileEdit: React.FC = () => {
 						label="Nom"
 						labelPlacement="floating"
 						value={farmer?.nom}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('nom', e.detail.value!)
 						}
 					/>
@@ -131,7 +238,7 @@ const ProfileEdit: React.FC = () => {
 						label="Email"
 						labelPlacement="floating"
 						value={farmer?.email}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('email', e.detail.value!)
 						}
 					/>
@@ -141,7 +248,7 @@ const ProfileEdit: React.FC = () => {
 						label="Prénom"
 						labelPlacement="floating"
 						value={farmer?.prenom}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('prenom', e.detail.value!)
 						}
 					/>
@@ -151,7 +258,7 @@ const ProfileEdit: React.FC = () => {
 						label="Description"
 						labelPlacement="floating"
 						value={farmer?.description}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('description', e.detail.value!)
 						}
 					/>
@@ -161,7 +268,7 @@ const ProfileEdit: React.FC = () => {
 						label="Numéro de téléphone"
 						labelPlacement="floating"
 						value={farmer?.num_tel}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('num_tel', e.detail.value!)
 						}
 					/>
@@ -171,7 +278,7 @@ const ProfileEdit: React.FC = () => {
 						label="Numéro de téléphone portable"
 						labelPlacement="floating"
 						value={farmer?.tel_portable}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('tel_portable', e.detail.value!)
 						}
 					/>
@@ -181,7 +288,7 @@ const ProfileEdit: React.FC = () => {
 						label="Site internet"
 						labelPlacement="floating"
 						value={farmer?.website}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('website', e.detail.value!)
 						}
 					/>
@@ -191,7 +298,7 @@ const ProfileEdit: React.FC = () => {
 						label="Facebook"
 						labelPlacement="floating"
 						value={farmer?.facebook}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('facebook', e.detail.value!)
 						}
 					/>
@@ -201,7 +308,7 @@ const ProfileEdit: React.FC = () => {
 						label="Instagram"
 						labelPlacement="floating"
 						value={farmer?.instagram}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('instagram', e.detail.value!)
 						}
 					/>
@@ -211,7 +318,7 @@ const ProfileEdit: React.FC = () => {
 						label="Twitter"
 						labelPlacement="floating"
 						value={farmer?.twitter}
-						onIonChange={e =>
+						onIonInput={e =>
 							handleInputChange('twitter', e.detail.value!)
 						}
 					/>

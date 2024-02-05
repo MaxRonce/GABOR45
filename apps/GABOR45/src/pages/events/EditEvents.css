@@ -1,0 +1,67 @@
+.title_containter{
+    display: flex;
+    align-items: center;
+}
+
+.supprimer-btn {
+    margin-left: auto;
+    --background: red !important;
+    margin-bottom: auto;
+}
+
+.my-custom-class .modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.delete_modal{
+    color: var(-ion-color-secondary-contrast);
+}
+
+
+.my-custom-class .close-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+
+.my-custom-class .modal-content {
+    cursor: default;
+}
+
+
+.my-custom-class .modal-form {
+    background-color: var(--ion-color-secondary);
+    border-radius: 10px ;
+    border: 2px solid #03a852;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-height: 80vh; 
+    overflow:scroll;
+    overflow-x:hidden;
+}
+
+.my-custom-class .modal-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.annuler-btn{
+    --background: gray !important;
+    margin-right: 5px;
+}

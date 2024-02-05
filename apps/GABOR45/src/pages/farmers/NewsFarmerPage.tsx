@@ -51,7 +51,7 @@ const NewsFarmerPage: React.FC = () => {
 				setNewsList(newsFromService);
 			}
 		};
-
+		
 		fetchNews();
 	}, [farmerId]);
 	console.log(newsList);
