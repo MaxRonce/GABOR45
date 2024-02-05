@@ -228,6 +228,8 @@ const ProfileEdit: React.FC = () => {
 						label="Nom"
 						labelPlacement="floating"
 						value={farmer?.nom}
+						type="text"
+						name="family-name"
 						onIonInput={e =>
 							handleInputChange('nom', e.detail.value!)
 						}
@@ -238,6 +240,8 @@ const ProfileEdit: React.FC = () => {
 						label="Email"
 						labelPlacement="floating"
 						value={farmer?.email}
+						type="email"
+						name="email"
 						onIonInput={e =>
 							handleInputChange('email', e.detail.value!)
 						}
@@ -248,6 +252,8 @@ const ProfileEdit: React.FC = () => {
 						label="Prénom"
 						labelPlacement="floating"
 						value={farmer?.prenom}
+						type="text"
+						name="given-name"
 						onIonInput={e =>
 							handleInputChange('prenom', e.detail.value!)
 						}
@@ -258,6 +264,7 @@ const ProfileEdit: React.FC = () => {
 						label="Description"
 						labelPlacement="floating"
 						value={farmer?.description}
+						type="text"
 						onIonInput={e =>
 							handleInputChange('description', e.detail.value!)
 						}
@@ -268,6 +275,8 @@ const ProfileEdit: React.FC = () => {
 						label="Numéro de téléphone"
 						labelPlacement="floating"
 						value={farmer?.num_tel}
+						type="text"
+						name="tel-local"
 						onIonInput={e =>
 							handleInputChange('num_tel', e.detail.value!)
 						}

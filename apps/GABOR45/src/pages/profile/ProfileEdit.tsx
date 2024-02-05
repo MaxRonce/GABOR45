@@ -79,6 +79,8 @@ const ProfileEdit: React.FC = () => {
 						label="Nom"
 						labelPlacement="floating"
 						value={util?.nom}
+						type="text"
+						name="family-name"
 						onIonInput={e =>
 							handleInputChange('nom', e.detail.value!)
 						}
@@ -89,6 +91,8 @@ const ProfileEdit: React.FC = () => {
 						label="Email"
 						labelPlacement="floating"
 						value={util?.email}
+						type="email"
+						name="email"
 						onIonInput={e =>
 							handleInputChange('email', e.detail.value!)
 						}
@@ -99,6 +103,8 @@ const ProfileEdit: React.FC = () => {
 						label="Prénom"
 						labelPlacement="floating"
 						value={util?.prenom}
+						type="text"
+						name="given-name"
 						onIonInput={e =>
 							handleInputChange('prenom', e.detail.value!)
 						}
