@@ -141,10 +141,11 @@ const Profile: React.FC = () => {
 						</div>
 						{isAgri &&
 							<button
+								disabled={!farmer_data?.id_utilisateur}
 								color="secondary"
 								onClick={() =>
 									history.push({
-										pathname:  `/events/myfeed/${farmer_data?.id_utilisateur}`,
+										pathname:  `/profile_events/myfeed/${farmer_data?.id_utilisateur}`,
 										state: { farmerId: farmer_data?.id_utilisateur },
 									}
 									)

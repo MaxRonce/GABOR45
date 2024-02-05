@@ -120,6 +120,8 @@ export const saveNews = async (news: any) => {
 		p_date_creation: news.date_creation,
 		p_id_agriculteur: news.id_agriculteur,
 		p_image: news.image,
+		p_is_recette: news.is_recette,
+		p_is_main: news.is_main,
 	});
 
 	if (error) {
