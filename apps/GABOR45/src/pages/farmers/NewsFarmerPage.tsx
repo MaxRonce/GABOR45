@@ -16,7 +16,7 @@ import {
 } from '@ionic/react';
 
 // Services and Models
-import { getNewsByFarmer } from '../../services/newsService';
+import { calcul_temps, getNewsByFarmer } from '../../services/newsService';
 import { News } from '../../models/News';
 
 // Custom Styling
@@ -82,6 +82,9 @@ const NewsFarmerPage: React.FC = () => {
 							<IonCardContent>
 								{newsItem.description}
 							</IonCardContent>
+							<p className="distance">
+								{calcul_temps(newsItem)}
+							</p>
 						</IonCard>
 					))
 				) : (

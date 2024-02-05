@@ -14,7 +14,7 @@ import {
 	IonAvatar,
 	IonLabel,
 } from "@ionic/react";
-import { getNewsForUser } from "../../services/newsService";
+import { getNewsForUser, calcul_temps } from "../../services/newsService";
 import { News } from "../../models/News";
 import { useAuth } from "../../hooks/useAuth";
 import { closeCircle } from "ionicons/icons";
@@ -165,6 +165,9 @@ const MyFeedPage: React.FC = () => {
 								)}
 								{newsItem.description}
 							</IonCardContent>
+							<p className="distance">
+								{calcul_temps(newsItem)}
+							</p>
 						</IonCard>
 					))}
 

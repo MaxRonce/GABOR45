@@ -92,3 +92,22 @@ export const saveNews = async (news: any) => {
 		return data;
 	}
 };
+
+export function calcul_temps(newsItem: News){
+	const date_evenement = new Date(newsItem.date_creation);
+	const date_actuelle = new Date();
+	const diff = date_actuelle.getTime() - date_evenement.getTime();
+	const diff_jours = diff / (1000 * 3600 * 24);
+	const diff_heures = diff / (1000 * 3600);
+	const diff_minutes = diff / (1000 * 60);
+	const diff_secondes = diff / 1000;
+	if (diff_secondes < 60) {
+		return Math.round(diff_secondes) + ' secondes';
+	} else if (diff_minutes < 60) {
+		return Math.round(diff_minutes) + ' minutes';
+	} else if (diff_heures < 24) {
+		return Math.round(diff_heures) + ' heures';
+	} else {
+		return Math.round(diff_jours) + ' jours';
+	}
+};
