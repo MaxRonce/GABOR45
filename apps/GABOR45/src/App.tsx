@@ -24,6 +24,7 @@ import FarmerDetailPage from "./pages/farmers/FarmerDetailPage";
 import NewsFarmerPage from "./pages/farmers/NewsFarmerPage";
 import IndexEvents from "./pages/events/IndexEvents";
 import EditEvents from "./pages/events/EditEvents";
+import PointsHorairesEdit from "./pages/profile/PointsHorairesEdit";
 import ProfileEdit from "./pages/profile/ProfileEdit";
 import Home from "./pages/Home";
 import MapPage from "./pages/map/Map";
@@ -106,6 +107,7 @@ const App: React.FC = () => (
 						<Profile />
 					</Route>
 					<Route path="/profile_events/myfeed/:farmerId" component={EditEvents} exact />
+					<Route path="/profile_agri/points_hr/:farmerId" component={PointsHorairesEdit} exact />
 					<Route
 						path="/profile_edit/:userId"
 						component={ProfileEdit}

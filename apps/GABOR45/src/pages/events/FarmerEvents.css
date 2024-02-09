@@ -44,7 +44,9 @@
     margin-top: 20px;
 }
 
-
+.input-pdv{
+    opacity: 1 !important;
+}
 
 .my-custom-class .modal-form {
     background-color: white;

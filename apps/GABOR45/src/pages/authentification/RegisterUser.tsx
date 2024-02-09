@@ -124,7 +124,7 @@ const RegisterUser: React.FC = () => {
 				<IonText className="ion-text-center">
 					<p className="text-small">
 						En cliquant sur S'inscrire, vous acceptez{' '}
-						<a href="">nos Conditions générales</a>.
+						<a href="https://maxronce.github.io/gabor45.github.io/">nos Conditions générales</a>.
 					</p>
 				</IonText>
 				<ButtonComponent

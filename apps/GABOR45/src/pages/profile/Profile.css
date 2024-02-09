@@ -51,5 +51,7 @@ h1{
     width: 100%; /* makes the button full width */
   }
 
- 
-  
+.btn-vente-horaire {
+  width: 80%;
+  padding: revert;
+}

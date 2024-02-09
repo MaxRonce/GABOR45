@@ -46,7 +46,6 @@ const MyFeedPage: React.FC = () => {
     };
 
     const confirmDelete = (newsId: string, image: string) => {
-        // Al confirmar, establece el ID y la imagen de la noticia seleccionada
         setSelectedNewsId(newsId);
         setSelectedNewsImage(image);
         setShowConfirmModal(true);
