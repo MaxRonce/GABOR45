@@ -52,7 +52,7 @@ const Profile: React.FC = () => {
 						);
 						setType_produit(categorie && categorie[0]?.name);
 					});
-      }
+			}
 		};
 		fetchData();
 	}, [currentUser]);
@@ -119,6 +119,7 @@ const Profile: React.FC = () => {
 				<p>Instagram: {farmer_data.instagram}</p>
 				<p>Twitter: {farmer_data.twitter}</p>
 				<p>num tel: {farmer_data.tel_portable}</p>
+
 			</div>
 		) : (
 			<> </>
@@ -145,14 +146,14 @@ const Profile: React.FC = () => {
 								color="secondary"
 								onClick={() =>
 									history.push({
-										pathname:  `/profile_events/myfeed/${farmer_data?.id_utilisateur}`,
+										pathname: `/profile_events/myfeed/${farmer_data?.id_utilisateur}`,
 										state: { farmerId: farmer_data?.id_utilisateur },
 									}
 									)
 								}
 							>
 								<IonIcon slot="start" icon={newspaperOutline} />
-								 Mes News
+								Mes News
 							</button>
 						}
 						<div className="information">
@@ -163,8 +164,22 @@ const Profile: React.FC = () => {
 							<p>Numéro de téléphone: {util.num_tel}</p>
 							{/* ... Autres informations de profil ... */}
 						</div>
-						
+
 						{infoAgri()}
+						{isAgri &&
+							<button
+								disabled={!farmer_data?.id_utilisateur}
+								className="btn-vente-horaire"
+								color="secondary"
+								onClick={() =>
+									history.push({
+										pathname: `/profile_agri/points_hr/${farmer_data?.id_utilisateur}`,
+										state: { farmerId: farmer_data?.id_utilisateur },
+									})
+								}
+							>Modifier mes points de vente et horaires</button>
+						}
+
 						<IonButton
 							onClick={redirectToProfileEdit}
 							className="edit-profile"

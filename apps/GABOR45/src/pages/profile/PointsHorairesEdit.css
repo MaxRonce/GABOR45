@@ -1,0 +1,135 @@
+.header-points {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-bottom: var(--ion-color-dark) solid 1px;
+    
+}
+.title {
+    color: var(--ion-color-dark);
+    margin-right: auto;
+}
+
+.title-actuelles {
+    color: var(--ion-color-dark);
+    font-size: large;
+}
+
+.nav-icon {
+    margin-right: auto;
+    margin-left: 2%;
+}
+
+.pointv-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+    padding: 0 5%;
+    max-height: fit-content;
+}
+
+.horaire-head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 5%;
+
+}
+
+.horaires-container{
+    border-bottom: var(--ion-color-dark) solid 1px;
+    margin-bottom: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.point-actuelles-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    max-height:  150px;
+    border-bottom: var(--ion-color-dark) solid 1px;
+    overflow:scroll;
+    overflow-x:hidden;
+}
+.container-horaire {
+    border-top: var(--ion-color-dark) solid 1px;
+    margin-top: 20%;
+}
+.row-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+.row-form-actuelles {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+}
+.labels-points {
+    width: 35%;
+    margin-bottom: 5%;
+}
+.label-adresse{
+    white-space: nowrap; 
+    overflow: hidden;  
+}
+
+.nom-input {
+    margin-right: 9%;
+}
+
+.buttons-content {
+    width: 30%;
+}
+
+
+.modal-map {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3% 5%;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5%;
+    align-items: center;
+}
+
+.btn-modal {
+    margin-top: 4%;
+}
+
+.btn-show-modal {
+    width: 50%;
+}
+
+.btn-valider{
+    margin-top: 5%;
+}
+
+.box-pdv {
+    border-bottom: var(--ion-color-primary) 2px solid;
+}
+
+.btn-modifier-hr {
+    margin-right: 5%;
+}
+
+.input-hr {
+    width: 50%;
+}
