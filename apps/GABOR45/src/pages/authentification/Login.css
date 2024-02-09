@@ -1,0 +1,24 @@
+.text-title:first-child {
+    border: 2px solid var(--ion-color-primary);
+    border-radius: 10px; /* Rounded corners */
+    color: var(--ion-color-secondary-contrast);
+    padding: 0.5%;
+    width: 40%;
+    margin: 4% auto; /* Center the element */
+    margin-top: 2%;
+}
+
+#question_inscription{
+    color: var(--ion-color-secondary-contrast);
+    font-size: 80%;
+}
+
+#ou-line{
+    background-color: var(--icon-background-color);
+}
+
+#redirect-inscription{
+    display: contents;
+    width: fit-content;
+    height: fit-content;
+}

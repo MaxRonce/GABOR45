@@ -7,45 +7,62 @@
     font-family: 'Poppins', sans-serif;
 }
 
+body.dark-mode{
+    background-color: var(--ion-color-secondary);
+    color: var(--ion-color-secondary-contrast);
+}
+
 .farmer-card {
     display: flex;
     align-items: center;
     width: 90%;
-    background: #FFFFFF;
+    background: var(--ion-color-secondary);
+    color: var(--ion-color-secondary-contrast);
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
 }
 
 .distance{
     text-align: right;
+    color: var(--ion-color-secondary-contrast);
+
 }
 
 .farm_name{
     font-weight: bolder;    
     font-size: 1.2rem;
-    color: #164550;
+    color: var(--ion-color-secondary-contrast);
+    background-color: var(--ion-color-secondary);
 }
 
+
+
 .nom_prenom_agri{
-    color: #0d0d0d;
+    color: var(--ion-color-secondary-contrast);
 }
 
 .farmer_img{
     width: auto;
-    background-color: white ;
+    background-color: var(--ion-color-secondary) ;
     border-radius: 10px;
 }
 
 .card_content{
     padding-top: 0 !important;
+    background-color: var(--ion-color-secondary) ;
+
 }
+
+
 
 .farmer-info {
     justify-content: space-between;
     display: flex;
     flex-direction: column;
     width: 100%;
+    background-color: var(--ion-color-secondary) !important;
 }
+
 
 
 
@@ -83,3 +100,5 @@ ion-list {
     height: 100% !important;
     font-size: 0.8rem !important;
 }
+
+

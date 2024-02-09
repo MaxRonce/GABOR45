@@ -28,6 +28,7 @@ import showP from "../../icons/showP.svg";
 import hideP from "../../icons/hideP.svg";
 import google from "../../icons/google.svg";
 import logo_Gabor45 from "../../icons/logo_Gabor45.svg";
+import "./Login.css";
 
 const Login: React.FC = () => {
 	const [email, setEmail] = useState<string>("");
@@ -165,7 +166,7 @@ const Login: React.FC = () => {
 				</IonText>
 
 				<InputComponent
-					classP="login-input"
+					classP="login-input input-email"
 					labelP="Email"
 					typeP="email"
 					iconName={mail}
@@ -228,21 +229,23 @@ const Login: React.FC = () => {
 					]}
 				/>
 				<ButtonComponent
-					classP="btns-login ion-margin-horizontal ion-padding-horizontal"
+					classP="btns-login ion-margin-horizontal ion-padding-horizontal btn-connect"
 					text="Se connecter"
 					onClick={handleLogin}
 				/>
+				<IonText id="question_inscription">
+				Vous n'avez pas de compte ?
+				</IonText>
 				<IonText
 					onClick={() => {
 						history.push("/registerUser");
 					}}
-					className="text-btn ion-text-center ion-margin-bottom"
+					className="text-btn ion-text-center ion-margin-bottom" id="redirect-inscription"
 				>
-					<h3 className="text-title">S'inscrire</h3>
+					<h3 className="text-title" id="inscrire">S'inscrire</h3>
 				</IonText>
-				<div id="line-login">
-					<IonText>ou</IonText>
-				</div>
+				<div id="line-login"></div>
+				<IonText id="ou-line">ou</IonText>
 				<ButtonComponent
 					classP="btns-login ion-padding-horizontal ion-margin-horizontal ion-margin-top"
 					text="Se connecter avec Facebook"

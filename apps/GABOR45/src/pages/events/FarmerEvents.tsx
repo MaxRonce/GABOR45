@@ -42,6 +42,7 @@ import {
 	handleModalContentClickF,
 	redirectToFarmerProfileF,
 } from './FunctionsEvents';
+import { useHistory } from 'react-router-dom';
 
 interface Ingredient {
 	name: string;
@@ -63,12 +64,14 @@ const FarmerEvents: React.FC = () => {
 	const [isRefreshing, setIsRefreshing] = useState(false);
 	const [nomEvenement, setNomEvenement] = useState<string>('');
 	const [description, setDescription] = useState<string>('');
-	const [imageFile, setImageFile] = useState(null);
+	const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+	const [imageFile, setImageFile] = useState<File | string>('');
 	const [isActive, setIsActive] = useState([true, false]);
 	const [imageName, setImageName] = useState<string>('');
 	const [ingredients, setIngredients] = useState<Ingredient[]>([
 		{ name: '', quantity: '', unit: '' },
 	]);
+	const history = useHistory();
 	const [steps, setSteps] = useState<Step[]>([{ description: '' }]);
 	const [showToast] = useIonToast();
 
@@ -80,11 +83,43 @@ const FarmerEvents: React.FC = () => {
 		closeModalF(setShowModal);
 	};
 
+	const validateForm = () => {
+		// Validar campos para eventos
+		if (isActive[0]) {
+			if (!nomEvenement.trim() || !description.trim()) {
+				showToast({
+					message: "Vous devez remplir tous les champs obligatoires",
+					duration: 2000,
+					color: "danger",
+				});
+				return false;
+			}
+		}
+
+		// Validar campos para recetas
+		if (isActive[1]) {
+			if (!nomEvenement.trim() || !description.trim() ||
+				ingredients.some(ing => !ing.name.trim() || !ing.quantity.trim() || !ing.unit.trim()) ||
+				steps.some(step => !step.description.trim())) {
+				showToast({
+					message: "Vous devez remplir tous les champs obligatoires",
+					duration: 2000,
+					color: "danger",
+				});
+				return false;
+			}
+		}
+
+		return true;
+	};
+
+
+
 	const handleModalContentClick = (e: React.MouseEvent) => {
 		handleModalContentClickF(e);
 	};
 	const cleanAll = () => {
-		setImageFile(null);
+		setImageFile('');
 		setImageName('');
 		setNomEvenement('');
 		setDescription('');
@@ -99,9 +134,6 @@ const FarmerEvents: React.FC = () => {
 				setIsLoading(false);
 			});
 		}
-		return () => {
-			cleanAll();
-		};
 	}, [user]);
 
 	const doRefresh = (event: CustomEvent) => {
@@ -112,12 +144,14 @@ const FarmerEvents: React.FC = () => {
 		});
 	};
 	const fetchNews = async () => {
+		setNewsList([]);
 		try {
 			if (user) {
 				const newsFromService = await getNewsForUser(user.id);
 				setNewsList(newsFromService);
+				setIsLoading(false);
 			}
-		} catch (error) {}
+		} catch (error) { }
 	};
 
 	// Define the base URL for the images
@@ -193,7 +227,7 @@ const FarmerEvents: React.FC = () => {
 
 	const handleClose = () => {
 		setShowFormModal(false);
-		setImageFile(null);
+		setImageFile('');
 		setImageName('');
 		setNomEvenement('');
 		setDescription('');
@@ -286,61 +320,73 @@ const FarmerEvents: React.FC = () => {
 		}
 	};
 
+	const handle_click_card = (newsItem: News) => {
+		if (newsItem.is_recette) {
+			history.push(`/recette/${newsItem.id_evenement}`);
+		}
+	}
+
 	//function to add an event
 	const handleSubmit = async (msg: string) => {
+		//Validation of the form
+		if (!validateForm()) {
+			return;
+		}
+
+		// Validation of the ingredients
+		const invalidQuantity = ingredients.some(ingredient => parseFloat(ingredient.quantity) < 0);
+		if (invalidQuantity) {
+			await showToast({
+				message: "Les quantités ne peuvent pas être négatives",
+				duration: 2000,
+				color: "danger",
+			});
+			return;
+		}
 		const currentDate = new Date();
 		const formattedDate = currentDate
 			.toISOString()
 			.replace('T', ' ')
 			.substring(0, 19);
 		try {
+			setIsButtonDisabled(true);
 			let fileName = '';
-			if (imageFile) {
-				let news = {};
-				if (msg === 'recette') {
-					fileName = await uploadImage(imageFile, 'recettes');
-					news = {
-						nom_evenement: nomEvenement,
-						description: description,
-						date_creation: formattedDate,
-						id_agriculteur: user.id,
-						image: fileName,
-					};
-					const data = await saveNews(news);
-					if (data) {
-						await saveIngredients(data);
-						await saveSteps(data);
-						setShowFormModal(false);
-						setImageFile(null);
-						setImageName('');
-						await showToast({
-							message: `${msg} a été ajouté avec succès`,
-							duration: 2000,
-							color: 'success',
-						});
-					}
-				} else {
-					fileName = await uploadImage(imageFile, 'images');
-					news = {
-						nom_evenement: nomEvenement,
-						description: description,
-						date_creation: formattedDate,
-						id_agriculteur: user.id,
-						image: fileName,
-					};
-					const data = await saveNews(news);
-					setShowFormModal(false);
-					setImageFile(null);
-					setImageName('');
-					await showToast({
-						message: `${msg} a été ajouté avec succès`,
-						duration: 2000,
-						color: 'success',
-					});
-					await fetchNews();
-				}
-				console.log('filename', fileName);
+			if (imageFile && typeof imageFile !== 'string') {
+				fileName = await uploadImage(imageFile, msg === 'recette' ? 'recettes' : 'evenements');
 			}
+			console.log(description);
+			let is_recette = false;
+			if (msg === 'recette') {
+				is_recette = true;
+			}
+			console.log(is_recette, "recete?");
+			let news = {
+				nom_evenement: nomEvenement,
+				description: description,
+				date_creation: formattedDate,
+				id_agriculteur: user.id,
+				image: fileName,
+				is_recette: is_recette,
+				is_main: false,
+			};
+			console.log("news", news);
+			const data = await saveNews(news);
+			if (data) {
+				if (msg === 'recette') {
+					await saveIngredients(data);
+					await saveSteps(data);
+				}
+				setShowFormModal(false);
+				cleanAll();
+				await showToast({
+					message: `${msg} a été ajouté avec succès`,
+					duration: 2000,
+					color: 'success',
+				});
+			}
+			setIsButtonDisabled(false);
+			setIsLoading(true);
+			await fetchNews();
 		} catch (error) {
 			console.error(error);
 			await showToast({
@@ -396,7 +442,9 @@ const FarmerEvents: React.FC = () => {
 						</div>
 					) : (
 						newsList.map((newsItem: News) => (
-							<IonCard key={newsItem.id_evenement}>
+							<IonCard key={newsItem.id_evenement} onClick={() =>
+								handle_click_card(newsItem)
+							}>
 								<IonCardHeader>
 									<IonCardTitle>
 										<div className="title_containter">
@@ -470,7 +518,7 @@ const FarmerEvents: React.FC = () => {
 						horizontal="end"
 						onClick={() => setShowFormModal(true)}
 					>
-						<IonFabButton>
+						<IonFabButton id='my-fab-button'>
 							<IonIcon src={add_outline} />
 						</IonFabButton>
 					</IonFab>
@@ -520,11 +568,8 @@ const FarmerEvents: React.FC = () => {
 											<IonItem>
 												<IonTextarea
 													placeholder="Description de l'évènement"
-													onIonChange={(e: any) =>
-														setDescription(
-															e.detail.value,
-														)
-													}
+													onIonChange={(e: any) => setDescription(e.detail.value)}
+													onBlur={(e: any) => setDescription(e.target.value)}
 												/>
 											</IonItem>
 											<IonItem>
@@ -567,6 +612,7 @@ const FarmerEvents: React.FC = () => {
 												expand="block"
 												color="danger"
 												onClick={() => handleClose()}
+												disabled={isButtonDisabled}
 											>
 												Annuler
 											</IonButton>
@@ -576,6 +622,7 @@ const FarmerEvents: React.FC = () => {
 												onClick={() =>
 													handleSubmit('évènement')
 												}
+												disabled={isButtonDisabled}
 											>
 												Ajouter
 											</IonButton>
@@ -611,111 +658,117 @@ const FarmerEvents: React.FC = () => {
 												>
 													Ingredients
 												</IonLabel>
-												<div className="items-content">
+												<div className='div-inputs'>
 													{ingredients.map(
 														(ingredient, index) => (
-															<div
-																key={index}
-																className="item-input"
-															>
-																<IonItem>
-																	<IonInput
-																		placeholder="Nom"
-																		className="name-input"
-																		value={
-																			ingredient.name
-																		}
-																		onIonChange={e =>
-																			handleIngredientChange(
-																				index,
-																				'name',
-																				e
-																					.detail
-																					.value ??
+															<div className='inputs-container'
+																key={index}>
+																<div className='row-inputs'>
+																	<IonItem>
+																		<IonInput
+																			placeholder="Nom"
+																			className="name-input"
+																			value={
+																				ingredient.name
+																			}
+																			onIonChange={e =>
+																				handleIngredientChange(
+																					index,
+																					'name',
+																					e
+																						.detail
+																						.value ??
 																					'',
-																			)
-																		}
-																	/>
-																</IonItem>
-																<IonItem>
-																	<IonInput
-																		placeholder="Quantité"
-																		type="number"
-																		className="number-input"
-																		value={
-																			ingredient.quantity
-																		}
-																		onIonChange={e =>
-																			handleIngredientChange(
-																				index,
-																				'quantity',
-																				e
-																					.detail
-																					.value ??
+																				)
+																			}
+																		/>
+																	</IonItem>
+																	<IonItem>
+																		<IonInput
+																			placeholder="Quantité"
+																			type="text"
+																			inputmode="numeric"
+																			pattern="\d*"
+																			className="number-input"
+																			min={0}
+																			maxlength={3}
+																			value={
+																				ingredient.quantity
+																			}
+																			onIonChange={e =>
+																				handleIngredientChange(
+																					index,
+																					'quantity',
+																					e
+																						.detail
+																						.value ??
 																					'',
-																			)
-																		}
-																	/>
-																</IonItem>
-																<IonItem>
-																	<IonSelect
-																		placeholder="Unité"
-																		value={
-																			ingredient.unit
-																		}
-																		onIonChange={e =>
-																			handleIngredientChange(
-																				index,
-																				'unit',
-																				e
-																					.detail
-																					.value ??
+																				)
+																			}
+																		/>
+																	</IonItem>
+																</div>
+																<div className='row-inputs'>
+																	<IonItem className='row-content'>
+																		<IonSelect
+																			placeholder="Unité"
+																			value={
+																				ingredient.unit
+																			}
+																			onIonChange={e =>
+																				handleIngredientChange(
+																					index,
+																					'unit',
+																					e
+																						.detail
+																						.value ??
 																					'',
-																			)
-																		}
-																	>
-																		<IonSelectOption value="g">
-																			g
-																		</IonSelectOption>
-																		<IonSelectOption value="kg">
-																			kg
-																		</IonSelectOption>
-																		<IonSelectOption value="l">
-																			l
-																		</IonSelectOption>
-																		<IonSelectOption value="cl">
-																			cl
-																		</IonSelectOption>
-																		<IonSelectOption value="ml">
-																			ml
-																		</IonSelectOption>
-																		<IonSelectOption value="cuillère à café">
-																			cuillère
-																			à
-																			café
-																		</IonSelectOption>
-																		<IonSelectOption value="cuillère à soupe">
-																			cuillère
-																			à
-																			soupe
-																		</IonSelectOption>
-																		<IonSelectOption value="pièce">
-																			pièce
-																		</IonSelectOption>
-																	</IonSelect>
-																</IonItem>
-																<IonItem>
-																	<IonButton
-																		color="danger"
-																		onClick={() =>
-																			removeIngredient(
-																				index,
-																			)
-																		}
-																	>
-																		Supprimer
-																	</IonButton>
-																</IonItem>
+																				)
+																			}
+																		>
+																			<IonSelectOption value="g">
+																				g
+																			</IonSelectOption>
+																			<IonSelectOption value="kg">
+																				kg
+																			</IonSelectOption>
+																			<IonSelectOption value="l">
+																				l
+																			</IonSelectOption>
+																			<IonSelectOption value="cl">
+																				cl
+																			</IonSelectOption>
+																			<IonSelectOption value="ml">
+																				ml
+																			</IonSelectOption>
+																			<IonSelectOption value="cuillère à café">
+																				cuillère
+																				à
+																				café
+																			</IonSelectOption>
+																			<IonSelectOption value="cuillère à soupe">
+																				cuillère
+																				à
+																				soupe
+																			</IonSelectOption>
+																			<IonSelectOption value="pièce">
+																				pièce
+																			</IonSelectOption>
+																		</IonSelect>
+																		<IonButton
+																			color="danger"
+																			onClick={() =>
+																				removeIngredient(
+																					index,
+																				)
+																			}
+																		>
+																			X
+																		</IonButton>
+																	</IonItem>
+
+																</div>
+
 															</div>
 														),
 													)}
@@ -734,46 +787,48 @@ const FarmerEvents: React.FC = () => {
 												>
 													Etapes
 												</IonLabel>
-												<div className="items-content">
+												<div className='div-inputs'>
 													{steps.map(
 														(step, index) => (
 															<div
 																key={index}
-																className="item-input step"
+																className="inputs-container"
 															>
-																<IonItem>
-																	<IonTextarea
-																		placeholder={`Étape ${
-																			index +
-																			1
-																		}`}
-																		value={
-																			step.description
-																		}
-																		onIonChange={e =>
-																			handleStepChange(
-																				index,
-																				'description',
-																				e
-																					.detail
-																					.value ??
+																<div className='row-inputs'>
+																	<IonItem className='row-content'>
+																		<IonTextarea
+																			class="input-step"
+																			placeholder={`Étape ${index +
+																				1
+																				}`}
+																			value={
+																				step.description
+																			}
+																			onIonChange={e =>
+																				handleStepChange(
+																					index,
+																					'description',
+																					e
+																						.detail
+																						.value ??
 																					'',
-																			)
-																		}
-																	/>
-																</IonItem>
-																<IonItem>
-																	<IonButton
-																		color="danger"
-																		onClick={() =>
-																			removeStep(
-																				index,
-																			)
-																		}
-																	>
-																		Supprimer
-																	</IonButton>
-																</IonItem>
+																				)
+																			}
+																		/>
+																		<IonButton
+																			className='btn-delete-step'
+																			color="danger"
+																			onClick={() =>
+																				removeStep(
+																					index,
+																				)
+																			}
+																		>
+																			X
+																		</IonButton>
+																	</IonItem>
+																</div>
+
 															</div>
 														),
 													)}
@@ -826,20 +881,24 @@ const FarmerEvents: React.FC = () => {
 												expand="block"
 												color="danger"
 												onClick={() => handleClose()}
+												disabled={isButtonDisabled}
 											>
 												Annuler
 											</IonButton>
 											<IonButton
+												id="submit-recipe"
 												expand="block"
 												type="submit"
 												onClick={() =>
 													handleSubmit('recette')
 												}
+												disabled={isButtonDisabled}
 											>
 												Ajouter
 											</IonButton>
 										</div>
 									</>
+
 								)}
 							</div>
 						</div>
@@ -851,3 +910,4 @@ const FarmerEvents: React.FC = () => {
 };
 
 export default FarmerEvents;
+
