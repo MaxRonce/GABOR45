@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import React from 'react';
 
 // Ionic Framework Components
 import {
@@ -10,10 +10,10 @@ import {
 	IonHeader,
 	IonToolbar,
 	IonTitle,
-} from "@ionic/react";
+} from '@ionic/react';
 
 // Custom Styling
-import "./map.css";
+import './Map.css';
 
 const MapPage: React.FC = () => {
 	const mapIframe = `

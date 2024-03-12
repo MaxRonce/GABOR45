@@ -1,6 +1,6 @@
 // React and React Router
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Ionic Framework Components
 import {
@@ -10,40 +10,40 @@ import {
 	IonContent,
 	IonIcon,
 	IonAlert,
-} from "@ionic/react";
+} from '@ionic/react';
 
 // Supabase
-import { supabase } from "../../supabaseClient";
+import { supabase } from '../../supabaseClient';
 
 // Custom Components
-import ButtonComponent from "../../components/ButtonComponent";
-import InputComponent from "../../components/InputComponent";
+import ButtonComponent from '../../components/ButtonComponent';
+import InputComponent from '../../components/InputComponent';
 
 // Custom Styling and Images
-import "../../theme/variables.css";
-import mail from "../../icons/mail.svg";
-import facebook from "../../icons/facebook.svg";
-import bloquer from "../../icons/bloquer.svg";
-import showP from "../../icons/showP.svg";
-import hideP from "../../icons/hideP.svg";
-import google from "../../icons/google.svg";
-import logo_Gabor45 from "../../icons/logo_Gabor45.svg";
-import "./Login.css";
+import '../../theme/variables.css';
+import mail from '../../icons/mail.svg';
+import facebook from '../../icons/facebook.svg';
+import bloquer from '../../icons/bloquer.svg';
+import showP from '../../icons/showP.svg';
+import hideP from '../../icons/hideP.svg';
+import google from '../../icons/google.svg';
+import logo_Gabor45 from '../../icons/logo_Gabor45.svg';
+import './Login.css';
 
 const Login: React.FC = () => {
-	const [email, setEmail] = useState<string>("");
-	const [resetEmail, setResetEmail] = useState<string>("");
-	const [password, setPassword] = useState<string>("");
+	const [email, setEmail] = useState<string>('');
+	const [resetEmail, setResetEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
 	const [showToast] = useIonToast();
 	const [showPassword, setShowPassword] = useState<boolean>(false);
 	const [showAlert, setShowAlert] = useState<boolean>(false);
 
 	const openAlert = () => {
-		setResetEmail(" ");
+		setResetEmail(' ');
 		setShowAlert(true);
 	};
 	const handleAlertClose = () => {
-		setResetEmail("");
+		setResetEmail('');
 		setShowAlert(false);
 	};
 	const history = useHistory();
@@ -54,19 +54,19 @@ const Login: React.FC = () => {
 		const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 		if (!expression.test(email)) {
 			await showToast({
-				message: "Email invalide",
+				message: 'Email invalide',
 				duration: 2000,
-				color: "danger",
+				color: 'danger',
 			});
 			return;
 		}
 		if (password.length < 6) {
 			await showToast({
-				message: "Mot de passe invalide",
+				message: 'Mot de passe invalide',
 				duration: 2000,
-				color: "danger",
+				color: 'danger',
 			});
-			setPassword("");
+			setPassword('');
 			return;
 		}
 		try {
@@ -77,29 +77,29 @@ const Login: React.FC = () => {
 
 			if (error) {
 				await showToast({
-					message: "connexion échouée",
+					message: 'connexion échouée',
 					duration: 2000,
-					color: "danger",
+					color: 'danger',
 				});
-				setPassword("");
+				setPassword('');
 			} else {
-				setPassword("");
-				setEmail("");
+				setPassword('');
+				setEmail('');
 				await showToast({
-					message: "Connexion réussie", // To keep in french
+					message: 'Connexion réussie', // To keep in french
 					duration: 1000,
-					color: "success",
-					position: "middle",
+					color: 'success',
+					position: 'middle',
 				});
 
-				history.push("/profile");
+				history.push('/profile');
 			}
 		} catch (error) {
-			console.error("Unexpected error during login:", error);
+			console.error('Unexpected error during login:', error);
 			await showToast({
-				message: "connexion échouée",
+				message: 'connexion échouée',
 				duration: 2000,
-				color: "danger",
+				color: 'danger',
 			});
 		}
 	};
@@ -112,47 +112,47 @@ const Login: React.FC = () => {
 		} catch (error) {
 			console.log(error);
 			await showToast({
-				message: "Error to sigUp",
+				message: 'Error to sigUp',
 				duration: 2000,
-				color: "danger",
+				color: 'danger',
 			});
 		}
 	};
 	//show and hide password
 	const showPasswordHandler = () => {
-		console.log("Push show password");
+		console.log('Push show password');
 		setShowPassword(!showPassword);
 	};
 
 	//function to send reset password
 	const handleSendResetPassword = async (e: any) => {
-		setResetEmail(" ");
-		console.log("email ", e.email);
+		setResetEmail(' ');
+		console.log('email ', e.email);
 		try {
 			const { error } = await supabase.auth.resetPasswordForEmail(
-				e.email
+				e.email,
 			);
 			if (error) {
 				await showToast({
-					message: "Error to send",
+					message: 'Error to send',
 					duration: 2000,
-					color: "danger",
+					color: 'danger',
 				});
 			} else {
 				await showToast({
-					message: "Success",
+					message: 'Success',
 					duration: 2000,
-					color: "success",
+					color: 'success',
 				});
-				setResetEmail("");
+				setResetEmail('');
 				handleAlertClose();
 			}
 		} catch (error) {
 			console.log(error);
 			await showToast({
-				message: "Error to send",
+				message: 'Error to send',
 				duration: 2000,
-				color: "danger",
+				color: 'danger',
 			});
 		}
 	};
@@ -172,7 +172,7 @@ const Login: React.FC = () => {
 					iconName={mail}
 					placeholderP="email@domain.com"
 					valueP={email}
-					onChange={(e: any) => setEmail(e.detail.value || "")}
+					onChange={(e: any) => setEmail(e.detail.value || '')}
 					classI="custom-input"
 					classIcon="login-icon ion-icon"
 				/>
@@ -180,18 +180,18 @@ const Login: React.FC = () => {
 				<InputComponent
 					classP="login-input input-pass"
 					labelP="Mot de passe"
-					typeP={showPassword ? "text" : "password"}
+					typeP={showPassword ? 'text' : 'password'}
 					placeholderP="********"
 					valueP={password}
-					onChange={(e: any) => setPassword(e.detail.value || "")}
+					onChange={(e: any) => setPassword(e.detail.value || '')}
 					classI="custom-input"
 					iconName={bloquer}
 					classIcon="login-icon ion-icon"
 					onIconClick={showPasswordHandler}
 					iconP={showPassword ? showP : hideP}
 					styleP={{
-						zIndex: "1",
-						position: "relative",
+						zIndex: '1',
+						position: 'relative',
 					}}
 				/>
 				<IonText
@@ -206,24 +206,24 @@ const Login: React.FC = () => {
 					message="vous recevrez un courriel pour réinitialiser votre mot de passe"
 					buttons={[
 						{
-							text: "Annuler",
-							role: "cancel",
-							handler: (e) => {
-								console.log("Cancelado");
+							text: 'Annuler',
+							role: 'cancel',
+							handler: e => {
+								console.log('Cancelado');
 								handleAlertClose();
 							},
 						},
 						{
-							text: "Envoyer",
-							handler: (e) => handleSendResetPassword(e),
+							text: 'Envoyer',
+							handler: e => handleSendResetPassword(e),
 						},
 					]}
 					isOpen={showAlert}
 					inputs={[
 						{
-							name: "email",
-							type: "email",
-							placeholder: "Email",
+							name: 'email',
+							type: 'email',
+							placeholder: 'Email',
 							value: resetEmail,
 						},
 					]}
@@ -234,35 +234,19 @@ const Login: React.FC = () => {
 					onClick={handleLogin}
 				/>
 				<IonText id="question_inscription">
-				Vous n'avez pas de compte ?
+					Vous n'avez pas de compte ?
 				</IonText>
 				<IonText
 					onClick={() => {
-						history.push("/registerUser");
+						history.push('/registerUser');
 					}}
-					className="text-btn ion-text-center ion-margin-bottom" id="redirect-inscription"
+					className="text-btn ion-text-center ion-margin-bottom"
+					id="redirect-inscription"
 				>
-					<h3 className="text-title" id="inscrire">S'inscrire</h3>
+					<h3 className="text-title" id="inscrire">
+						S'inscrire
+					</h3>
 				</IonText>
-				<div id="line-login"></div>
-				<IonText id="ou-line">ou</IonText>
-				<ButtonComponent
-					classP="btns-login ion-padding-horizontal ion-margin-horizontal ion-margin-top"
-					text="Se connecter avec Facebook"
-					onClick={() => {
-						signInWith("facebook");
-					}}
-					iconName={facebook}
-					styleP={{ "--ion-color-primary": "#2b5c93" }}
-				/>
-				<ButtonComponent
-					classP="btns-login btn-google ion-padding-horizontal ion-margin-horizontal ion-margin-top"
-					text="Se connecter avec Google"
-					onClick={() => {
-						signInWith("google");
-					}}
-					iconName={google}
-				/>
 			</IonContent>
 		</IonPage>
 	);
