@@ -50,19 +50,40 @@ const ProfileEdit: React.FC = () => {
 
 	const handleSave = async () => {
 		if (util) {
-			if (
-				regexTest(util?.nom || '', 'name') &&
-				regexTest(util?.prenom || '', 'name') &&
-				regexTest(util?.email || '', 'email')
-			) {
-				await showToast({
-					message: 'Veuillez remplir les champs correctement',
-					duration: 2000,
-					color: 'danger',
-				});
-				return;
-			}
 			try {
+				if (
+					(util?.nom || '') != '' &&
+					!regexTest(util?.nom || '', 'name')
+				) {
+					await showToast({
+						message: 'Nom invalide',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+				if (
+					(util?.prenom || '') != '' &&
+					!regexTest(util?.prenom || '', 'name')
+				) {
+					await showToast({
+						message: 'Prénom invalide',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
+				if (
+					(util?.email || '') != '' &&
+					!regexTest(util?.email || '', 'email')
+				) {
+					await showToast({
+						message: 'Email invalide',
+						duration: 2000,
+						color: 'danger',
+					});
+					return;
+				}
 				await updateUserInfo(currentUser?.id || '', util);
 				history.push(`/profile`);
 			} catch (error) {
